@@ -17,10 +17,7 @@ export async function POST(req, { params }) {
 
     await Message.create({ user: user._id, message });
 
-    return NextResponse.json(
-      { message: "Message sent successfully!" },
-      { status: 201 }
-    );
+    return NextResponse.json({ message: "Message sent successfully!" }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
