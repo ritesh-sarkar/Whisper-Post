@@ -46,13 +46,34 @@ export async function POST(req) {
       const mailOption = {
         from: "developerriteshsarkar@gmail.com",
         to: user.email,
-        subject: "WhisperPost| Reset Password",
+        subject: "WhisperPost | Reset Password",
         html: `
-                  <h2>Verify Your Email</h2>
-                  <p>Use the following OTP to verify your email:</p>
-                  <h3>${generatedOTP}</h3>
-                  <p>This OTP will expire in 5 minutes.</p>
-                  `,
+    <div style="background-color: #ffffff; padding: 40px; font-family: Arial, sans-serif; color: #1e40af; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); max-width: 600px; margin: auto;">
+      <h2 style="text-align: center; color: #1e40af; margin-bottom: 20px;">Password Reset Request</h2>
+
+      <p style="font-size: 16px; color: #333333; margin-bottom: 24px;">
+        Hello ${user.name || "User"},<br/><br/>
+        We received a request to reset your password for your <strong>WhisperPost</strong> account. Use the OTP below to continue:
+      </p>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <div style="display: inline-block; background-color: #f0f4ff; color: #1e40af; font-size: 24px; font-weight: bold; padding: 12px 24px; border-radius: 6px; letter-spacing: 2px;">
+          ${generatedOTP}
+        </div>
+      </div>
+
+      <p style="font-size: 14px; color: #555555; text-align: center;">
+        This OTP will expire in 5 minutes.<br/>
+        If you didn’t request this, you can safely ignore this email.
+      </p>
+
+      <hr style="margin: 32px 0; border: none; border-top: 1px solid #eeeeee;" />
+
+      <p style="font-size: 12px; color: #999999; text-align: center;">
+        &copy; ${new Date().getFullYear()} WhisperPost. All rights reserved.
+      </p>
+    </div>
+  `,
       };
 
       const transport = nodemailer.createTransport({

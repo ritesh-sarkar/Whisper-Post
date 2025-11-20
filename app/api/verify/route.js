@@ -1,8 +1,7 @@
 import User from "@/models/UserModel";
 import ConnectToDB from "@/lib/DBConnection";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken"; // ✅ You forgot this
-
+import jwt from "jsonwebtoken"; 
 const JWT_Secret = process.env.JWT_SECRET;
 
 export async function POST(req) {

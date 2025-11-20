@@ -57,12 +57,33 @@ export async function POST(req) {
     const mailOption = {
       from: "developerriteshsarkar@gmail.com",
       to: user.email,
-      subject: "WhisperPost| Verify Your Email",
+      subject: "WhisperPost | Verify Your Email",
       html: `
-            <h1>Verify Your Email</h1>
-            <p>Click the link below to verify your email:</p>
-            <a href="${NEXT_AUTH_URL}/verify/${token}">Verify Email</a>
-            `,
+  <div style="background-color: #ffffff; padding: 40px; font-family: Arial, sans-serif; color: #1e40af; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); max-width: 600px; margin: auto;">
+    <h2 style="text-align: center; color: #1e40af; margin-bottom: 20px;">WhisperPost Email Verification</h2>
+    
+    <p style="font-size: 16px; color: #333333; margin-bottom: 24px;">
+      Hello ${user.name || "User"},<br/><br/>
+      Thank you for registering on <strong>WhisperPost</strong>! Please verify your email address to activate your account and start sharing your thoughts.
+    </p>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="${NEXT_AUTH_URL}/verify/${token}" style="display: inline-block; background-color: #1e40af; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold;">
+        Verify Email
+      </a>
+    </div>
+
+    <p style="font-size: 14px; color: #555555; text-align: center;">
+      If you did not create this account, you can safely ignore this email.
+    </p>
+
+    <hr style="margin: 32px 0; border: none; border-top: 1px solid #eeeeee;" />
+
+    <p style="font-size: 12px; color: #999999; text-align: center;">
+      &copy; ${new Date().getFullYear()} WhisperPost. All rights reserved.
+    </p>
+  </div>
+  `,
     };
 
     const transport = nodemailer.createTransport({
