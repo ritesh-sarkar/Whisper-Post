@@ -9,13 +9,14 @@ const ConditionalFooter = () => {
         className="
         border-t-2
         border-solid
-        border-gray-300 
+        border-border 
         py-8
+        bg-transparent
         "
       >
         <div
           className="   
-          text-gray-600
+          text-text-alt
           text-center
           "
         >

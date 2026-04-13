@@ -82,12 +82,12 @@ export default function RootLayout({ children }) {
           ${poppins.variable}
           ${inter.variable}
           antialiased
+          bg-bg
           h-full
           w-full
-          bg-gray-50
-          text-gray-800
+          text-text
+          font-secondary
           overflow-x-hidden
-          font-inter
           select-none
         `}
       >

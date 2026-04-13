@@ -1,19 +1,101 @@
 @import "tailwindcss";
 
+/* 🌌 THEME VARIABLES (Midnight Glass) */
 :root {
+  /* Fonts */
   --font-poppins: "Poppins", sans-serif;
   --font-inter: "Inter", sans-serif;
+
+  /* Backgrounds */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #11121a;
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  /* Accents */
+  --accent-primary: #7c3aed;   /* purple */
+  --accent-secondary: #06b6d4; /* cyan */
+  --accent-pink: #ec4899;
+
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #9ca3af;
+
+  /* Borders */
+  --border-glass: rgba(255, 255, 255, 0.1);
+
+  
 }
 
-.font-poppins {
-  font-family: var(--font-poppins);
+@theme{
+  --color-bg: var(--bg-primary);
+  --color-bg-alt: var(--bg-secondary);
+  --color-text: var(--text-primary);
+  --color-text-alt: var(--text-secondary);
+  --color-accent: var(--accent-primary);
+  --color-accent-alt: var(--accent-secondary);
+  --color-accent-pink: var(--accent-pink);
+  --color-bg-glass: var(--bg-glass);
+  --color-border: var(--border-glass);
+  --font-primary: var(--font-poppins);
+  --font-secondary: var(--font-inter);
+
 }
 
-.font-inter {
-  font-family: var(--font-inter);
+
+/* 🧊 GLASS CARD UTILITY */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
 }
 
-/* Corrected Scrollbar Styles */
+
+/* 🔘 BUTTON STYLE */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+}
+
+
+.loved {
+  color: var(--accent-pink);
+  font-weight: 600;
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.25);
+}
+
+/* 🎨 MOOD COLORS */
+.mood-love {
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+}
+
+.mood-confession {
+  background: linear-gradient(135deg, #f97316, #fb923c);
+}
+
+.mood-funny {
+  background: linear-gradient(135deg, #eab308, #fde047);
+}
+
+.mood-secret {
+  background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+}
+
+.mood-advice {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+}
+
+/* 🖱️ SCROLLBAR */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -24,23 +106,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #a0a0a0;
+  background: var(--text-secondary);
   border-radius: 4px;
 }
 
-/* Optional for Firefox */
+/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #a0a0a0 transparent;
-}
-
-.newMessage {
-  color: #1F2937;
-  font-weight: bold;
-  background:#ddeafb;
-}
-.loved{
-  color: #ff57bf;
-  font-weight: bold;
-  background:#ffb7e3;
+  scrollbar-color: var(--text-secondary) transparent;
 }

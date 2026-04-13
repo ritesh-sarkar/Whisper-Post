@@ -1,6 +1,38 @@
 import CreateProfileButton from "@/app/components/CreateProfileButton";
 
+import { IoShieldOutline } from "react-icons/io5";
+import { IoSparklesSharp } from "react-icons/io5";
+import { TbBrandGoogleAnalytics } from "react-icons/tb";
+import { FaShareAlt } from "react-icons/fa";
+
 const page = () => {
+  const features = [
+    {
+      title: "Anonymous Messaging",
+      text: "Receive messages from anyone without revealing their identity. Pure honesty, no filters.",
+      icon: IoShieldOutline,
+      iconGenre: "anonymous",
+    },
+    {
+      title: "Mood-Based Messages",
+      text: "Every message carries a mood — love, confession, humor, or secrets — making each one feel alive.",
+      icon: IoSparklesSharp,
+      iconGenre: "mood",
+    },
+    {
+      title: "Smart Insights",
+      text: "Track how many messages you receive daily and weekly with clean, simple insights.",
+      icon: TbBrandGoogleAnalytics,
+      iconGenre: "insights",
+    },
+    // {
+    //   title: "Shareable Identity",
+    //   text: "Your personal link is all you need. Share it anywhere and start receiving messages instantly.",
+    //   icon: FaShareAlt,
+    //   iconGenre: "share",
+    // },
+  ];
+
   return (
     <div
       className="
@@ -11,10 +43,14 @@ const page = () => {
         items-center
         justify-center
         w-full
-        mt-20
+        pt-30
+        bg-linear-to-br
+        from-bg
+        via-accent/10
+        to-bg
+        md:pt-50
       "
     >
-    
       <div
         className="
           w-full
@@ -29,171 +65,132 @@ const page = () => {
       >
         <h1
           className="
-            text-5xl 
+            text-[40px]
+            font-primary
             font-bold 
-            mb-6
+            px-1.5
+            mb-10
             leading-tight
+            capitalize
+            md:text-6xl
           "
         >
-          Speak freely. <br /> Stay anonymous.
+          Hear what they never say out{" "}
+          <span
+            className="
+            bg-linear-to-r 
+            from-accent-pink
+            to-accent
+            bg-clip-text 
+            text-transparent
+            "
+          >
+            loud.
+          </span>
         </h1>
         <p
           className="
             text-xl 
-            text-gray-700 
+            text-text-alt
+            font-secondary
             mb-12 
             max-w-2xl 
             mx-auto
+            px-2
+            md:text-2xl
           "
         >
-          Create your anonymous message link and receive honest, unfiltered
-          feedback from anyone, anywhere.
+          Share your unique link and let anyone send you anonymous messages. No
+          names. No pressure. Just honest thoughts.
         </p>
 
         <CreateProfileButton />
       </div>
 
       {/* Feature Blocks */}
+
       <div
         className="
           w-full
           py-2
+          p-6
           flex
           flex-col
           items-center
           justify-center
-          text-center
+          gap-10
           mb-12
+          md:flex-row
+          md:justify-around
+          md:p-12
         "
       >
-        {/* Feature 1 */}
-        <span
-          className="
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-3.5
-            mb-10
-          "
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="size-16 text-blue-600"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 
-              1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
-            />
-          </svg>
-          <h3
+        {features.map((feature, index) => (
+          <span
+            key={index}
             className="
-              text-xl 
-              font-semibold 
-              mb-3
-            "
+                  w-full
+                  md:h-80
+                  bg-bg-glass
+                  backdrop-blur-2xl
+                  rounded-2xl
+                  p-3
+                  flex
+                  flex-col
+                  items-start
+                  justify-center
+                  gap-3.5
+                  text-start
+                  border-1
+                  border-border
+                  transition-all
+                  duration-300
+                  ease-in-out
+                  hover:bg-text-alt/10
+                  md:p-6
+                "
           >
-            Create Anonymous Link
-          </h3>
-          <p className="text-gray-700">
-            Generate a unique link that anyone can use to send you messages
-            anonymously.
-          </p>
-        </span>
+            <feature.icon
+              className={`
+                    text-5xl 
+                    text-accent
+                    bg-text-alt/15
+                    p-2
+                    rounded-2xl
+                    ${
+                      feature.iconGenre === "anonymous"
+                        ? "text-accent"
+                        : feature.iconGenre === "mood"
+                          ? "text-accent-pink"
+                          : feature.iconGenre === "insights"
+                            ? "text-accent-alt"
+                            : ""
+                    }
+                    `}
+            />
 
-        {/* Feature 2 */}
-        <span
-          className="
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-3.5
-            mb-10
-          "
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="size-16 text-blue-600"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 
-              3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 
-              0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 
-              1.668.337 2.555.337Z"
-            />
-          </svg>
-          <h3
-            className="
-              text-xl 
-              font-semibold 
-              mb-3
-            "
-          >
-            Receive Unfiltered Messages
-          </h3>
-          <p className="text-gray-700">
-            Get honest feedback, confessions, and thoughts that people might not
-            share otherwise.
-          </p>
-        </span>
-
-        {/* Feature 3 */}
-        <span
-          className="
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-3.5
-            mb-10
-          "
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="size-16 text-blue-600"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 
-              11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 
-              9.749c0 5.592 3.824 10.29 9 11.623 
-              5.176-1.332 9-6.03 9-11.622 
-              0-1.31-.21-2.571-.598-3.751h-.152c-3.196 
-              0-6.1-1.248-8.25-3.285Z"
-            />
-          </svg>
-          <h3
-            className="
-              text-xl 
-              font-semibold 
-              mb-3
-            "
-          >
-            Stay Safe & In Control
-          </h3>
-          <p className="text-gray-700">
-            Full control over your messages with blocking, filtering, and
-            privacy settings.
-          </p>
-        </span>
+            <h3
+              className="
+                      text-xl
+                      font-bold
+                      font-primary 
+                      mt-2
+                      "
+            >
+              {feature.title}
+            </h3>
+            <p
+              className="
+                    text-base
+                    text-text-alt
+                    my-2
+                    font-secondary
+                    "
+            >
+              {feature.text}
+            </p>
+          </span>
+        ))}
       </div>
     </div>
   );

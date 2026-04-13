@@ -52,19 +52,21 @@ const ConditionalMainHeader = () => {
     return (
       <header
         className="
-          sticky
+          fixed
           top-0 
           z-10 
           w-full 
-          bg-white 
+          bg-transparent
+          backdrop-blur-2xl
           px-2 
           py-1 
-          font-poppins 
-          shadow-gray-300
+          font-primary
           shadow-md
           flex 
           items-center 
           justify-between
+          rounded-br-xl
+          rounded-bl-xl
         "
       >
         <span
@@ -72,9 +74,8 @@ const ConditionalMainHeader = () => {
             w-1/2 
             flex 
             items-center 
-            gap-2 
-            font-bold 
-            text-2xl
+            font-semibold 
+            text-xl
           "
         >
           <Image
@@ -83,13 +84,11 @@ const ConditionalMainHeader = () => {
             width={60}
             height={60}
             className="
-              border-r-2 
-              border-[#687280] 
-              p-0 
+              p-2
               m-0
             "
           />
-          <h1>Whisper Post</h1>
+          <h1>WhisperPost</h1>
         </span>
 
         <span
@@ -107,12 +106,12 @@ const ConditionalMainHeader = () => {
             href="/login"
             className="
               font-semibold 
-              text-gray-600 
-              hover:text-gray-900 
+              text-text-alt
               hover:underline 
               transition-all 
               duration-300 
               ease-in-out
+              cursor-pointer
             "
           >
             Login
@@ -122,12 +121,10 @@ const ConditionalMainHeader = () => {
             href="/signup"
             className="
               font-semibold 
-              text-white 
-              bg-blue-600 
-              hover:bg-blue-700 
+              bg-border
               px-2 
-              py-1 
-              rounded-md
+              py-1.5 
+              rounded-xl
             "
           >
             Get Started
@@ -143,11 +140,11 @@ const ConditionalMainHeader = () => {
           top-0 
           z-10 
           w-full 
-          bg-white 
+          bg-transparent
           px-2 
           py-1 
-          font-poppins 
-          shadow-gray-200
+          font-primary 
+          shadow-border
           shadow-md
           flex 
           items-center 
@@ -188,17 +185,19 @@ const ConditionalMainHeader = () => {
           top-0 
           z-10 
           w-full 
-          bg-white 
+          bg-transparent
           px-2 
           py-4 
-          font-poppins 
-          shadow-gray-200
+          font-primary 
+          shadow-border
           shadow-md
           flex 
           items-center 
           justify-between
         "
       >
+
+        // TODO : add profile picture & functionality
         <span
           className="
         w-1/2 
@@ -242,9 +241,9 @@ const ConditionalMainHeader = () => {
           >
             <h1
               className="
-           font-poppins
+           font-primary
            text-xl 
-           text-gray-800
+           text-text
            font-bold
           "
             >
@@ -253,9 +252,9 @@ const ConditionalMainHeader = () => {
 
             <p
               className="
-            font-poppins
+            font-primary
             text-sm 
-            text-gray-600
+            text-text-secondary
             "
             >{`@${username}`}</p>
           </span>
@@ -277,12 +276,12 @@ const ConditionalMainHeader = () => {
             items-center
             gap-2
             cursor-pointer
-            bg-blue-200
+            bg-accent/20
             px-2
             py-1
             rounded-md
-            text-blue-600
-            font-poppins
+            text-accent
+            font-primary
           "
           >
             <svg
@@ -303,7 +302,7 @@ const ConditionalMainHeader = () => {
             <p
               className="
               text-sm
-              font-poppins
+              font-primary
               font-semibold
             "
             >{`new ${unreadMessages.length}`}</p>
@@ -320,7 +319,7 @@ const ConditionalMainHeader = () => {
             duration-300
             ease-in-out
             active:scale-90
-            hover:bg-pink-100
+            hover:bg-accent-pink/20
             px-2
             py-1
             rounded-md
@@ -334,7 +333,7 @@ const ConditionalMainHeader = () => {
               stroke="currentColor"
               className="
             size-7
-            text-pink-600
+            text-accent-pink
             transform
             rotate-90
             "
