@@ -92,14 +92,23 @@ const ConditionalFooter = () => {
                     duration-300
                     ease-in-out
                     hover:scale-110
-                    ${link.name === "Github" ? "hover:text-text" : 
-                      link.name === "Facebook" ? "hover:text-[#1877F2]" : 
-                      link.name === "Instagram" ? "hover:text-[#e1306c]" : 
-                      link.name === "LinkedIn" ? "hover:text-[#0A66C2]" : ""} 
+                    ${
+                      link.name === "Github"
+                        ? "hover:text-text"
+                        : link.name === "Facebook"
+                          ? "hover:text-[#1877F2]"
+                          : link.name === "Instagram"
+                            ? "hover:text-[#e1306c]"
+                            : link.name === "LinkedIn"
+                              ? "hover:text-[#0A66C2]"
+                              : ""
+                    } 
                   `}
                 key={link.name}
               >
-                <a href={link.link}>{link.icon}</a>
+                <a target="_blank" rel="noopener noreferrer" href={link.link}>
+                  {link.icon}
+                </a>
               </li>
             ))}
           </ul>
