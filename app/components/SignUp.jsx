@@ -84,7 +84,9 @@ const SignUp = () => {
     <div
       className="
         w-full
+        h-full
         bg-bg
+        mt-8
         mx-auto
         font-secondary
         flex
@@ -389,6 +391,7 @@ const SignUp = () => {
                 hover:via-accent/20
                 hover:to-accent-pink/20
                 active:scale-95
+                cursor-pointer
               "
             >
               Create Account

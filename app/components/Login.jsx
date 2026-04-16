@@ -60,7 +60,6 @@ const Login = () => {
         w-full
         h-full
         bg-bg
-        
         mx-auto
         font-secondary
         flex
@@ -280,6 +279,7 @@ const Login = () => {
               hover:via-accent/20
               hover:to-accent-pink/20
               active:scale-95
+              cursor-pointer
             "
           >
             Login
