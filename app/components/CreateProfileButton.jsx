@@ -29,6 +29,7 @@ const CreateProfileButton = () => {
       hover:from-accent-primary/20
       hover:via-accent/20
       hover:to-accent-pink/20
+      active:scale-95
       "
     >
       Create Profile

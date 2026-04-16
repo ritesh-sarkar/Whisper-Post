@@ -1,10 +1,6 @@
 import SignUp from "@/app/components/SignUp";
 const page = () => {
-  return <div className="
-  w-full
-  h-screen
-  bg-gray-50
-  ">
+  return <div>
     <SignUp />
   </div>;
 };

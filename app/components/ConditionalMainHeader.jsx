@@ -132,6 +132,50 @@ const ConditionalMainHeader = () => {
         </span>
       </header>
     );
+  } else if (pathname === "/login" || pathname === "/signup") {
+    return (
+      <header
+        className="
+          fixed
+          top-0 
+          z-10 
+          w-full 
+          bg-transparent
+          backdrop-blur-2xl
+          px-2 
+          py-1 
+          font-primary
+          shadow-md
+          flex 
+          items-center 
+          justify-between
+          rounded-br-xl
+          rounded-bl-xl
+        "
+      >
+        <span
+          className="
+            w-1/2 
+            flex 
+            items-center 
+            font-semibold 
+            text-xl
+          "
+        >
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={60}
+            height={60}
+            className="
+              p-2
+              m-0
+            "
+          />
+          <h1>WhisperPost</h1>
+        </span>
+      </header>
+    );
   } else if (pathname.startsWith("/message/")) {
     return (
       <header
@@ -167,8 +211,6 @@ const ConditionalMainHeader = () => {
             width={60}
             height={60}
             className="
-              border-r-2 
-              border-[#687280] 
               p-0 
               m-0
             "
@@ -196,7 +238,6 @@ const ConditionalMainHeader = () => {
           justify-between
         "
       >
-
         // TODO : add profile picture & functionality
         <span
           className="
@@ -218,10 +259,10 @@ const ConditionalMainHeader = () => {
               h-10
               sm:size-10
               sm:m-2
-              bg-blue-500
+              bg-accent
               p-1.5
               rounded-full
-              text-white
+              text-primary
             "
           >
             <path
@@ -241,11 +282,11 @@ const ConditionalMainHeader = () => {
           >
             <h1
               className="
-           font-primary
-           text-xl 
-           text-text
-           font-bold
-          "
+                font-primary
+                text-xl 
+                text-text
+                font-bold
+              "
             >
               {name}
             </h1>
@@ -259,7 +300,6 @@ const ConditionalMainHeader = () => {
             >{`@${username}`}</p>
           </span>
         </span>
-
         <span
           className="
           w-1/2 

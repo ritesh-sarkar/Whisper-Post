@@ -49,8 +49,45 @@ const page = () => {
         via-accent/10
         to-bg
         md:pt-50
+        relative
+        overflow-hidden
       "
     >
+      {/* Background orbits */}
+
+      <div
+        className="
+            absolute 
+            top-[20%]
+            -left-64 
+            w-96 
+            h-96
+            bg-accent-pink/40 
+            rounded-full 
+            blur-3xl 
+            -z-10 
+            pointer-events-none
+            md:w-[400px]
+            md:h-[400px]
+            "
+      ></div>
+      <div
+        className="
+          absolute 
+          bottom-[20%]
+          -right-64 
+          w-96 
+          h-96 
+          bg-accent/40 
+          rounded-full 
+          blur-3xl 
+          -z-10 
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+          "
+      ></div>
+
       <div
         className="
           w-full

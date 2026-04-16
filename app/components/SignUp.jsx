@@ -1,11 +1,14 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import { useState } from "react";
 import { SignUpValidationZod } from "@/lib/SignUpValidationZod";
 import toast from "react-hot-toast";
 import axios from "axios";
 import LoaderComponent from "@/app/components/LoaderComponent";
+
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -53,7 +56,7 @@ const SignUp = () => {
         setVerifyBanner(true);
       }
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error(error.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -65,88 +68,151 @@ const SignUp = () => {
     setPassword("");
   };
 
-  if (loading) return <LoaderComponent state={"Creating your account"} />;
+  const handleGoogleLogin = () => {
+    // TODO: integrate Google OAuth
+    toast("Google login coming soon 🚀");
+  };
+
+  if (loading)
+    return (
+      <LoaderComponent
+        state={"Creating your account"}
+      />
+    );
 
   return (
     <div
       className="
         w-full
-        h-auto
+        bg-bg
+        mt-20
         mx-auto
+        font-secondary
         flex
         flex-col
-        sm:flex-row
         items-center
-        justify-center 
-        pt-10
+        justify-center
         p-2.5
-        sm:gap-10
-        sm:h-full
+        relative
+        overflow-hidden
+        md:mt-30
       "
     >
-      {!verifyBanner && (
-        <>
-          <div className="sm:w-1/2 flex justify-center">
-            <Image
-              src="/signup.svg"
-              alt="signup illustration"
-              width={250}
-              height={250}
-              className="
-            m-2
-            sm:w-[512px]
-            sm:h-[512px]
-          "
-            />
-          </div>
+      {/* Background orbits */}
 
-          <form
-            onSubmit={handleSubmit}
-            className="
-          sm:w-1/2
-          sm:max-w-[600px]
-          w-4/5
-          flex
-          flex-col
-          items-center
-          justify-center
-          gap-1
-          shadow-md
-          shadow-gray-300
-          rounded
-          p-2.5
-          bg-white
-          mb-10
+      <div
+        className="
+          absolute
+          top-[20%]
+          -left-64
+          w-96
+          h-96
+          bg-accent-pink/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
         "
+      />
+
+      <div
+        className="
+          absolute
+          bottom-[20%]
+          -right-64
+          w-96
+          h-96
+          bg-accent/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+        "
+      />
+
+      {!verifyBanner && (
+        <div
+          className="
+            w-full
+            h-full
+            flex
+            flex-col
+            items-center
+            justify-center
+            gap-5
+          "
+        >
+          <span
+            className="
+              w-full
+              flex
+              flex-col
+              items-center
+              justify-center
+              gap-2
+              my-5
+            "
           >
             <h1
               className="
-            font-poppins
-            text-2xl
-            font-semibold
-            text-gray-800
-            m-2
-          "
+                font-primary
+                text-3xl
+                font-semibold
+                text-text
+                m-2
+              "
             >
               Create profile
             </h1>
 
-            <h3 className="text-lg text-gray-600">
+            <h3
+              className="
+                text-xl
+                text-text-alt
+              "
+            >
               Join <span className="font-bold">WhisperPost</span> today!
             </h3>
+          </span>
 
+          <form
+            onSubmit={handleSubmit}
+            className="
+              w-9/10
+              max-w-[500px]
+              bg-bg-glass
+              flex
+              flex-col
+              items-center
+              justify-center
+              gap-1
+              border
+              border-border
+              rounded-xl
+              p-2.5
+              mb-20
+              font-secondary
+              md:p-4
+            "
+          >
+            {/* Name */}
             <label
               className="
-            w-full
-            flex
-            flex-col
-            items-start
-            justify-start
-            p-2.5
-            text-gray-800
-            gap-1
-            font-semibold
-          "
+                w-full
+                flex
+                flex-col
+                items-start
+                justify-start
+                py-3
+                px-2.5
+                text-text
+                gap-1
+                font-semibold
+              "
             >
               Name:
               <input
@@ -157,42 +223,37 @@ const SignUp = () => {
                 placeholder="Enter your name"
                 required
                 className="
-              w-full
-              py-2.5
-              px-4
-              rounded
-              border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
-            "
+                  w-full
+                  py-2.5
+                  px-4
+                  rounded-xl
+                  border
+                  border-border
+                  focus:outline-none
+                  focus:ring-1
+                  focus:ring-accent
+                "
               />
               {error && (
-                <p
-                  className="
-          text-red-500
-          text-sm
-          my-1
-          "
-                >
+                <p className="text-red-500 text-sm my-1">
                   {error.name}
                 </p>
               )}
             </label>
 
+            {/* Username */}
             <label
               className="
-            w-full
-            flex
-            flex-col
-            items-start
-            justify-start
-            p-2.5
-            text-gray-800
-            gap-1
-            font-semibold
-          "
+                w-full
+                flex
+                flex-col
+                items-start
+                justify-start
+                p-2.5
+                text-text
+                gap-1
+                font-semibold
+              "
             >
               Username:
               <input
@@ -203,42 +264,37 @@ const SignUp = () => {
                 placeholder="@username"
                 required
                 className="
-              w-full
-              py-2.5
-              px-4
-              rounded
-              border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
-            "
+                  w-full
+                  py-2.5
+                  px-4
+                  rounded-xl
+                  border
+                  border-border
+                  focus:outline-none
+                  focus:ring-1
+                  focus:ring-accent
+                "
               />
               {error && (
-                <p
-                  className="
-          text-red-500
-          text-sm
-          my-1
-          "
-                >
+                <p className="text-red-500 text-sm my-1">
                   {error.username}
                 </p>
               )}
             </label>
 
+            {/* Email */}
             <label
               className="
-            w-full
-            flex
-            flex-col
-            items-start
-            justify-start
-            p-2.5
-            text-gray-800
-            gap-1
-            font-semibold
-          "
+                w-full
+                flex
+                flex-col
+                items-start
+                justify-start
+                p-2.5
+                text-text
+                gap-1
+                font-semibold
+              "
             >
               Email:
               <input
@@ -249,42 +305,37 @@ const SignUp = () => {
                 placeholder="Enter your email"
                 required
                 className="
-              w-full
-              py-2.5
-              px-4
-              rounded
-              border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
-            "
+                  w-full
+                  py-2.5
+                  px-4
+                  rounded-xl
+                  border
+                  border-border
+                  focus:outline-none
+                  focus:ring-1
+                  focus:ring-accent
+                "
               />
               {error && (
-                <p
-                  className="
-          text-red-500
-          text-sm
-          my-1
-          "
-                >
+                <p className="text-red-500 text-sm my-1">
                   {error.email}
                 </p>
               )}
             </label>
 
+            {/* Password */}
             <label
               className="
-            w-full
-            flex
-            flex-col
-            items-start
-            justify-start
-            p-2.5
-            text-gray-800
-            gap-1
-            font-semibold
-          "
+                w-full
+                flex
+                flex-col
+                items-start
+                justify-start
+                p-2.5
+                text-text
+                gap-1
+                font-semibold
+              "
             >
               Password:
               <input
@@ -295,116 +346,160 @@ const SignUp = () => {
                 placeholder="Enter your password"
                 required
                 className="
-              w-full
-              py-2.5
-              px-4
-              rounded
-              border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
-            "
+                  w-full
+                  py-2.5
+                  px-4
+                  rounded-xl
+                  border
+                  border-border
+                  focus:outline-none
+                  focus:ring-1
+                  focus:ring-accent
+                "
               />
               {error && (
-                <p
-                  className="
-          text-red-500
-          text-sm
-          my-1
-          "
-                >
+                <p className="text-red-500 text-sm my-1">
                   {error.password}
                 </p>
               )}
             </label>
 
+            {/* Create Account */}
             <button
               type="submit"
               className="
-            w-full
-            py-2.5
-            font-semibold
-            text-lg
-            rounded
-            bg-blue-600
-            text-white
-            hover:bg-blue-800
-            transition-colors
-            duration-300
-            ease-in-out
-            m-2
-            sm:m-5
-          "
+                text-center
+                text-xl
+                font-primary
+                font-semibold
+                text-bg
+                bg-text
+                flex
+                justify-center
+                items-center
+                px-5
+                py-2.5
+                my-4
+                rounded-xl
+                transition-all
+                duration-300
+                ease-in-out
+                hover:tracking-wide
+                hover:gap-2
+                hover:bg-linear-to-br
+                hover:from-accent-primary/20
+                hover:via-accent/20
+                hover:to-accent-pink/20
+                active:scale-95
+              "
             >
-              Sign Up
+              Create Account
+              <IoIosArrowRoundForward className="ml-1 text-2xl" />
             </button>
 
-            <p className="text-gray-600">
+            {/* Divider */}
+            <div
+              className="
+                w-full
+                flex
+                items-center
+                justify-center
+                gap-3
+                my-2
+              "
+            >
+              <div className="flex-1 h-[1px] bg-border" />
+              <span className="text-text-alt text-sm">or</span>
+              <div className="flex-1 h-[1px] bg-border" />
+            </div>
+
+            {/* Google Login */}
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="
+                w-full
+                flex
+                items-center
+                justify-center
+                gap-3
+                py-2.5
+                px-4
+                border
+                border-border
+                rounded-xl
+                bg-bg-glass
+                text-text
+                font-medium
+                transition-all
+                duration-300
+                hover:bg-bg-alt
+                active:scale-95
+                cursor-pointer
+              "
+            >
+              <FcGoogle className="text-xl" />
+              Continue with Google
+            </button>
+
+            <p className="text-text-alt mt-3">
               Already have an account?{" "}
-              <Link href="/login" className="text-blue-600 font-semibold">
+              <Link href="/login" className="text-accent font-semibold">
                 Log in
               </Link>
             </p>
           </form>
-        </>
+        </div>
       )}
 
       {verifyBanner && (
-        <>
-          <div
-            className="
-             w-9/10
+        <div
+          className="
+            w-9/10
             max-w-[600px]
             mx-auto
             flex
             flex-col
             items-center
             justify-center
-            gap-4
+            gap-5
             text-center
-            bg-white
-            rounded-lg
-            shadow-lg
-            shadow-gray-200
+            bg-bg-glass
+            rounded-xl
+            border
+            border-border
             py-5
             px-3
-            sm:py-6
-            sm:px-5
-            "
-          >
-            <h1
-              className="
-               font-poppins
+            md:py-6
+            md:px-5
+          "
+        >
+          <h1
+            className="
+              font-primary
               text-2xl
               font-semibold
-              text-gray-800
-              sm:text-3xl
-              sm:font-semibold
-              sm:leading-tight
-              "
-            >
-              A verification link has been sent to your email.
-            </h1>
+              text-text
+              md:text-3xl
+              md:leading-tight
+            "
+          >
+            A verification link has been sent to your email.
+          </h1>
 
-            <p
-              className="
-               font-poppins
-              text-gray-600
-              sm:text-lg
-              sm:font-medium
-              sm:leading-snug
-              sm:tracking-wide
-              sm:mt-1
-              sm:mb-3
-              "
-            >
-              {" "}
-              Please check your email and verify your account to do further
-              action.
-            </p>
-          </div>
-        </>
+          <p
+            className="
+              font-secondary
+              text-text-alt
+              md:text-lg
+              md:font-medium
+              md:leading-snug
+              md:tracking-wide
+            "
+          >
+            Please check your email and verify your account to continue.
+          </p>
+        </div>
       )}
     </div>
   );
