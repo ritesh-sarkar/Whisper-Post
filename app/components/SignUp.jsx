@@ -85,7 +85,6 @@ const SignUp = () => {
       className="
         w-full
         bg-bg
-        mt-20
         mx-auto
         font-secondary
         flex
@@ -95,7 +94,6 @@ const SignUp = () => {
         p-2.5
         relative
         overflow-hidden
-        md:mt-30
       "
     >
       {/* Background orbits */}
@@ -409,7 +407,7 @@ const SignUp = () => {
               "
             >
               <div className="flex-1 h-[1px] bg-border" />
-              <span className="text-text-alt text-sm">or</span>
+              <span className="text-text-alt text-sm">Or</span>
               <div className="flex-1 h-[1px] bg-border" />
             </div>
 

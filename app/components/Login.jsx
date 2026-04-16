@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -7,14 +8,19 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import LoaderComponent from "@/app/components/LoaderComponent";
 
+import { FcGoogle } from "react-icons/fc";
+import { IoIosArrowRoundForward } from "react-icons/io";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const handleLogin = async () => {
     setLoading(true);
+
     try {
       const loginRequest = await signIn("credentials", {
         email,
@@ -22,12 +28,12 @@ const Login = () => {
         redirect: false,
       });
 
-      if (loginRequest.ok) {
+      if (loginRequest?.ok) {
         toast.success("Logged in successfully");
         router.push("/dashboard");
       }
 
-      if (loginRequest.error) {
+      if (loginRequest?.error) {
         toast.error(loginRequest.error);
       }
     } catch (error) {
@@ -37,184 +43,317 @@ const Login = () => {
     }
   };
 
-  if (loading) return <LoaderComponent state={"Loging in"} />;
+  const handleGoogleLogin = () => {
+    signIn("google", { callbackUrl: "/dashboard" });
+  };
+
+  if (loading)
+    return (
+      <LoaderComponent
+        state={"Logging in"}
+      />
+    );
 
   return (
     <div
       className="
         w-full
         h-full
+        bg-bg
+        
         mx-auto
+        font-secondary
         flex
         flex-col
-        sm:flex-row
         items-center
         justify-center
-        pt-10
         p-2.5
-        sm:gap-10
+        relative
+        overflow-hidden
       "
     >
-      <div className="sm:w-1/2 flex justify-center">
-        <Image
-          src="/login.svg"
-          alt="login.svg"
-          width={250}
-          height={250}
-          className="
-            m-2
-            sm:w-[512px]
-            sm:h-[512px]
-          "
-        />
-      </div>
+      {/* Background blobs */}
 
-      <form
-        action="submit"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin();
-        }}
+      <div
         className="
-          sm:w-1/2
-          sm:max-w-[600px]
-          w-4/5
+          absolute
+          top-[20%]
+          -left-64
+          w-96
+          h-96
+          bg-accent-pink/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+        "
+      />
+
+      <div
+        className="
+          absolute
+          bottom-[20%]
+          -right-64
+          w-96
+          h-96
+          bg-accent/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+        "
+      />
+
+      <div
+        className="
+          w-full
+          h-full
           flex
           flex-col
           items-center
           justify-center
-          gap-1
-          shadow-md
-          shadow-gray-300
-          rounded
-          p-2.5
-          bg-white
-          mb-10
+          gap-5
         "
       >
-        <h1
-          className="
-            font-poppins
-            text-2xl
-            font-semibold
-            text-gray-800
-            m-2
-          "
-        >
-          Welcome back
-        </h1>
+        {/* Heading */}
 
-        <h3 className="text-lg text-gray-600">
-          Login to <span className="font-bold">WhisperPost</span>
-        </h3>
-
-        <label
+        <span
           className="
             w-full
             flex
             flex-col
-            items-start
-            justify-start
-            p-2.5
-            text-gray-800
+            items-center
+            justify-center
             gap-2
-            font-semibold
+            my-5
           "
         >
-          Email:
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+          <h1
             className="
-              w-full
-              py-2.5
-              px-4
-              rounded
-              border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
+              font-primary
+              text-3xl
+              font-semibold
+              text-text
+              m-2
             "
-          />
-        </label>
+          >
+            Welcome back
+          </h1>
 
-        <label
+          <h3
+            className="
+              text-xl
+              text-text-alt
+              font-secondary
+            "
+          >
+            Login to <span className="font-bold">WhisperPost</span>
+          </h3>
+        </span>
+
+        {/* Form */}
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
           className="
-            w-full
+            w-9/10
+            max-w-[500px]
+            bg-bg-glass
             flex
             flex-col
-            items-start
-            justify-start
+            items-center
+            justify-center
+            gap-1
+            border
+            border-border
+            rounded-xl
             p-2.5
-            text-gray-800
-            gap-2
-            font-semibold
+            mb-10
+            font-secondary
+            md:p-4
           "
         >
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-            required
+          {/* Email */}
+
+          <label
             className="
               w-full
+              flex
+              flex-col
+              items-start
+              justify-start
+              p-2.5
+              text-text
+              gap-1
+              font-semibold
+            "
+          >
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+              className="
+                w-full
+                py-2.5
+                px-4
+                rounded-xl
+                border
+                border-border
+                focus:outline-none
+                focus:ring-1
+                focus:ring-accent
+              "
+            />
+          </label>
+
+          {/* Password */}
+
+          <label
+            className="
+              w-full
+              flex
+              flex-col
+              items-start
+              justify-start
+              p-2.5
+              text-text
+              gap-1
+              font-semibold
+            "
+          >
+            Password:
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+              className="
+                w-full
+                py-2.5
+                px-4
+                rounded-xl
+                border
+                border-border
+                focus:outline-none
+                focus:ring-1
+                focus:ring-accent
+              "
+            />
+          </label>
+
+          {/* Login Button */}
+
+          <button
+            type="submit"
+            className="
+              text-center
+              text-xl
+              font-primary
+              font-semibold
+              text-bg
+              bg-text
+              flex
+              justify-center
+              items-center
+              px-5
+              py-1.5
+              my-4
+              rounded-xl
+              transition-all
+              duration-300
+              ease-in-out
+              hover:tracking-wide
+              hover:gap-2
+              hover:bg-linear-to-br
+              hover:from-accent-primary/20
+              hover:via-accent/20
+              hover:to-accent-pink/20
+              active:scale-95
+            "
+          >
+            Login
+            <IoIosArrowRoundForward className="ml-1 text-2xl" />
+          </button>
+
+          {/* Divider */}
+
+          <div
+            className="
+              w-full
+              flex
+              items-center
+              justify-center
+              gap-3
+              my-2
+            "
+          >
+            <div className="flex-1 h-[1px] bg-border" />
+            <span className="text-text-alt text-sm">Or</span>
+            <div className="flex-1 h-[1px] bg-border" />
+          </div>
+
+          {/* Google Login */}
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="
+              w-full
+              flex
+              items-center
+              justify-center
+              gap-3
               py-2.5
               px-4
-              rounded
               border
-              border-gray-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-600
+              border-border
+              rounded-xl
+              bg-bg-glass
+              text-text
+              font-medium
+              transition-all
+              duration-300
+              hover:bg-bg-alt
+              active:scale-95
+              cursor-pointer
             "
-          />
-        </label>
+          >
+            <FcGoogle className="text-xl" />
+            Continue with Google
+          </button>
 
-        <button
-          type="submit"
-          className="
-            w-full
-            py-2.5
-            font-semibold
-            text-lg
-            rounded
-            bg-blue-600
-            text-white
-            hover:bg-blue-800
-            transition-colors
-            duration-300
-            ease-in-out
-            m-2
-            sm:m-5
-          "
-        >
-          Login
-        </button>
+          {/* Links */}
 
-        <p className="text-gray-600">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-blue-600 font-semibold">
-            Sign up
+          <p className="text-text-alt mt-3">
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="text-accent font-semibold">
+              Sign up
+            </Link>
+          </p>
+
+          <Link
+            href="/forgot-password"
+            className="
+              text-accent
+              font-semibold
+              hover:underline
+            "
+          >
+            Forgot Password?
           </Link>
-        </p>
-
-        <Link
-          href="/forgot-password"
-          className="
-        text-blue-600 
-        font-semibold
-        hover:underline
-        "
-        >
-          Forgot Password?
-        </Link>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
