@@ -61,17 +61,19 @@ export const metadata = {
     images: ["/og.webp"],
     creator: "Ritesh Sarkar",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
+
   icons: {
     icon: "/favicon.ico",
   },
   other: {
     "google-site-verification": "h0l0uTNeF1BayotC41QD2O8u_YxbLgnlc40D6QdTX2o",
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {

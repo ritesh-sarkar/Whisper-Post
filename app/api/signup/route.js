@@ -20,13 +20,13 @@ export async function POST(req) {
     if (isExistUser) {
       return NextResponse.json(
         { error: "User already exist!" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (isExistUsername) {
       return NextResponse.json(
         { error: "username already taken!" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -51,7 +51,7 @@ export async function POST(req) {
       JWT_Secret,
       {
         expiresIn: "1h",
-      }
+      },
     );
 
     const mailOption = {
@@ -59,29 +59,101 @@ export async function POST(req) {
       to: user.email,
       subject: "WhisperPost | Verify Your Email",
       html: `
-  <div style="background-color: #ffffff; padding: 40px; font-family: Arial, sans-serif; color: #1e40af; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); max-width: 600px; margin: auto;">
-    <h2 style="text-align: center; color: #1e40af; margin-bottom: 20px;">WhisperPost Email Verification</h2>
+  <div style="
+    background: #0a0a0f;
+    padding: 40px 16px;
+    font-family: Inter, Poppins, Arial, sans-serif;
+    color: #f8fafc;
+  ">
     
-    <p style="font-size: 16px; color: #333333; margin-bottom: 24px;">
-      Hello ${user.name || "User"},<br/><br/>
-      Thank you for registering on <strong>WhisperPost</strong>! Please verify your email address to activate your account and start sharing your thoughts.
-    </p>
+    <div style="
+      max-width: 600px;
+      margin: auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    ">
 
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="${NEXT_AUTH_URL}/verify/${token}" style="display: inline-block; background-color: #1e40af; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold;">
-        Verify Email
+      <!-- Brand -->
+      <h1 style="
+        font-size: 26px;
+        font-weight: 600;
+        color: #f8fafc;
+        margin-bottom: 8px;
+      ">
+        WhisperPost
+      </h1>
+
+      <p style="
+        color: #9ca3af;
+        font-size: 14px;
+        margin-bottom: 28px;
+      ">
+        Anonymous. Secure. Yours.
+      </p>
+
+      <!-- Title -->
+      <h2 style="
+        font-size: 20px;
+        font-weight: 600;
+        color: #f8fafc;
+        margin-bottom: 16px;
+      ">
+        Verify your email
+      </h2>
+
+      <!-- Message -->
+      <p style="
+        font-size: 15px;
+        color: #9ca3af;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      ">
+        Hey ${user.name || "there"},<br/><br/>
+        You're just one step away from accessing your WhisperPost account.
+        Click below to verify your email and start receiving anonymous messages.
+      </p>
+
+      <!-- CTA Button -->
+      <a href="${NEXT_AUTH_URL}/verify/${token}" style="
+        display: inline-block;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #7c3aed, #ec4899);
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 10px;
+      ">
+        Verify Account →
       </a>
+
+      <!-- Divider -->
+      <div style="
+        margin: 32px 0;
+        height: 1px;
+        background: rgba(255,255,255,0.1);
+      "></div>
+
+      <!-- Footer -->
+      <p style="
+        font-size: 13px;
+        color: #9ca3af;
+        line-height: 1.5;
+      ">
+        If you didn’t create this account, you can safely ignore this email.
+      </p>
+
+      <p style="
+        margin-top: 20px;
+        font-size: 12px;
+        color: #9ca3af;
+      ">
+        © ${new Date().getFullYear()} WhisperPost. All rights reserved.
+      </p>
+
     </div>
-
-    <p style="font-size: 14px; color: #555555; text-align: center;">
-      If you did not create this account, you can safely ignore this email.
-    </p>
-
-    <hr style="margin: 32px 0; border: none; border-top: 1px solid #eeeeee;" />
-
-    <p style="font-size: 12px; color: #999999; text-align: center;">
-      &copy; ${new Date().getFullYear()} WhisperPost. All rights reserved.
-    </p>
   </div>
   `,
     };
@@ -102,7 +174,7 @@ export async function POST(req) {
         message:
           "Signup successful! Please check your email to verify your account.",
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
