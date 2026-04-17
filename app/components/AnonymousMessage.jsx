@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { useParams } from "next/navigation";
@@ -7,9 +8,12 @@ import { MessageValidationZod } from "@/lib/MessageValidationZod";
 import axios from "axios";
 import LoaderComponent from "@/app/components/LoaderComponent";
 
+import { IoIosArrowRoundForward } from "react-icons/io";
+
 const AnonymousMessage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { username } = useParams();
 
   const handleMessageSubmit = async (e) => {
@@ -25,7 +29,10 @@ const AnonymousMessage = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("/api/messages/" + username, { message });
+      const res = await axios.post(`/api/messages/${username}`, {
+        message,
+      });
+
       toast.success(res.data.message);
       setMessage("");
     } catch (error) {
@@ -35,119 +42,147 @@ const AnonymousMessage = () => {
     }
   };
 
-  if (loading) return <LoaderComponent state={"Sending message"} />;
+  if (loading)
+    return (
+      <LoaderComponent
+        state={"Sending message"}
+      />
+    );
 
   return (
     <div
       className="
         w-full
         h-full
+        bg-bg
         mx-auto
+        font-secondary
         flex
         flex-col
         items-center
         justify-center
-        gap-10
-        pt-6
-        bg-gray-50
-        sm:pt-5
+        p-2.5
+        relative
+        overflow-x-hidden
       "
     >
-      {/* Header */}
+      {/* Background blobs */}
+
       <div
         className="
-          w-4/5
-          sm:w-[500px]
+          absolute
+          top-[20%]
+          -left-64
+          w-96
+          h-96
+          bg-accent-pink/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+        "
+      />
+
+      <div
+        className="
+          absolute
+          bottom-[20%]
+          -right-64
+          w-96
+          h-96
+          bg-accent/30
+          rounded-full
+          blur-3xl
+          z-10
+          pointer-events-none
+          md:w-[400px]
+          md:h-[400px]
+        "
+      />
+
+      {/* Header */}
+
+      <div
+        className="
+          w-full
           flex
           flex-col
           items-center
           justify-center
           gap-2
           text-center
+          my-5
         "
       >
         <span
           className="
             w-20
             h-20
-            sm:w-24
-            sm:h-24
             rounded-full
             flex
             items-center
             justify-center
-            bg-blue-500
-            m-4
+            bg-accent
           "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="
-              w-10
-              h-10
-              sm:size-15
-              text-white
-            "
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-            />
-          </svg>
+          {/* //TODO:profile pic */}
         </span>
 
         <h1
           className="
-            font-poppins
+            font-primary
             text-2xl
-            font-bold
-            text-gray-800
+            font-semibold
+            text-text
           "
         >
           Send an anonymous message
         </h1>
 
-        <h3
+        <p
           className="
-            font-semibold
-            text-gray-600
+            text-text-alt
             text-lg
           "
         >
           to @{username}
-        </h3>
+        </p>
       </div>
+
+      {/* Card */}
 
       <div
         className="
-          w-4/5
-          sm:w-[500px]
-          bg-white
-          shadow-md
-          shadow-gray-300
-          rounded-md
+          w-9/10
+          max-w-[500px]
+          bg-bg-glass
+          border
+          border-border
+          rounded-xl
           p-4
+          md:p-5
+          flex
+          flex-col
+          items-center
+          justify-center
+          gap-4
           mb-10
         "
       >
         <form
           onSubmit={handleMessageSubmit}
           className="
+            w-full
             flex
             flex-col
-            gap-4
-            w-full
-            h-full
+            gap-3
           "
         >
           <label
             className="
-              text-gray-800
+              text-text
               font-semibold
             "
           >
@@ -166,22 +201,21 @@ const AnonymousMessage = () => {
               w-full
               px-4
               py-3
-              rounded-md
+              rounded-xl
               border
-              border-gray-300
+              border-border
+              bg-transparent
+              text-text
               focus:outline-none
-              focus:ring-2
-              focus:ring-blue-500
-              text-gray-800
-              text-md
+              focus:ring-1
+              focus:ring-accent
             "
           />
 
           <span
             className="
-              text-gray-600
+              text-text-alt
               text-sm
-              font-semibold
               self-end
             "
           >
@@ -191,51 +225,44 @@ const AnonymousMessage = () => {
           <button
             type="submit"
             className="
-              w-full
-              bg-blue-500
-              font-semibold
-              text-white
+              text-center
               text-lg
-              rounded-md
+              font-primary
+              font-semibold
+              text-bg
+              bg-text
               flex
               items-center
               justify-center
-              gap-2
-              p-3
-              mt-2
-              hover:bg-blue-600
-              transition-colors
+              px-5
+              py-2.5
+              rounded-xl
+              transition-all
               duration-300
+              hover:tracking-wide
+              hover:gap-2
+              hover:bg-linear-to-br
+              hover:from-accent-primary/20
+              hover:via-accent/20
+              hover:to-accent-pink/20
+              active:scale-95
+              cursor-pointer
             "
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-              />
-            </svg>
-            Send anonymous message
+            Send Message
+            <IoIosArrowRoundForward className="ml-1 text-2xl" />
           </button>
         </form>
 
         <Link
           href="/signup"
           className="
-            block
-            text-center
-            text-lg
-            font-poppins
+            text-accent
             font-semibold
-            text-blue-600
-            mt-6
+            mt-2
+            transition-all
+            duration-300
+            hover:underline
           "
         >
           Create your own anonymous link

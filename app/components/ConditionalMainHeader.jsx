@@ -180,19 +180,21 @@ const ConditionalMainHeader = () => {
     return (
       <header
         className="
-          sticky
+          fixed
           top-0 
           z-10 
           w-full 
           bg-transparent
+          backdrop-blur-2xl
           px-2 
           py-1 
-          font-primary 
-          shadow-border
+          font-primary
           shadow-md
           flex 
           items-center 
           justify-between
+          rounded-br-xl
+          rounded-bl-xl
         "
       >
         <span
@@ -223,19 +225,21 @@ const ConditionalMainHeader = () => {
     return (
       <header
         className="
-          sticky
+          fixed
           top-0 
           z-10 
           w-full 
           bg-transparent
+          backdrop-blur-2xl
           px-2 
-          py-4 
-          font-primary 
-          shadow-border
+          py-1 
+          font-primary
           shadow-md
           flex 
           items-center 
           justify-between
+          rounded-br-xl
+          rounded-bl-xl
         "
       >
         // TODO : add profile picture & functionality

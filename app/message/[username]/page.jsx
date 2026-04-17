@@ -10,10 +10,11 @@ const page = () => {
   return (
     <div
       className="
-    w-full
-    h-full
-    bg-gray-50
-    "
+        h-screen 
+        felx 
+        justify-center 
+        items-center
+        "
     >
       <AnonymousMessage />
     </div>
