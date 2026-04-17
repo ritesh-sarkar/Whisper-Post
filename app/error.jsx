@@ -9,7 +9,7 @@ export default function Error({ error, reset }) {
   return (
     <div
       className="
-     w-9/10
+    w-9/10
     h-screen
     mx-auto
     flex

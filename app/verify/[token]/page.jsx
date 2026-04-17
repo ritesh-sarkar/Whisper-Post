@@ -5,13 +5,11 @@ const VarificationPage = () => {
   return (
     <div
       className="
-    w-full
-    h-screen
-    bg-gray-50
-    flex
-    items-center
-    justify-center
-    "
+        h-screen 
+        felx 
+        justify-center 
+        items-center
+        "
     >
       <VerifyAccount />
     </div>
