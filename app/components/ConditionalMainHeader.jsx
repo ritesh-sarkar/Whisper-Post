@@ -242,7 +242,7 @@ const ConditionalMainHeader = () => {
           rounded-bl-xl
         "
       >
-        // TODO : add profile picture & functionality
+        {/* // TODO : add profile picture & functionality */}
         <span
           className="
         w-1/2 

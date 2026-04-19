@@ -85,7 +85,6 @@ const SignUp = () => {
       className="
         w-full
         h-full
-        bg-bg
         mt-8
         mx-auto
         font-secondary
@@ -107,10 +106,10 @@ const SignUp = () => {
           -left-64
           w-96
           h-96
-          bg-accent-pink/30
+          bg-accent-pink/20
           rounded-full
           blur-3xl
-          z-10
+          -z-10
           pointer-events-none
           md:w-[400px]
           md:h-[400px]
@@ -124,10 +123,10 @@ const SignUp = () => {
           -right-64
           w-96
           h-96
-          bg-accent/30
+          bg-accent/20
           rounded-full
           blur-3xl
-          z-10
+          -z-10
           pointer-events-none
           md:w-[400px]
           md:h-[400px]

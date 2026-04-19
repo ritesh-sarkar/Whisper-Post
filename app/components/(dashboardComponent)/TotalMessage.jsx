@@ -6,7 +6,7 @@ const TotalMessage = ({ messages, loadMessages }) => {
       className="
         w-40
         h-40
-        bg-white
+        bg-bg-glass
         rounded-lg
         flex
         flex-col

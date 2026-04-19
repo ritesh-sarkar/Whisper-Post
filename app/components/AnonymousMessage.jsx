@@ -42,19 +42,13 @@ const AnonymousMessage = () => {
     }
   };
 
-  if (loading)
-    return (
-      <LoaderComponent
-        state={"Sending message"}
-      />
-    );
+  if (loading) return <LoaderComponent state={"Sending message"} />;
 
   return (
     <div
       className="
         w-full
         h-full
-        bg-bg
         mx-auto
         font-secondary
         flex
@@ -70,37 +64,21 @@ const AnonymousMessage = () => {
 
       <div
         className="
-          absolute
-          top-[20%]
-          -left-64
+          absolute 
+          top-0 
+          left-1/2 
+          -translate-x-1/2 
           w-96
           h-96
-          bg-accent-pink/30
-          rounded-full
+          bg-accent/20
+          rounded-full 
           blur-3xl
-          z-10
+          -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
-        "
-      />
-
-      <div
-        className="
-          absolute
-          bottom-[20%]
-          -right-64
-          w-96
-          h-96
-          bg-accent/30
-          rounded-full
-          blur-3xl
-          z-10
-          pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
-        "
-      />
+          md:w-[600px]
+          md:h-[600px]
+          "
+      ></div>
 
       {/* Header */}
 

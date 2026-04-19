@@ -98,7 +98,6 @@ const ForgotComponent = () => {
       className="
         w-full
         min-h-screen
-        bg-bg
         mx-auto
         font-secondary
         flex
@@ -119,10 +118,10 @@ const ForgotComponent = () => {
           -left-64
           w-96
           h-96
-          bg-accent-pink/30
+          bg-accent-pink/20
           rounded-full
           blur-3xl
-          z-10
+          -z-10
           pointer-events-none
           md:w-[400px]
           md:h-[400px]
@@ -136,7 +135,7 @@ const ForgotComponent = () => {
           -right-64
           w-96
           h-96
-          bg-accent/30
+          bg-accent/20
           rounded-full
           blur-3xl
           z-10

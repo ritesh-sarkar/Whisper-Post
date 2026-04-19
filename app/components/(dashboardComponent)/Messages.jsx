@@ -187,7 +187,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               `,
               msg.isNew && "newMessage",
               isBeingDeleted &&
-                "opacity-0 blur-2xl scale-95 transition duration-1000 ease-in-out"
+                "opacity-0 blur-2xl scale-95"
             )}
           >
             <div

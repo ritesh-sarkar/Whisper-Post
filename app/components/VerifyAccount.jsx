@@ -42,7 +42,6 @@ const VerifyAccount = () => {
       className="
         w-full
         h-full
-        bg-bg
         mx-auto
         font-secondary
         flex
@@ -63,7 +62,7 @@ const VerifyAccount = () => {
           -left-64
           w-96
           h-96
-          bg-accent-pink/30
+          bg-accent-pink/20
           rounded-full
           blur-3xl
           z-10
@@ -80,7 +79,7 @@ const VerifyAccount = () => {
           -right-64
           w-96
           h-96
-          bg-accent/30
+          bg-accent/20
           rounded-full
           blur-3xl
           z-10

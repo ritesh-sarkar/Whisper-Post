@@ -4,21 +4,21 @@ const TodayMessage = ({ TodayMessage }) => {
       className="
         w-40
         h-40
-        bg-white
+        bg-bg-alt
         rounded-lg
         flex
         flex-col
         items-start
-        shadow-lg
-        shadow-gray-200
         py-5
         px-3
         gap-2
-        sm:gap-3
-        sm:px-5
-        sm:py-6
-        sm:w-64
-        sm:h-44
+        border-2
+        border-border
+        md:gap-3
+        md:px-5
+        md:py-6
+        md:w-64
+        md:h-44
       "
     >
       <svg
@@ -27,7 +27,7 @@ const TodayMessage = ({ TodayMessage }) => {
         viewBox="0 0 24 24"
         strokeWidth={2}
         stroke="currentColor"
-        className="size-7 text-green-500 sm:size-8"
+        className="size-7 text-accent md:size-8"
       >
         <path
           strokeLinecap="round"
@@ -36,11 +36,11 @@ const TodayMessage = ({ TodayMessage }) => {
         />
       </svg>
 
-      <span className="text-3xl font-bold text-gray-800 pt-2">
+      <span className="text-3xl font-bold text-text pt-2">
         {TodayMessage.length}
       </span>
 
-      <p className="text-gray-500 sm:text-lg sm:font-semibold">
+      <p className="font-primary text-text-alt md:text-lg md:font-semibold">
         Today
       </p>
     </div>
