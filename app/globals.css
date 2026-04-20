@@ -74,25 +74,36 @@
   box-shadow: 0 0 10px rgba(236, 72, 153, 0.25);
 }
 
+
 /* 🎨 MOOD COLORS */
 .mood-love {
-  background: linear-gradient(135deg, #ec4899, #f472b6);
+  background: #ec489a50;
+  border: 1px solid #f472b6;
+  color: #f472b6;
 }
 
 .mood-confession {
-  background: linear-gradient(135deg, #f97316, #fb923c);
+  background: #f9741650;
+  border: 1px solid #f97416;
+  color: #f97416;
 }
 
 .mood-funny {
-  background: linear-gradient(135deg, #eab308, #fde047);
+  background:#eab20850;
+  border: 1px solid #fde047;
+  color: #fde047;
 }
 
 .mood-secret {
-  background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+  background: #7f1d1d50;
+  border: 1px solid #ff5656;
+  color: #ff5656;
 }
 
 .mood-advice {
-  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  background: #2563eb50;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
 }
 
 /* 🖱️ SCROLLBAR */

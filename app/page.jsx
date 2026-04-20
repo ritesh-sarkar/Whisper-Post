@@ -3,7 +3,6 @@ import CreateProfileButton from "@/app/components/CreateProfileButton";
 import { IoShieldOutline } from "react-icons/io5";
 import { IoSparklesSharp } from "react-icons/io5";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
-import { FaShareAlt } from "react-icons/fa";
 
 const page = () => {
   const features = [
