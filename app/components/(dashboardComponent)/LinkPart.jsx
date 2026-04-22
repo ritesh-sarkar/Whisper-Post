@@ -30,7 +30,7 @@ const LinkPart = () => {
         flex
         flex-col
         items-start
-        backdrop-blur-md
+        backdrop-blur-lg
         py-5
         px-4
         gap-4
@@ -60,8 +60,7 @@ const LinkPart = () => {
         className="
           w-full
           flex
-          flex-col
-          sm:flex-row
+          flex-row
           items-center
           gap-3
         "
@@ -102,11 +101,13 @@ const LinkPart = () => {
             flex
             items-center
             justify-center
+            gap-1
             px-5
             py-2.5
             rounded-xl
             transition-all
             duration-300
+            ease-in-out
             hover:tracking-wide
             hover:gap-2
             hover:bg-linear-to-br

@@ -50,7 +50,7 @@ const Dashboard = () => {
     <div
       className="
         w-full
-        min-h-screen
+        h-screen
         bg-bg
         flex
         flex-col
@@ -61,36 +61,7 @@ const Dashboard = () => {
         p-2.5
       "
     >
-      {/* Background blobs */}
-
-      <div
-        className="
-          absolute
-          top-[20%]
-          -left-64
-          w-96
-          h-96
-          bg-accent-pink/30
-          rounded-full
-          blur-3xl
-          z-0
-        "
-      />
-
-      <div
-        className="
-          absolute
-          bottom-[20%]
-          -right-64
-          w-96
-          h-96
-          bg-accent/30
-          rounded-full
-          blur-3xl
-          z-0
-        "
-      />
-
+      
       {/* Stats Section */}
 
       <aside
@@ -102,7 +73,6 @@ const Dashboard = () => {
           grid-cols-2
           md:grid-cols-4
           gap-4
-          z-10
         "
       >
         {/* <TotalMessage
@@ -125,13 +95,13 @@ const Dashboard = () => {
 
       {/* Link Section */}
 
-      <div className="z-10 mt-5 w-full max-w-[900px]">
+      {/* <div className="mt-5 w-full max-w-[900px]">
         <LinkPart />
-      </div>
+      </div> */}
 
       {/* Messages Card */}
 
-      <div
+      {/* <div
         className="
           w-9/10
           max-w-[900px]
@@ -144,7 +114,6 @@ const Dashboard = () => {
           px-3
           py-4
           pb-6
-          z-10
           backdrop-blur-md
         "
       >
@@ -182,7 +151,7 @@ const Dashboard = () => {
             loadMessages={loadMessages}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
