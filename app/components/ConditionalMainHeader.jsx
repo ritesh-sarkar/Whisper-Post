@@ -25,7 +25,7 @@ const ConditionalMainHeader = () => {
   const [username, setUsername] = useState("");
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
-  const [isDeleteOpen, setisDeleteOpen] = useState(true);
+  const [isDeleteOpen, setisDeleteOpen] = useState(false);
 
   const { data: session } = useSession();
 

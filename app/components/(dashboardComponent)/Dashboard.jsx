@@ -6,6 +6,7 @@ import Unread from "@/app/components/(dashboardComponent)/Unread";
 import WeekMessage from "@/app/components/(dashboardComponent)/WeekMessage";
 import LinkPart from "@/app/components/(dashboardComponent)/LinkPart";
 import Messages from "@/app/components/(dashboardComponent)/Messages";
+import Graph from "@/app/components/(dashboardComponent)/Graph";
 
 import { fetchMessagesByUser } from "@/lib/FetchMessageByUser";
 import { useSession } from "next-auth/react";
@@ -36,21 +37,16 @@ const Dashboard = () => {
     loadMessages();
   }, [userID]);
 
-  const todayMessages = messages.filter((msg) =>
-    isToday(msg.createdAt)
-  );
+  const todayMessages = messages.filter((msg) => isToday(msg.createdAt));
 
-  const weekMessages = messages.filter((msg) =>
-    isThisWeek(msg.createdAt)
-  );
+  const weekMessages = messages.filter((msg) => isThisWeek(msg.createdAt));
 
-  const unreadMessages = messages.filter((msg) => msg.isNew);
+
 
   return (
     <div
       className="
         w-full
-        h-screen
         bg-bg
         flex
         flex-col
@@ -61,13 +57,13 @@ const Dashboard = () => {
         p-2.5
       "
     >
-      
+      <Graph />
       {/* Stats Section */}
 
       <aside
         className="
           w-full
-          max-w-[900px]
+          max-w-225
           mt-6
           grid
           grid-cols-2
@@ -75,36 +71,25 @@ const Dashboard = () => {
           gap-4
         "
       >
-        {/* <TotalMessage
-          messages={messages}
-          loadMessages={loadMessages}
-        />
+        <TotalMessage messages={messages} loadMessages={loadMessages} />
 
-        <TodayMessage
-          TodayMessage={todayMessages}
-        />
+        <TodayMessage TodayMessage={todayMessages} />
 
-        <Unread
-          Unread={unreadMessages}
-        />
-
-        <WeekMessage
-          WeekMessage={weekMessages}
-        /> */}
+        <WeekMessage WeekMessage={weekMessages} />
       </aside>
 
       {/* Link Section */}
 
-      {/* <div className="mt-5 w-full max-w-[900px]">
+      <div className="mt-5 w-full max-w-225">
         <LinkPart />
-      </div> */}
+      </div>
 
       {/* Messages Card */}
 
       {/* <div
         className="
           w-9/10
-          max-w-[900px]
+          max-w-225
           bg-bg-glass
           border
           border-border
@@ -132,7 +117,7 @@ const Dashboard = () => {
         <div
           className="
             w-full
-            h-[1px]
+            h-px
             bg-border
             my-2
           "
@@ -140,7 +125,7 @@ const Dashboard = () => {
 
         <div
           className="
-            sm:max-h-[600px]
+            sm:max-h-150
             sm:overflow-y-auto
             pr-1
           "

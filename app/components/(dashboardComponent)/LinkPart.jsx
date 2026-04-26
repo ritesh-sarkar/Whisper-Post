@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 
-import { IoIosLink } from "react-icons/io";
+// icons
 import { IoCopyOutline } from "react-icons/io5";
 
 const LinkPart = () => {
@@ -23,10 +23,10 @@ const LinkPart = () => {
     <div
       className="
         w-full
-        bg-bg-glass
-        border
+        bg-bg-alt
+        border-2
         border-border
-        rounded-xl
+        rounded-2xl
         flex
         flex-col
         items-start
@@ -34,42 +34,103 @@ const LinkPart = () => {
         py-5
         px-4
         gap-4
+        mt-10
+        md:mt-10
+        transition-all
+        duration-300
+        ease-in-out
+        hover:bg-bg-glass
       "
     >
-      {/* Title */}
+      {/* Profile image part */}
 
-      <h1
+      <div
         className="
-          w-full
-          flex
-          items-center
-          gap-3
-          text-text
-          text-lg
-          font-primary
-          font-semibold
-        "
+            flex
+            flex-row
+            items-center
+            gap-3
+            md:gap-4
+            mb-5
+          "
       >
-        <IoIosLink className="text-accent text-xl" />
-        Your anonymous link
-      </h1>
+        <img
+          src="profile.png"
+          alt="profile image"
+          className="
+              w-16
+              h-16
+              object-cover
+              rounded-xl
+            "
+        />
+        <span>
+          <h1
+            className="
+                  font-primary
+                  text-xl
+                  md:text-2xl
+                  font-semibold
+                "
+          >
+            {session?.user?.name}
+          </h1>
 
-      {/* Input + Button */}
+          <h2
+            className="
+                  font-secondary
+                  text-text-alt
+                  text-base
+                  md:text-lg
+                "
+          >
+            @{session?.user?.username}
+          </h2>
+        </span>
+      </div>
+
+      {/* link + Button */}
 
       <div
         className="
           w-full
           flex
-          flex-row
-          items-center
+          flex-col
+          items-start
+          justify-center
           gap-3
         "
       >
-        <input
-          type="text"
-          readOnly
-          value={anonyLink}
+        <h1
           className="
+            w-full
+            text-left
+            font-primary
+            text-base
+            uppercase
+            text-text-alt
+          "
+        >
+          Your public link.
+        </h1>
+
+        <span
+          className="
+            w-full
+            flex
+            flex-row
+            gap-2
+            md:gap-6
+            items-center
+            justify-between
+            mb-3
+          "
+        >
+          <input
+            type="text"
+            readOnly
+            value={anonyLink}
+            className="
             w-full
             py-2.5
             px-4
@@ -80,18 +141,18 @@ const LinkPart = () => {
             text-text
             focus:outline-none
           "
-        />
+          />
 
-        <button
-          onClick={() => {
-            if (anonyLink) {
-              navigator.clipboard.writeText(anonyLink);
-              toast.success("Copied to clipboard");
-            } else {
-              toast.error("Link not ready yet. Try again!");
-            }
-          }}
-          className="
+          <button
+            onClick={() => {
+              if (anonyLink) {
+                navigator.clipboard.writeText(anonyLink);
+                toast.success("Copied to clipboard");
+              } else {
+                toast.error("Link not ready yet. Try again!");
+              }
+            }}
+            className="
             text-center
             text-base
             font-primary
@@ -115,26 +176,26 @@ const LinkPart = () => {
             hover:via-accent/20
             hover:to-accent-pink/20
             active:scale-95
+            cursor-pointer
           "
-        >
-          <IoCopyOutline className="text-lg" />
-          Copy
-        </button>
-      </div>
+          >
+            <IoCopyOutline className="text-lg" />
+            Copy
+          </button>
+        </span>
 
-      {/* Description */}
-
-      <p
-        className="
+        <p
+          className="
           w-full
           text-sm
           text-text-alt
           text-center
-          sm:text-base
+          md:text-base
         "
-      >
-        Share this link anywhere to receive anonymous messages from anyone!
-      </p>
+        >
+          Share this link anywhere to receive anonymous messages from anyone!
+        </p>
+      </div>
     </div>
   );
 };
