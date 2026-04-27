@@ -57,7 +57,14 @@ const Dashboard = () => {
         p-2.5
       "
     >
-      <Graph />
+
+      {/* Link Section */}
+
+      <div className="mt-5 w-full max-w-225">
+        <LinkPart />
+      </div>
+
+
       {/* Stats Section */}
 
       <aside
@@ -66,7 +73,7 @@ const Dashboard = () => {
           max-w-225
           mt-6
           grid
-          grid-cols-2
+          grid-cols-3
           md:grid-cols-4
           gap-4
         "
@@ -78,12 +85,9 @@ const Dashboard = () => {
         <WeekMessage WeekMessage={weekMessages} />
       </aside>
 
-      {/* Link Section */}
+      {/* Graph section */}
 
-      <div className="mt-5 w-full max-w-225">
-        <LinkPart />
-      </div>
-
+      <Graph />
       {/* Messages Card */}
 
       {/* <div

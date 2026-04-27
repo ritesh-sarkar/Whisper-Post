@@ -14,9 +14,9 @@ const data = [
 
 export default function CardinalAreaChart() {
   return (
-    <div className="w-full h-75 mt-10 bg-transparent max-w-150">
+    <div className="w-full h-75 mt-10 bg-bg">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
+        <AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
           <defs>
             <linearGradient id="customGradient" x1="0" y1="0" x2="0" y2="1">
               <stop stopColor="#7c3aed" offset="5%" stopOpacity="1" />
@@ -41,6 +41,7 @@ export default function CardinalAreaChart() {
           ></Area>
 
           <Tooltip
+            
             contentStyle={{
               backgroundColor: "#11121a",
               backdropFilter: "blur(10px)",

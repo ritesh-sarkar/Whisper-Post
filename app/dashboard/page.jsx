@@ -11,7 +11,6 @@ const page = () => {
       className="
         w-full
         h-full
-        bg-gray-50
         flex
         flex-col
         items-center
