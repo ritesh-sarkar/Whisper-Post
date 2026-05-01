@@ -2,7 +2,6 @@
 
 import TotalMessage from "@/app/components/(dashboardComponent)/TotalMessage";
 import TodayMessage from "@/app/components/(dashboardComponent)/TodayMessage";
-import Unread from "@/app/components/(dashboardComponent)/Unread";
 import WeekMessage from "@/app/components/(dashboardComponent)/WeekMessage";
 import LinkPart from "@/app/components/(dashboardComponent)/LinkPart";
 import Messages from "@/app/components/(dashboardComponent)/Messages";
@@ -41,12 +40,11 @@ const Dashboard = () => {
 
   const weekMessages = messages.filter((msg) => isThisWeek(msg.createdAt));
 
-
-
   return (
     <div
       className="
         w-full
+        h-full
         bg-bg
         flex
         flex-col
@@ -54,56 +52,116 @@ const Dashboard = () => {
         font-secondary
         relative
         overflow-x-hidden
-        p-2.5
+        p-2
+        mt-20
+        md:p-5
+        lg:max-w-85/100
+        lg:mt-30
       "
     >
+      {/* Upper part container */}
 
-      {/* Link Section */}
+      <div
+        className="
+          w-full
+          h-full
+          max-w-9/10
+          flex
+          flex-col
+          items-start
+          justify-center
+          gap-12
+          lg:flex-row
+          lg:items-center
+          lg:justify-center  
+        "
+      >
+        {/* Link part */}
+        <div
+          className="
+            w-full
+            h-full
+            lg:w-1/2
+          "
+        >
+          <LinkPart />
+        </div>
 
-      <div className="mt-5 w-full max-w-225">
-        <LinkPart />
+        {/* Card and graph part */}
+        <div
+          className="
+            w-full
+            flex
+            flex-col
+            justify-center
+            items-start
+            gap-10
+          "
+        >
+          {/* Cards */}
+          <div
+            className="
+              w-full
+              flex
+              flex-col
+              gap-8
+              sm:flex-row
+              sm:items-start
+              sm:justify-between
+            "
+          >
+            <TotalMessage messages={messages} />
+            <TodayMessage TodayMessage={todayMessages} />
+            <WeekMessage WeekMessage={weekMessages} />
+          </div>
+
+          {/* Graph */}
+          <div
+            className="
+              w-full
+              bg-bg-alt/50
+              border
+              border-border
+              rounded-3xl
+              flex
+              flex-col
+              items-start
+              justify-between
+              p-2
+              text-text-alt
+              gap-2
+            "
+          >
+            <h1
+              className="
+                text-lg
+                font-primary
+                p-2
+              "
+            >
+              Activity Overview
+            </h1>
+            <Graph />
+          </div>
+        </div>
       </div>
 
 
-      {/* Stats Section */}
 
-      <aside
-        className="
-          w-full
-          max-w-225
-          mt-6
-          grid
-          grid-cols-3
-          md:grid-cols-4
-          gap-4
-        "
-      >
-        <TotalMessage messages={messages} loadMessages={loadMessages} />
-
-        <TodayMessage TodayMessage={todayMessages} />
-
-        <WeekMessage WeekMessage={weekMessages} />
-      </aside>
-
-      {/* Graph section */}
-
-      <Graph />
       {/* Messages Card */}
 
-      {/* <div
+      <div
         className="
           w-9/10
-          max-w-225
-          bg-bg-glass
+          bg-bg
           border
           border-border
-          rounded-xl
-          mt-6
-          mb-10
+          rounded-3xl
+          my-16
           px-3
           py-4
           pb-6
-          backdrop-blur-md
+          backdrop-blur-xl
         "
       >
         <h1
@@ -113,6 +171,7 @@ const Dashboard = () => {
             font-semibold
             text-text
             m-2
+            tracking-wider
           "
         >
           Messages
@@ -121,17 +180,22 @@ const Dashboard = () => {
         <div
           className="
             w-full
-            h-px
-            bg-border
-            my-2
+            h-0.5
+            bg-linear-to-r
+            from-accent
+            via-accent-alt
+            to-accent-pink
+            my-5
+            rounded-full
           "
         />
 
         <div
           className="
-            sm:max-h-150
-            sm:overflow-y-auto
-            pr-1
+            bg-transparent
+            md:max-h-150
+            md:overflow-y-auto
+            px-1
           "
         >
           <Messages
@@ -140,7 +204,7 @@ const Dashboard = () => {
             loadMessages={loadMessages}
           />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

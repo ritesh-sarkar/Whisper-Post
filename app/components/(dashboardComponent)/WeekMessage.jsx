@@ -6,22 +6,26 @@ const WeekMessage = ({ WeekMessage }) => {
   return (
     <div
       className="
-        w-auto
-        bg-bg-glass
-        rounded-2xl
+        w-full
+        bg-bg-alt/50
+        rounded-3xl
         flex
         flex-col
         items-start
-        py-5
-        px-3
+        justify-between
+        p-5
         text-text
         gap-2
+        border
+        border-border
+        transition-all
+        duration-300
+        ease-in-out
+        hover:bg-bg-alt
         md:gap-3
         md:px-5
-        md:py-6
-        mt-10
-        border-2
-        border-border
+        md:py-6 
+        md:h-44
       "
     >
       <span
@@ -52,10 +56,10 @@ const WeekMessage = ({ WeekMessage }) => {
       
             <span
               className="
-                text-3xl 
+                text-4xl 
                 font-bold
                 font-primary
-                pt-2
+                pt-5
                 "
             >
               {WeekMessage?.length}

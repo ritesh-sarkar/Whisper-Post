@@ -105,8 +105,8 @@ const AnonymousMessage = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[500px]
-          md:h-[500px]
+          md:w-125
+          md:h-125
           "
       ></div>
 
@@ -172,7 +172,7 @@ const AnonymousMessage = () => {
       <div
         className="
           w-9/10
-          max-w-[500px]
+          max-w-125
           bg-bg-alt
           border-5
           border-border
@@ -275,6 +275,7 @@ const AnonymousMessage = () => {
             >
               {moodOption.map((mood, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => {
                     setMessageMood(mood.name);

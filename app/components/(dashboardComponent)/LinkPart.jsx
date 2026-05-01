@@ -23,10 +23,11 @@ const LinkPart = () => {
     <div
       className="
         w-full
-        bg-bg-alt
-        border-2
+        h-full
+        bg-bg-alt/50
+        border
         border-border
-        rounded-2xl
+        rounded-3xl
         flex
         flex-col
         items-start
@@ -34,12 +35,11 @@ const LinkPart = () => {
         py-5
         px-4
         gap-4
-        mt-10
-        md:mt-10
         transition-all
         duration-300
         ease-in-out
-        hover:bg-bg-glass
+        hover:bg-bg-alt
+        lg:h-146
       "
     >
       {/* Profile image part */}

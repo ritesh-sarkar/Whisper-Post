@@ -14,7 +14,6 @@ const page = () => {
         flex
         flex-col
         items-center
-        sm:flex-row
       "
     >
       <Dashboard />

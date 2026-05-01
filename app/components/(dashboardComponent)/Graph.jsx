@@ -14,7 +14,15 @@ const data = [
 
 export default function CardinalAreaChart() {
   return (
-    <div className="w-full h-75 mt-10 bg-bg">
+    <div 
+      className="
+        w-full 
+        max-w-225 
+        h-48
+        md:h-75
+        bg-transparent
+        "
+    >
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
           <defs>
@@ -31,7 +39,7 @@ export default function CardinalAreaChart() {
             stroke="#7c3aed"
             strokeWidth="2"
             fill="url(#customGradient)"
-            fillOpacity={0.2}
+            fillOpacity={0.35}
             activeDot={{
               r: 6,
               fill: "#7c3aed",
@@ -41,7 +49,7 @@ export default function CardinalAreaChart() {
           ></Area>
 
           <Tooltip
-            
+            dataKey="day"
             contentStyle={{
               backgroundColor: "#11121a",
               backdropFilter: "blur(10px)",
