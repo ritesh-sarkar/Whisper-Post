@@ -66,8 +66,8 @@ const page = () => {
             blur-3xl 
             -z-10 
             pointer-events-none
-            md:w-[400px]
-            md:h-[400px]
+            md:w-100
+            md:h-100
             "
       ></div>
       <div
@@ -82,8 +82,8 @@ const page = () => {
           blur-3xl 
           -z-10 
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
           "
       ></div>
 
@@ -177,7 +177,7 @@ const page = () => {
                   justify-center
                   gap-3.5
                   text-start
-                  border-1
+                  border
                   border-border
                   transition-all
                   duration-300
