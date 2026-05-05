@@ -1,7 +1,12 @@
 import CreateProfileButton from "@/app/components/CreateProfileButton";
 
-import { IoShieldOutline } from "react-icons/io5";
-import { IoSparklesSharp } from "react-icons/io5";
+// custom libs and components
+import AnimationWrapper from "./components/AnimatioinWrapper";
+import ParticleBackground from "./components/Particles";
+
+// icons
+import { IoShieldOutline, IoSparklesSharp } from "react-icons/io5";
+import { FaUserCheck } from "react-icons/fa";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 
 const page = () => {
@@ -24,12 +29,12 @@ const page = () => {
       icon: TbBrandGoogleAnalytics,
       iconGenre: "insights",
     },
-    // {
-    //   title: "Shareable Identity",
-    //   text: "Your personal link is all you need. Share it anywhere and start receiving messages instantly.",
-    //   icon: FaShareAlt,
-    //   iconGenre: "share",
-    // },
+    {
+      title: "Authentic Messages",
+      text: "No bots or system-generated texts - only real messages from real people.",
+      icon: FaUserCheck,
+      iconGenre: "authentic",
+    },
   ];
 
   return (
@@ -44,9 +49,9 @@ const page = () => {
         w-full
         pt-30
         bg-linear-to-br
-        from-bg
+        from-bg/80
         via-accent/10
-        to-bg
+        to-bg/80 
         md:pt-50
         relative
         overflow-hidden
@@ -87,6 +92,18 @@ const page = () => {
           "
       ></div>
 
+      {/* Background particles */}
+      <div
+        className="
+          fixed
+          inset-0
+          -z-20
+          pointer-events-none
+        "
+      >
+        <ParticleBackground />
+      </div>
+
       <div
         className="
           w-full
@@ -96,9 +113,38 @@ const page = () => {
           items-center
           justify-center
           text-center
-          mb-12
         "
       >
+        <h1
+          className="
+            flex
+            gap-1.5
+            items-center
+            justify-center
+            bg-accent-pink/10
+            py-1
+            px-2
+            rounded-full
+            text-base
+            text-accent-pink
+            font-primary
+            border
+            border-accent-pink
+            shadow-[0_0_15px]
+            shadow-accent-pink/40
+            animate-bounce
+            mb-10
+
+            md:text-lg
+            md:mb-20
+            mb:py-2
+            mb:px-3
+          "
+        >
+          <IoSparklesSharp />
+          Where Secrets Speak Freely.
+        </h1>
+
         <h1
           className="
             text-[40px]
@@ -137,7 +183,9 @@ const page = () => {
           "
         >
           Share your unique link and let anyone send you anonymous messages. No
-          names. No pressure. Just honest thoughts.
+          names. No pressure.{" "}
+          <span className="font-bold capitalize">No BOT spamming.</span> Just
+          honest thoughts.
         </p>
 
         <CreateProfileButton />
@@ -148,29 +196,30 @@ const page = () => {
       <div
         className="
           w-full
+          max-w-6xl
           py-2
           p-6
-          flex
-          flex-col
-          items-center
-          justify-center
+          grid
+          grid-cols-1
+          sm:grid-cols-2
           gap-10
-          mb-12
+          my-13
           md:flex-row
           md:justify-around
           md:p-12
         "
       >
         {features.map((feature, index) => (
-          <span
-            key={index}
-            className="
+          <AnimationWrapper key={index} index={index}>
+            <span
+              key={index}
+              className="
                   w-full
                   md:h-80
                   bg-bg-glass
-                  backdrop-blur-2xl
+                  backdrop-blur-sm
                   rounded-2xl
-                  p-3
+                  p-4
                   flex
                   flex-col
                   items-start
@@ -185,9 +234,9 @@ const page = () => {
                   hover:bg-text-alt/10
                   md:p-6
                 "
-          >
-            <feature.icon
-              className={`
+            >
+              <feature.icon
+                className={`
                     text-5xl 
                     text-accent
                     bg-text-alt/15
@@ -200,32 +249,35 @@ const page = () => {
                           ? "text-accent-pink"
                           : feature.iconGenre === "insights"
                             ? "text-accent-alt"
-                            : ""
+                            : feature.iconGenre === "authentic"
+                              ? "text-yellow-300"
+                              : " "
                     }
                     `}
-            />
+              />
 
-            <h3
-              className="
+              <h3
+                className="
                       text-xl
                       font-bold
                       font-primary 
                       mt-2
                       "
-            >
-              {feature.title}
-            </h3>
-            <p
-              className="
+              >
+                {feature.title}
+              </h3>
+              <p
+                className="
                     text-base
                     text-text-alt
                     my-2
                     font-secondary
                     "
-            >
-              {feature.text}
-            </p>
-          </span>
+              >
+                {feature.text}
+              </p>
+            </span>
+          </AnimationWrapper>
         ))}
       </div>
     </div>

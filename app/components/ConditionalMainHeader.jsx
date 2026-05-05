@@ -123,6 +123,7 @@ const ConditionalMainHeader = () => {
               duration-300 
               ease-in-out
               cursor-pointer
+              active:scale-90
             "
           >
             Login
@@ -130,12 +131,17 @@ const ConditionalMainHeader = () => {
 
           <Link
             href="/signup"
-            className="
-              font-semibold 
+            className=" 
               bg-border
               px-2 
               py-1.5 
               rounded-xl
+              cursor-pointer
+              transition-all 
+              duration-300 
+              ease-in-out
+              hover:bg-bg
+              active:scale-90
             "
           >
             Get Started
@@ -391,7 +397,7 @@ const ConditionalMainHeader = () => {
                     flex-col
                     items-start
                     justify-center
-                    border-b-1
+                    border-b
                     border-border
                   "
                 >
@@ -453,7 +459,7 @@ const ConditionalMainHeader = () => {
                   <hr
                     className="
                       w-full
-                      h-[1px]
+                      h-px
                     bg-red-600
                       rounded-full
                       border-none
@@ -514,7 +520,7 @@ const ConditionalMainHeader = () => {
                   onClick={(e) => e.stopPropagation()}
                   className="
                     w-9/10
-                    max-w-[450px]
+                    max-w-112.5
                     bg-bg-alt
                     border-2
                     border-border
@@ -812,7 +818,7 @@ const ConditionalMainHeader = () => {
                   onClick={(e) => e.stopPropagation()}
                   className="
                     w-9/10
-                    max-w-[450px]
+                    max-w-112.5
                     bg-bg-alt
                     border-2
                     border-border

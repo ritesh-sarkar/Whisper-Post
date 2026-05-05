@@ -1,9 +1,14 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { Poppins, Inter } from "next/font/google";
+
+// Components and custom libs
 import ConditionalMainHeader from "@/app/components/ConditionalMainHeader";
 import ConditionalFooter from "@/app/components/ConditionalFooter";
+import CustomCursor from "./components/CustomCursor";
 import { Authprovider } from "@/lib/Authprovider";
+
+// Analytics and Speed Insights
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -131,6 +136,7 @@ export default function RootLayout({ children }) {
 
         <Authprovider>
           <ConditionalMainHeader />
+          <CustomCursor />
           {children}
           <Analytics />
           <SpeedInsights />
