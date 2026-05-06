@@ -1,0 +1,41 @@
+[33m65933b6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mv2[m[33m)[m Merge branch 'v2' of https://github.com/ritesh-sarkar/Whisper-Post into v2
+[33m52eecc1[m fixed some minor warnings in the custom cursor file and refactor the codes
+[33mccaed0c[m[33m ([m[1;31morigin/v2[m[33m)[m fixed some minor warnings in the custor cursor file and refactor the codes
+[33m99c2c75[m modified the home page and added animations through framer motion, changed card layout and added a new card, added particle effet(custom) on home page. also added a custom cursor(might be changed later)
+[33me8638e9[m fixed some tailwind class warnings
+[33mfd0b015[m changed error and page not found page and error.svg and not-found.svg UI
+[33m0a32d2d[m installed framer motion and modified the Toaster only
+[33m7f4580c[m modified many files, completely changed the dashboard UI, message apprearing section, added pin button etc. Only UI changed, need to make them functionable and all the animations are made with css classes. will upgraded with framer motion
+[33mfdd6a81[m fixed rechart graph outline problem caused by svg rendering
+[33me70b01f[m added sonarQUbe for code quality analysis, modified some files, added new graph (need to be impove and make it functional), installed libs, modified cards in dashboard (today msg, week msg, total msg) and much more
+[33m096c9d6[m suspended hydration error, modified the dashboard header, added settings option, profile edit option and account delete option with user confirmation. added popup system and logout part moved to settings section. just modified the UI only
+[33m6d9969f[m Modified user anonymous msg  interface and added mood and hint option with changing bg according to the selected mood by any stranger. only changed the UI. Also modified global.css file and added new custom classes for moods style
+[33m28e4b0a[m fixed an UI problem with bg blobs, adjusted opacity, modified z-index in signup page, login page, reset pass page. also started modifying anony message page again.
+[33m370d412[m fixed viewport issue with layout.jsx file, modified signup  backend {send mail} part and changed email UI
+[33m769bbd2[m refactor loader, enhanched loading animation, rebuilt message sending page and added profile picture showing option (fronted only), added create profile redirection
+[33m98db7ff[m refector verify account page and rebuilt UI
+[33m86fd5df[m rebuilt reset pass section and fixed UI problem and mistakes in both login and signup page.
+[33m3cd7feb[m rebuilt login page and fixed UI bad practice in both login and signup page. also added google login system in login section
+[33m077e6fc[m rebuilt signup page (UI only), refator codes, added google singup system frontend only and fixed an UI bug caused during reconstruction
+[33mb82e063[m fixed a simple issue and added target and rel attr in social media redirection link
+[33m7d7060c[m fixed dependency peer error along with package conflicts and version mismatch
+[33mc95d3ab[m Chnaged UI, addded conditional classes and social media links along with portfolio redirection
+[33m6dd63e0[m created v2 branch and copied all files in this branch
+[33m0fc6f2b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m returned to the origian form
+[33ma3e3cf5[m fixed ig and wp share option issue
+[33m030e1f4[m fixed ig and wp share option
+[33m4fe9af4[m added ig and wp share option
+[33mc71a262[m Added a snap button
+[33me986d0c[m Added glur effect and card modal
+[33m79bdf06[m Added Google Verification tag
+[33m24ba781[m Added Vercel SpeedInsights
+[33m611c6dd[m Enhanched the loading UI
+[33m0cb1533[m Updated the Open Graph
+[33maadc386[m Updated the RootLayout and optimised SEO
+[33m7b9e6df[m update mail sender and reset-password
+[33m032e0ef[m update mail sender and reset-password
+[33m9fb4668[m fixed copy button bug
+[33m81f9c11[m fixed copy button bug
+[33m35f392b[m Added Vercel Analytics
+[33m17ab206[m Initial commit - Add WhisperPost project
+[33m414e934[m Initial commit from Create Next App
