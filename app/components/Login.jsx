@@ -1,13 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import LoaderComponent from "@/app/components/LoaderComponent";
 
+//Custom libs and components
+import LoaderComponent from "@/app/components/LoaderComponent";
+import AnimationWrapper from "./Animation/AnimationWrapper";
+import { accountAccessAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { FcGoogle } from "react-icons/fc";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
@@ -55,10 +59,14 @@ const Login = () => {
     );
 
   return (
+    <AnimationWrapper
+      variants={accountAccessAnimationConfig(0.3)}
+      once={false}
+    >
     <div
       className="
         w-full
-        h-full
+        h-screenc
         mx-auto
         font-secondary
         flex
@@ -84,8 +92,8 @@ const Login = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
       />
 
@@ -101,8 +109,8 @@ const Login = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
       />
 
@@ -162,7 +170,7 @@ const Login = () => {
           }}
           className="
             w-9/10
-            max-w-[500px]
+            max-w-125
             bg-bg-glass
             flex
             flex-col
@@ -297,9 +305,9 @@ const Login = () => {
               my-2
             "
           >
-            <div className="flex-1 h-[1px] bg-border" />
+            <div className="flex-1 h-px bg-border" />
             <span className="text-text-alt text-sm">Or</span>
-            <div className="flex-1 h-[1px] bg-border" />
+            <div className="flex-1 h-px bg-border" />
           </div>
 
           {/* Google Login */}
@@ -354,6 +362,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </AnimationWrapper>
   );
 };
 

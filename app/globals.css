@@ -52,7 +52,7 @@
   width: 8px;
   height: 8px;
   background: var(--accent-pink); 
-  border-radius: 9999px;
+  border-radius: 100%;
   z-index: 1;
 }
 
@@ -65,7 +65,7 @@
   width: 8px;
   height: 8px;
   background: var(--accent-pink);
-  border-radius: 9999px;
+  border-radius: 100%;
   opacity: 0.6;
   z-index: 0;
   animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;

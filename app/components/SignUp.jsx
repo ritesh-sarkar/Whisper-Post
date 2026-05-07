@@ -2,11 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { SignUpValidationZod } from "@/lib/SignUpValidationZod";
 import toast from "react-hot-toast";
 import axios from "axios";
+
+// Custom Libs and components
+import { SignUpValidationZod } from "@/lib/SignUpValidationZod";
 import LoaderComponent from "@/app/components/LoaderComponent";
 
+// animation libs
+import {
+  accountAccessAnimationConfig,
+  headerAnimationConfig,
+} from "@/lib/AnimationConfig";
+import AnimationWrapper from "./Animation/AnimationWrapper";
+
+// icons
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 
@@ -73,16 +83,12 @@ const SignUp = () => {
     toast("Google login coming soon 🚀");
   };
 
-  if (loading)
-    return (
-      <LoaderComponent
-        state={"Creating your account"}
-      />
-    );
+  if (loading) return <LoaderComponent state={"Creating your account"} />;
 
   return (
-    <div
-      className="
+    <AnimationWrapper variants={accountAccessAnimationConfig(0.3)} once={false}>
+      <div
+        className="
         w-full
         h-full
         mt-8
@@ -96,11 +102,11 @@ const SignUp = () => {
         relative
         overflow-hidden
       "
-    >
-      {/* Background orbits */}
+      >
+        {/* Background orbits */}
 
-      <div
-        className="
+        <div
+          className="
           absolute
           top-[20%]
           -left-64
@@ -111,13 +117,13 @@ const SignUp = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
-      />
+        />
 
-      <div
-        className="
+        <div
+          className="
           absolute
           bottom-[20%]
           -right-64
@@ -128,14 +134,14 @@ const SignUp = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
-      />
+        />
 
-      {!verifyBanner && (
-        <div
-          className="
+        {!verifyBanner && (
+          <div
+            className="
             w-full
             h-full
             flex
@@ -144,9 +150,9 @@ const SignUp = () => {
             justify-center
             gap-5
           "
-        >
-          <span
-            className="
+          >
+            <span
+              className="
               w-full
               flex
               flex-col
@@ -155,34 +161,34 @@ const SignUp = () => {
               gap-2
               my-5
             "
-          >
-            <h1
-              className="
+            >
+              <h1
+                className="
                 font-primary
                 text-3xl
                 font-semibold
                 text-text
                 m-2
               "
-            >
-              Create profile
-            </h1>
+              >
+                Create profile
+              </h1>
 
-            <h3
-              className="
+              <h3
+                className="
                 text-xl
                 text-text-alt
               "
-            >
-              Join <span className="font-bold">WhisperPost</span> today!
-            </h3>
-          </span>
+              >
+                Join <span className="font-bold">WhisperPost</span> today!
+              </h3>
+            </span>
 
-          <form
-            onSubmit={handleSubmit}
-            className="
+            <form
+              onSubmit={handleSubmit}
+              className="
               w-9/10
-              max-w-[500px]
+              max-w-125
               bg-bg-glass
               flex
               flex-col
@@ -197,10 +203,10 @@ const SignUp = () => {
               font-secondary
               md:p-4
             "
-          >
-            {/* Name */}
-            <label
-              className="
+            >
+              {/* Name */}
+              <label
+                className="
                 w-full
                 flex
                 flex-col
@@ -212,16 +218,16 @@ const SignUp = () => {
                 gap-1
                 font-semibold
               "
-            >
-              Name:
-              <input
-                type="text"
-                autoComplete="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
-                required
-                className="
+              >
+                Name:
+                <input
+                  type="text"
+                  autoComplete="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your name"
+                  required
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -232,17 +238,15 @@ const SignUp = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
-              {error && (
-                <p className="text-red-500 text-sm my-1">
-                  {error.name}
-                </p>
-              )}
-            </label>
+                />
+                {error && (
+                  <p className="text-red-500 text-sm my-1">{error.name}</p>
+                )}
+              </label>
 
-            {/* Username */}
-            <label
-              className="
+              {/* Username */}
+              <label
+                className="
                 w-full
                 flex
                 flex-col
@@ -253,16 +257,16 @@ const SignUp = () => {
                 gap-1
                 font-semibold
               "
-            >
-              Username:
-              <input
-                type="text"
-                autoComplete="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="@username"
-                required
-                className="
+              >
+                Username:
+                <input
+                  type="text"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="@username"
+                  required
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -273,17 +277,15 @@ const SignUp = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
-              {error && (
-                <p className="text-red-500 text-sm my-1">
-                  {error.username}
-                </p>
-              )}
-            </label>
+                />
+                {error && (
+                  <p className="text-red-500 text-sm my-1">{error.username}</p>
+                )}
+              </label>
 
-            {/* Email */}
-            <label
-              className="
+              {/* Email */}
+              <label
+                className="
                 w-full
                 flex
                 flex-col
@@ -294,16 +296,16 @@ const SignUp = () => {
                 gap-1
                 font-semibold
               "
-            >
-              Email:
-              <input
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                className="
+              >
+                Email:
+                <input
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -314,17 +316,15 @@ const SignUp = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
-              {error && (
-                <p className="text-red-500 text-sm my-1">
-                  {error.email}
-                </p>
-              )}
-            </label>
+                />
+                {error && (
+                  <p className="text-red-500 text-sm my-1">{error.email}</p>
+                )}
+              </label>
 
-            {/* Password */}
-            <label
-              className="
+              {/* Password */}
+              <label
+                className="
                 w-full
                 flex
                 flex-col
@@ -335,16 +335,16 @@ const SignUp = () => {
                 gap-1
                 font-semibold
               "
-            >
-              Password:
-              <input
-                type="password"
-                autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-                className="
+              >
+                Password:
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -355,18 +355,16 @@ const SignUp = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
-              {error && (
-                <p className="text-red-500 text-sm my-1">
-                  {error.password}
-                </p>
-              )}
-            </label>
+                />
+                {error && (
+                  <p className="text-red-500 text-sm my-1">{error.password}</p>
+                )}
+              </label>
 
-            {/* Create Account */}
-            <button
-              type="submit"
-              className="
+              {/* Create Account */}
+              <button
+                type="submit"
+                className="
                 text-center
                 text-xl
                 font-primary
@@ -392,14 +390,14 @@ const SignUp = () => {
                 active:scale-95
                 cursor-pointer
               "
-            >
-              Create Account
-              <IoIosArrowRoundForward className="ml-1 text-2xl" />
-            </button>
+              >
+                Create Account
+                <IoIosArrowRoundForward className="ml-1 text-2xl" />
+              </button>
 
-            {/* Divider */}
-            <div
-              className="
+              {/* Divider */}
+              <div
+                className="
                 w-full
                 flex
                 items-center
@@ -407,17 +405,17 @@ const SignUp = () => {
                 gap-3
                 my-2
               "
-            >
-              <div className="flex-1 h-[1px] bg-border" />
-              <span className="text-text-alt text-sm">Or</span>
-              <div className="flex-1 h-[1px] bg-border" />
-            </div>
+              >
+                <div className="flex-1 h-px bg-border" />
+                <span className="text-text-alt text-sm">Or</span>
+                <div className="flex-1 h-px bg-border" />
+              </div>
 
-            {/* Google Login */}
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="
+              {/* Google Login */}
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="
                 w-full
                 flex
                 items-center
@@ -437,26 +435,26 @@ const SignUp = () => {
                 active:scale-95
                 cursor-pointer
               "
-            >
-              <FcGoogle className="text-xl" />
-              Continue with Google
-            </button>
+              >
+                <FcGoogle className="text-xl" />
+                Continue with Google
+              </button>
 
-            <p className="text-text-alt mt-3">
-              Already have an account?{" "}
-              <Link href="/login" className="text-accent font-semibold">
-                Log in
-              </Link>
-            </p>
-          </form>
-        </div>
-      )}
+              <p className="text-text-alt mt-3">
+                Already have an account?{" "}
+                <Link href="/login" className="text-accent font-semibold">
+                  Log in
+                </Link>
+              </p>
+            </form>
+          </div>
+        )}
 
-      {verifyBanner && (
-        <div
-          className="
+        {verifyBanner && (
+          <div
+            className="
             w-9/10
-            max-w-[600px]
+            max-w-150
             mx-auto
             flex
             flex-col
@@ -473,9 +471,9 @@ const SignUp = () => {
             md:py-6
             md:px-5
           "
-        >
-          <h1
-            className="
+          >
+            <h1
+              className="
               font-primary
               text-2xl
               font-semibold
@@ -483,12 +481,12 @@ const SignUp = () => {
               md:text-3xl
               md:leading-tight
             "
-          >
-            A verification link has been sent to your email.
-          </h1>
+            >
+              A verification link has been sent to your email.
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
               font-secondary
               text-text-alt
               md:text-lg
@@ -496,12 +494,13 @@ const SignUp = () => {
               md:leading-snug
               md:tracking-wide
             "
-          >
-            Please check your email and verify your account to continue.
-          </p>
-        </div>
-      )}
-    </div>
+            >
+              Please check your email and verify your account to continue.
+            </p>
+          </div>
+        )}
+      </div>
+    </AnimationWrapper>
   );
 };
 
