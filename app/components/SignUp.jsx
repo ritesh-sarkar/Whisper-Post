@@ -86,7 +86,7 @@ const SignUp = () => {
   if (loading) return <LoaderComponent state={"Creating your account"} />;
 
   return (
-    <AnimationWrapper variants={accountAccessAnimationConfig(0.3)} once={false}>
+    <AnimationWrapper variants={accountAccessAnimationConfig(0.3)} once={true}>
       <div
         className="
         w-full

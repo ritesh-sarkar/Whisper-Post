@@ -51,22 +51,14 @@ const Login = () => {
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
-  if (loading)
-    return (
-      <LoaderComponent
-        state={"Logging in"}
-      />
-    );
+  if (loading) return <LoaderComponent state={"Logging in"} />;
 
   return (
-    <AnimationWrapper
-      variants={accountAccessAnimationConfig(0.3)}
-      once={false}
-    >
-    <div
-      className="
+    <AnimationWrapper variants={accountAccessAnimationConfig(0.3)} once={true}>
+      <div
+        className="
         w-full
-        h-screenc
+        h-screen
         mx-auto
         font-secondary
         flex
@@ -77,11 +69,11 @@ const Login = () => {
         relative
         overflow-hidden
       "
-    >
-      {/* Background blobs */}
+      >
+        {/* Background blobs */}
 
-      <div
-        className="
+        <div
+          className="
           absolute
           top-[20%]
           -left-64
@@ -95,10 +87,10 @@ const Login = () => {
           md:w-100
           md:h-100
         "
-      />
+        />
 
-      <div
-        className="
+        <div
+          className="
           absolute
           bottom-[20%]
           -right-64
@@ -112,10 +104,10 @@ const Login = () => {
           md:w-100
           md:h-100
         "
-      />
+        />
 
-      <div
-        className="
+        <div
+          className="
           w-full
           h-full
           flex
@@ -124,11 +116,11 @@ const Login = () => {
           justify-center
           gap-5
         "
-      >
-        {/* Heading */}
+        >
+          {/* Heading */}
 
-        <span
-          className="
+          <span
+            className="
             w-full
             flex
             flex-col
@@ -137,38 +129,38 @@ const Login = () => {
             gap-2
             my-5
           "
-        >
-          <h1
-            className="
+          >
+            <h1
+              className="
               font-primary
               text-3xl
               font-semibold
               text-text
               m-2
             "
-          >
-            Welcome back
-          </h1>
+            >
+              Welcome back
+            </h1>
 
-          <h3
-            className="
+            <h3
+              className="
               text-xl
               text-text-alt
               font-secondary
             "
-          >
-            Login to <span className="font-bold">WhisperPost</span>
-          </h3>
-        </span>
+            >
+              Login to <span className="font-bold">WhisperPost</span>
+            </h3>
+          </span>
 
-        {/* Form */}
+          {/* Form */}
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin();
-          }}
-          className="
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+            className="
             w-9/10
             max-w-125
             bg-bg-glass
@@ -185,11 +177,11 @@ const Login = () => {
             font-secondary
             md:p-4
           "
-        >
-          {/* Email */}
+          >
+            {/* Email */}
 
-          <label
-            className="
+            <label
+              className="
               w-full
               flex
               flex-col
@@ -200,15 +192,15 @@ const Login = () => {
               gap-1
               font-semibold
             "
-          >
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="
+            >
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="
                 w-full
                 py-2.5
                 px-4
@@ -219,13 +211,13 @@ const Login = () => {
                 focus:ring-1
                 focus:ring-accent
               "
-            />
-          </label>
+              />
+            </label>
 
-          {/* Password */}
+            {/* Password */}
 
-          <label
-            className="
+            <label
+              className="
               w-full
               flex
               flex-col
@@ -236,15 +228,15 @@ const Login = () => {
               gap-1
               font-semibold
             "
-          >
-            Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-              className="
+            >
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+                className="
                 w-full
                 py-2.5
                 px-4
@@ -255,14 +247,14 @@ const Login = () => {
                 focus:ring-1
                 focus:ring-accent
               "
-            />
-          </label>
+              />
+            </label>
 
-          {/* Login Button */}
+            {/* Login Button */}
 
-          <button
-            type="submit"
-            className="
+            <button
+              type="submit"
+              className="
               text-center
               text-xl
               font-primary
@@ -288,15 +280,15 @@ const Login = () => {
               active:scale-95
               cursor-pointer
             "
-          >
-            Login
-            <IoIosArrowRoundForward className="ml-1 text-2xl" />
-          </button>
+            >
+              Login
+              <IoIosArrowRoundForward className="ml-1 text-2xl" />
+            </button>
 
-          {/* Divider */}
+            {/* Divider */}
 
-          <div
-            className="
+            <div
+              className="
               w-full
               flex
               items-center
@@ -304,18 +296,18 @@ const Login = () => {
               gap-3
               my-2
             "
-          >
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-text-alt text-sm">Or</span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
+            >
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-text-alt text-sm">Or</span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
 
-          {/* Google Login */}
+            {/* Google Login */}
 
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            className="
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="
               w-full
               flex
               items-center
@@ -335,33 +327,33 @@ const Login = () => {
               active:scale-95
               cursor-pointer
             "
-          >
-            <FcGoogle className="text-xl" />
-            Continue with Google
-          </button>
+            >
+              <FcGoogle className="text-xl" />
+              Continue with Google
+            </button>
 
-          {/* Links */}
+            {/* Links */}
 
-          <p className="text-text-alt mt-3">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-accent font-semibold">
-              Sign up
-            </Link>
-          </p>
+            <p className="text-text-alt mt-3">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="text-accent font-semibold">
+                Sign up
+              </Link>
+            </p>
 
-          <Link
-            href="/forgot-password"
-            className="
+            <Link
+              href="/forgot-password"
+              className="
               text-accent
               font-semibold
               hover:underline
             "
-          >
-            Forgot Password?
-          </Link>
-        </form>
+            >
+              Forgot Password?
+            </Link>
+          </form>
+        </div>
       </div>
-    </div>
     </AnimationWrapper>
   );
 };

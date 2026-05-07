@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import LoaderComponent from "@/app/components/LoaderComponent";
 
+// Custom Libs and components
+import LoaderComponent from "@/app/components/LoaderComponent";
+import AnimationWrapper from "./Animation/AnimationWrapper";
+import { accountAccessAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 const ForgotComponent = () => {
@@ -123,8 +127,8 @@ const ForgotComponent = () => {
           blur-3xl
           -z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
       />
 
@@ -140,13 +144,17 @@ const ForgotComponent = () => {
           blur-3xl
           z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
       />
 
-      <div
-        className="
+      <AnimationWrapper
+        variants={accountAccessAnimationConfig(0.4)}
+        once={true}
+      >
+        <div
+          className="
           w-full
           flex
           flex-col
@@ -154,11 +162,11 @@ const ForgotComponent = () => {
           justify-center
           gap-5
         "
-      >
-        {/* Heading */}
+        >
+          {/* Heading */}
 
-        <span
-          className="
+          <span
+            className="
             w-full
             flex
             flex-col
@@ -167,35 +175,35 @@ const ForgotComponent = () => {
             gap-2
             my-5
           "
-        >
-          <h1
-            className="
+          >
+            <h1
+              className="
               font-primary
               text-3xl
               font-semibold
               text-text
             "
-          >
-            Forgot Password?
-          </h1>
+            >
+              Forgot Password?
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
               text-text-alt
               text-center
-              max-w-[500px]
+              max-w-125
             "
-          >
-            Don&apos;t worry! Follow the steps below to recover your account.
-          </p>
-        </span>
+            >
+              Don&apos;t worry! Follow the steps below to recover your account.
+            </p>
+          </span>
 
-        {/* Card */}
+          {/* Card */}
 
-        <div
-          className="
+          <div
+            className="
             w-9/10
-            max-w-[500px]
+            max-w-125
             bg-bg-glass
             border
             border-border
@@ -208,31 +216,31 @@ const ForgotComponent = () => {
             justify-center
             gap-4
           "
-        >
-          {/* EMAIL */}
+          >
+            {/* EMAIL */}
 
-          {state === "email-state" && (
-            <form
-              onSubmit={handleEmailSubmit}
-              className="
+            {state === "email-state" && (
+              <form
+                onSubmit={handleEmailSubmit}
+                className="
                 w-full
                 flex
                 flex-col
                 items-center
                 gap-4
               "
-            >
-              <p className="text-text-alt text-center">
-                Enter your registered email
-              </p>
+              >
+                <p className="text-text-alt text-center">
+                  Enter your registered email
+                </p>
 
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Enter your email"
-                className="
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="Enter your email"
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -245,11 +253,11 @@ const ForgotComponent = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
+                />
 
-              <button
-                type="submit"
-                className="
+                <button
+                  type="submit"
+                  className="
                   text-center
                   text-xl
                   font-primary
@@ -275,37 +283,37 @@ const ForgotComponent = () => {
                   active:scale-95
                   cursor-pointer
                 "
-              >
-                Send OTP
-                <IoIosArrowRoundForward className="ml-1 text-2xl" />
-              </button>
-            </form>
-          )}
+                >
+                  Send OTP
+                  <IoIosArrowRoundForward className="ml-1 text-2xl" />
+                </button>
+              </form>
+            )}
 
-          {/* OTP */}
+            {/* OTP */}
 
-          {state === "OTP-state" && (
-            <form
-              onSubmit={handleOtpSubmit}
-              className="
+            {state === "OTP-state" && (
+              <form
+                onSubmit={handleOtpSubmit}
+                className="
                 w-full
                 flex
                 flex-col
                 items-center
                 gap-4
               "
-            >
-              <p className="text-text-alt text-center">
-                Enter the 6-digit OTP sent to your email
-              </p>
+              >
+                <p className="text-text-alt text-center">
+                  Enter the 6-digit OTP sent to your email
+                </p>
 
-              <input
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-                placeholder="••••••"
-                className="
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                  placeholder="••••••"
+                  className="
                   w-1/2
                   py-2.5
                   px-4
@@ -321,11 +329,11 @@ const ForgotComponent = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
+                />
 
-              <button
-                type="submit"
-                className="
+                <button
+                  type="submit"
+                  className="
                   text-center
                   text-xl
                   font-primary
@@ -351,35 +359,37 @@ const ForgotComponent = () => {
                   active:scale-95
                   cursor-pointer
                 "
-              >
-                Verify OTP
-                <IoIosArrowRoundForward className="ml-1 text-2xl" />
-              </button>
-            </form>
-          )}
+                >
+                  Verify OTP
+                  <IoIosArrowRoundForward className="ml-1 text-2xl" />
+                </button>
+              </form>
+            )}
 
-          {/* PASSWORD */}
+            {/* PASSWORD */}
 
-          {state === "password-state" && (
-            <form
-              onSubmit={handlePasswordSubmit}
-              className="
+            {state === "password-state" && (
+              <form
+                onSubmit={handlePasswordSubmit}
+                className="
                 w-full
                 flex
                 flex-col
                 items-center
                 gap-4
               "
-            >
-              <p className="text-text-alt text-center">Set your new password</p>
+              >
+                <p className="text-text-alt text-center">
+                  Set your new password
+                </p>
 
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="New password"
-                className="
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="New password"
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -392,15 +402,15 @@ const ForgotComponent = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
+                />
 
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                placeholder="Confirm password"
-                className="
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  placeholder="Confirm password"
+                  className="
                   w-full
                   py-2.5
                   px-4
@@ -413,11 +423,11 @@ const ForgotComponent = () => {
                   focus:ring-1
                   focus:ring-accent
                 "
-              />
+                />
 
-              <button
-                type="submit"
-                className="
+                <button
+                  type="submit"
+                  className="
                   text-center
                   text-xl
                   font-primary
@@ -443,16 +453,16 @@ const ForgotComponent = () => {
                   active:scale-95
                   cursor-pointer
                 "
-              >
-                Reset Password
-                <IoIosArrowRoundForward className="ml-1 text-2xl" />
-              </button>
-            </form>
-          )}
+                >
+                  Reset Password
+                  <IoIosArrowRoundForward className="ml-1 text-2xl" />
+                </button>
+              </form>
+            )}
 
-          <button
-            onClick={() => router.push("/login")}
-            className="
+            <button
+              onClick={() => router.push("/login")}
+              className="
               text-text-alt
               text-base
               my-2
@@ -463,11 +473,12 @@ const ForgotComponent = () => {
               hover:text-text
               cursor-pointer
             "
-          >
-            Back to Login
-          </button>
+            >
+              Back to Login
+            </button>
+          </div>
         </div>
-      </div>
+      </AnimationWrapper>
     </div>
   );
 };

@@ -4,8 +4,13 @@ import { useRouter, useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import axios from "axios";
-import LoaderComponent from "@/app/components/LoaderComponent";
 
+// Custom Libs and components
+import LoaderComponent from "@/app/components/LoaderComponent";
+import AnimationWrapper from "./Animation/AnimationWrapper";
+import { accountAccessAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 const VerifyAccount = () => {
@@ -38,10 +43,14 @@ const VerifyAccount = () => {
   if (loading) return <LoaderComponent state={"Verifying account"} />;
 
   return (
-    <div
-      className="
+    <AnimationWrapper
+      variants={accountAccessAnimationConfig(0.5)}
+      once={true}
+    >
+      <div
+        className="
         w-full
-        h-full
+        h-screen
         mx-auto
         font-secondary
         flex
@@ -52,11 +61,11 @@ const VerifyAccount = () => {
         relative
         overflow-x-hidden
       "
-    >
-      {/* Background blobs */}
+      >
+        {/* Background blobs */}
 
-      <div
-        className="
+        <div
+          className="
           absolute
           top-[20%]
           -left-64
@@ -67,13 +76,13 @@ const VerifyAccount = () => {
           blur-3xl
           z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
-      />
+        />
 
-      <div
-        className="
+        <div
+          className="
           absolute
           bottom-[20%]
           -right-64
@@ -84,18 +93,17 @@ const VerifyAccount = () => {
           blur-3xl
           z-10
           pointer-events-none
-          md:w-[400px]
-          md:h-[400px]
+          md:w-100
+          md:h-100
         "
-      />
+        />
 
-      {/* Card */}
+        {/* Card */}
 
-      <div
-        className="
+        <div
+          className="
           w-9/10
-          max-w-[500px]
-          bg-bg-glass
+          max-w-125
           border
           border-border
           rounded-xl
@@ -109,19 +117,19 @@ const VerifyAccount = () => {
           gap-4
           text-center
         "
-      >
-        <h1
-          className="
+        >
+          <h1
+            className="
             font-secondary
             text-2xl
             font-semibold
             text-text
             md:text-3xl
           "
-        >
-          Thanks for joining <br />
-          <span
-            className="
+          >
+            Thanks for joining <br />
+            <span
+              className="
             font-primary
             bg-linear-to-r 
             from-accent-pink
@@ -129,24 +137,24 @@ const VerifyAccount = () => {
             bg-clip-text 
             text-transparent
             "
-          >
-            WhisperPost!
-          </span>
-        </h1>
+            >
+              WhisperPost!
+            </span>
+          </h1>
 
-        <p
-          className="
+          <p
+            className="
             text-text-alt
             md:text-lg
           "
-        >
-          Verify your account to get started.
-        </p>
+          >
+            Verify your account to get started.
+          </p>
 
-        <button
-          type="button"
-          onClick={handleVerification}
-          className="
+          <button
+            type="button"
+            onClick={handleVerification}
+            className="
             text-center
             text-lg
             font-primary
@@ -171,12 +179,13 @@ const VerifyAccount = () => {
             active:scale-95
             cursor-pointer
           "
-        >
-          Verify Account
-          <IoIosArrowRoundForward className="ml-1 text-2xl" />
-        </button>
+          >
+            Verify Account
+            <IoIosArrowRoundForward className="ml-1 text-2xl" />
+          </button>
+        </div>
       </div>
-    </div>
+    </AnimationWrapper>
   );
 };
 
