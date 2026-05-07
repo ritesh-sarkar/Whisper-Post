@@ -1,7 +1,7 @@
 import CreateProfileButton from "@/app/components/CreateProfileButton";
 
 // custom libs and components
-import AnimationWrapper from "./components/AnimatioinWrapper";
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 import {
   heroAnimationConfig,
   cardAnimationConfig,

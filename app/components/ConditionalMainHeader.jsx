@@ -19,7 +19,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 //animation libs
 import { headerAnimationConfig } from "@/lib/AnimationConfig";
-import AnimationWrapper from "./Animation/AnimationWrapper";
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 
 const ConditionalMainHeader = () => {
   const pathname = usePathname();

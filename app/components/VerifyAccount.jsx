@@ -7,7 +7,7 @@ import axios from "axios";
 
 // Custom Libs and components
 import LoaderComponent from "@/app/components/LoaderComponent";
-import AnimationWrapper from "./Animation/AnimationWrapper";
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 import { accountAccessAnimationConfig } from "@/lib/AnimationConfig";
 
 // icons

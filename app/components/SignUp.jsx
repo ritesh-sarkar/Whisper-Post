@@ -10,11 +10,8 @@ import { SignUpValidationZod } from "@/lib/SignUpValidationZod";
 import LoaderComponent from "@/app/components/LoaderComponent";
 
 // animation libs
-import {
-  accountAccessAnimationConfig,
-  headerAnimationConfig,
-} from "@/lib/AnimationConfig";
-import AnimationWrapper from "./Animation/AnimationWrapper";
+import { accountAccessAnimationConfig } from "@/lib/AnimationConfig";
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 
 // icons
 import { IoIosArrowRoundForward } from "react-icons/io";
