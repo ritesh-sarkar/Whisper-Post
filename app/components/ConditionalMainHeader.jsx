@@ -16,7 +16,10 @@ import { CiUser } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
-import { set } from "mongoose";
+
+//animation libs
+import { headerAnimationConfig } from "@/lib/AnimationConfig";
+import AnimationWrapper from "./Animation/AnimationWrapper";
 
 const ConditionalMainHeader = () => {
   const pathname = usePathname();
@@ -61,8 +64,9 @@ const ConditionalMainHeader = () => {
 
   if (pathname === "/") {
     return (
-      <header
-        className="
+      <AnimationWrapper variants={headerAnimationConfig(0.2)} once={true}>
+        <header
+          className="
           fixed
           top-0 
           z-10 
@@ -79,31 +83,31 @@ const ConditionalMainHeader = () => {
           rounded-br-xl
           rounded-bl-xl
         "
-      >
-        <span
-          className="
+        >
+          <span
+            className="
             w-1/2 
             flex 
             items-center 
             font-semibold 
             text-xl
           "
-        >
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={60}
-            height={60}
-            className="
+          >
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="
               p-2
               m-0
             "
-          />
-          <h1>WhisperPost</h1>
-        </span>
+            />
+            <h1>WhisperPost</h1>
+          </span>
 
-        <span
-          className="
+          <span
+            className="
             w-1/2 
             flex 
             items-center 
@@ -112,10 +116,10 @@ const ConditionalMainHeader = () => {
             text-[18px]
             sm:gap-5
           "
-        >
-          <Link
-            href="/login"
-            className="
+          >
+            <Link
+              href="/login"
+              className="
               font-semibold 
               text-text-alt
               hover:underline 
@@ -125,13 +129,13 @@ const ConditionalMainHeader = () => {
               cursor-pointer
               active:scale-90
             "
-          >
-            Login
-          </Link>
+            >
+              Login
+            </Link>
 
-          <Link
-            href="/signup"
-            className=" 
+            <Link
+              href="/signup"
+              className=" 
               bg-border
               px-2 
               py-1.5 
@@ -143,11 +147,12 @@ const ConditionalMainHeader = () => {
               hover:bg-bg
               active:scale-90
             "
-          >
-            Get Started
-          </Link>
-        </span>
-      </header>
+            >
+              Get Started
+            </Link>
+          </span>
+        </header>
+      </AnimationWrapper>
     );
   } else if (pathname === "/login" || pathname === "/signup") {
     return (

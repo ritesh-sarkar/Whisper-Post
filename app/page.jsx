@@ -2,6 +2,10 @@ import CreateProfileButton from "@/app/components/CreateProfileButton";
 
 // custom libs and components
 import AnimationWrapper from "./components/AnimatioinWrapper";
+import {
+  heroAnimationConfig,
+  cardAnimationConfig,
+} from "@/lib/AnimationConfig";
 import ParticleBackground from "./components/Particles";
 
 // icons
@@ -104,8 +108,10 @@ const page = () => {
         <ParticleBackground />
       </div>
 
-      <div
-        className="
+      {/* Hero animation  */}
+      <AnimationWrapper variants={heroAnimationConfig(0.5)} once={false}>
+        <div
+          className="
           w-full
           py-2
           flex
@@ -114,9 +120,9 @@ const page = () => {
           justify-center
           text-center
         "
-      >
-        <h1
-          className="
+        >
+          <h1
+            className="
             flex
             gap-1.5
             items-center
@@ -140,13 +146,13 @@ const page = () => {
             mb:py-2
             mb:px-3
           "
-        >
-          <IoSparklesSharp />
-          Where Secrets Speak Freely.
-        </h1>
+          >
+            <IoSparklesSharp />
+            Where Secrets Speak Freely.
+          </h1>
 
-        <h1
-          className="
+          <h1
+            className="
             text-[40px]
             font-primary
             font-bold 
@@ -156,22 +162,22 @@ const page = () => {
             capitalize
             md:text-6xl
           "
-        >
-          Hear what they never say out{" "}
-          <span
-            className="
+          >
+            Hear what they never say out{" "}
+            <span
+              className="
             bg-linear-to-r 
             from-accent-pink
             to-accent
             bg-clip-text 
             text-transparent
             "
-          >
-            loud.
-          </span>
-        </h1>
-        <p
-          className="
+            >
+              loud.
+            </span>
+          </h1>
+          <p
+            className="
             text-xl 
             text-text-alt
             font-secondary
@@ -181,18 +187,18 @@ const page = () => {
             px-2
             md:text-2xl
           "
-        >
-          Share your unique link and let anyone send you anonymous messages. No
-          names. No pressure.{" "}
-          <span className="font-bold capitalize">No BOT spamming.</span> Just
-          honest thoughts.
-        </p>
+          >
+            Share your unique link and let anyone send you anonymous messages.
+            No names. No pressure.{" "}
+            <span className="font-bold capitalize">No BOT spamming.</span> Just
+            honest thoughts.
+          </p>
 
-        <CreateProfileButton />
-      </div>
+          <CreateProfileButton />
+        </div>
+      </AnimationWrapper>
 
       {/* Feature Blocks */}
-
       <div
         className="
           w-full
@@ -210,7 +216,11 @@ const page = () => {
         "
       >
         {features.map((feature, index) => (
-          <AnimationWrapper key={index} index={index}>
+          <AnimationWrapper
+            key={index}
+            variants={cardAnimationConfig(index * 0.15)}
+            once={false}
+          >
             <span
               key={index}
               className="
