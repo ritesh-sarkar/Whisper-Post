@@ -10,7 +10,7 @@ const page = () => {
   return (
     <div
       className="
-        h-screen 
+        h-auto 
         felx 
         justify-center 
         items-center

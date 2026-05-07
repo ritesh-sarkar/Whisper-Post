@@ -141,14 +141,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-secondary);
+  background: var(--accent-primary);
   border-radius: 4px;
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--text-secondary) transparent;
+  scrollbar-color: var(--accent-primary) transparent;
 }
 
 .recharts-wrapper *:focus,
