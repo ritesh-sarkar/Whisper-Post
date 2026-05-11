@@ -166,11 +166,11 @@ const page = () => {
             Hear what they never say out{" "}
             <span
               className="
-            bg-linear-to-r 
-            from-accent-pink
-            to-accent
-            bg-clip-text 
-            text-transparent
+                bg-linear-to-r 
+                from-accent-pink
+                to-accent
+                bg-clip-text 
+                text-transparent
             "
             >
               loud.
@@ -189,9 +189,7 @@ const page = () => {
           "
           >
             Share your unique link and let anyone send you anonymous messages.
-            No names. No pressure.{" "}
-            <span className="font-bold capitalize">No BOT spamming.</span> Just
-            honest thoughts.
+            No names, No pressure, Just honest thoughts.
           </p>
 
           <CreateProfileButton />

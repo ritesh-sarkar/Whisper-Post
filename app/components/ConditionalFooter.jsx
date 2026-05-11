@@ -1,6 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
 
+//Custom libs and components
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { footerAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { FaGithub } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
@@ -33,7 +38,9 @@ const ConditionalFooter = () => {
   const pathname = usePathname();
   if (pathname === "/" || pathname === "/dashboard")
     return (
-      <footer
+      <AnimationWrapper
+        variants={footerAnimationConfig(0.2)}
+        once={false}
         className="
         border-t-2
         border-solid
@@ -113,7 +120,7 @@ const ConditionalFooter = () => {
             ))}
           </ul>
         </div>
-      </footer>
+      </AnimationWrapper>
     );
 };
 
