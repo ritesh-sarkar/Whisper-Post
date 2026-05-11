@@ -1,10 +1,17 @@
 "use client";
 
+// Custom components and libs
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { dashboardCardAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { FaRegMessage } from "react-icons/fa6";
 
 const TotalMessage = ({ messages }) => {
   return (
-    <div
+    <AnimationWrapper
+      variants={dashboardCardAnimationConfig(0.15)}
+      once ={false}
       className="
         w-full
         bg-bg-alt/50
@@ -63,7 +70,7 @@ const TotalMessage = ({ messages }) => {
       >
         {messages?.length}
       </span>
-    </div>
+    </AnimationWrapper>
   );
 };
 

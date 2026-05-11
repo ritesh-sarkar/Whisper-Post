@@ -1,10 +1,17 @@
 "use client";
 
+// Custom components and libs
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { dashboardCardAnimationConfig } from "@/lib/AnimationConfig";
+
+// icons
 import { GiProgression } from "react-icons/gi";
 
 const TodayMessage = ({ TodayMessage }) => {
   return (
-    <div
+    <AnimationWrapper
+      variants={dashboardCardAnimationConfig(0.15*2)}
+      once={false}
       className="
         w-full
         bg-bg-alt/50
@@ -64,7 +71,7 @@ const TodayMessage = ({ TodayMessage }) => {
       >
         {TodayMessage?.length}
       </span>
-    </div>
+    </AnimationWrapper>
   );
 };
 

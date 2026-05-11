@@ -1,17 +1,22 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+// Custom components
 import TotalMessage from "@/app/components/(dashboardComponent)/TotalMessage";
 import TodayMessage from "@/app/components/(dashboardComponent)/TodayMessage";
 import WeekMessage from "@/app/components/(dashboardComponent)/WeekMessage";
 import LinkPart from "@/app/components/(dashboardComponent)/LinkPart";
 import Messages from "@/app/components/(dashboardComponent)/Messages";
 import Graph from "@/app/components/(dashboardComponent)/Graph";
-
 import { fetchMessagesByUser } from "@/lib/FetchMessageByUser";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { isToday, isThisWeek } from "@/lib/DateCountLogic";
+
+// Animation part
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { dashboardLinkPartAnimationConfig, dashboardCardAnimationConfig } from "@/lib/AnimationConfig";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -77,7 +82,9 @@ const Dashboard = () => {
         "
       >
         {/* Link part */}
-        <div
+        <AnimationWrapper
+          variants={dashboardLinkPartAnimationConfig(0.2)}
+          once={false}
           className="
             w-full
             h-full
@@ -85,7 +92,7 @@ const Dashboard = () => {
           "
         >
           <LinkPart />
-        </div>
+        </AnimationWrapper>
 
         {/* Card and graph part */}
         <div
@@ -116,7 +123,9 @@ const Dashboard = () => {
           </div>
 
           {/* Graph */}
-          <div
+          <AnimationWrapper
+            variants={dashboardCardAnimationConfig(0.15*5)}
+            once={false}
             className="
               w-full
               bg-bg-alt/50
@@ -142,11 +151,9 @@ const Dashboard = () => {
               Activity Overview
             </h1>
             <Graph />
-          </div>
+          </AnimationWrapper>
         </div>
       </div>
-
-
 
       {/* Messages Card */}
 

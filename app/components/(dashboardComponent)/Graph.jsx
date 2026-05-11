@@ -1,5 +1,10 @@
 "use client";
 
+// Custom components and libs
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { dashboardCardAnimationConfig } from "@/lib/AnimationConfig";
+
+// Recharts components
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
@@ -14,9 +19,9 @@ const data = [
 
 export default function CardinalAreaChart() {
   return (
-    <div 
+    <div
       className="
-        w-full 
+        w-full
         max-w-225 
         h-48
         md:h-75
@@ -24,7 +29,10 @@ export default function CardinalAreaChart() {
         "
     >
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+        >
           <defs>
             <linearGradient id="customGradient" x1="0" y1="0" x2="0" y2="1">
               <stop stopColor="#7c3aed" offset="5%" stopOpacity="1" />
