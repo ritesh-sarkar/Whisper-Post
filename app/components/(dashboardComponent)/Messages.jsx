@@ -5,6 +5,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
+// Custom libs and components
+import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import { messageCardAnimationConfig } from "@/lib/AnimationConfig";
+
 // icons
 import { TiPinOutline } from "react-icons/ti";
 import { FaRegHeart, FaRegMessage } from "react-icons/fa6";
@@ -17,6 +21,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
   const [pinned, setPinned] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(true);
 
+  // session part
   const { data: session } = useSession();
 
   const selectedRef = useRef(null);
@@ -86,7 +91,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
       setDeleting(null);
     }
   };
-  
 
   const handleSnapDownload = async () => {
     if (!selectedRef.current) return;
@@ -162,13 +166,13 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
 
   // control section handler
   const handleControlsToggle = (clickedMessageId) => {
-    setControlsOpen((prev) => 
-      prev === clickedMessageId ? null : clickedMessageId
+    setControlsOpen((prev) =>
+      prev === clickedMessageId ? null : clickedMessageId,
     );
   };
 
-  // Message filter
 
+  // Message filter
   const normalMessages = messages.filter((msg) => !msg.pinned);
   const pinnedMessages = messages.filter((msg) => msg.pinned);
 
@@ -177,14 +181,22 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     const isBeingDeleted = deleting === msg.id;
 
     return (
-      <div
+      <AnimationWrapper
+        variants={messageCardAnimationConfig(0.2)}
+        once={false}
         key={msg.id}
-        onClick={() => {
-          toggleIsNew(msg.id);
-          handleControlsToggle(msg.id);
-        }}
-        className={clsx(
-          `
+        className="
+          w-full
+        "
+      >
+        <div
+          key={msg.id}
+          onClick={() => {
+            toggleIsNew(msg.id);
+            handleControlsToggle(msg.id);
+          }}
+          className={clsx(
+            `
               w-full
               bg-bg-alt
               rounded-xl
@@ -195,18 +207,17 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               transition
               duration-300
               ease-in-out
-              relative
-              
+              relative   
               hover:bg-bg-glass
               cursor-pointer
               `,
-          msg.isNew && "newMessage hover:bg-bg",
-          isBeingDeleted && "opacity-0 blur-2xl scale-95",
-        )}
-      >
-        {/* Mood, Hint and time part  */}
-        <div
-          className="
+            msg.isNew && "newMessage hover:bg-bg",
+            isBeingDeleted && "opacity-0 blur-2xl scale-95",
+          )}
+        >
+          {/* Mood, Hint and time part  */}
+          <div
+            className="
               w-full
               font-primary
               text-text-alt
@@ -217,10 +228,10 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               relative
               mb-3
             "
-        >
-          {/* Mood and hint part */}
-          <span
-            className="
+          >
+            {/* Mood and hint part */}
+            <span
+              className="
                     w-3/4
                     flex
                     items-center
@@ -228,9 +239,9 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     gap-5
                     text-xs
                   "
-          >
-            <h1
-              className={`
+            >
+              <h1
+                className={`
                       p-1.5
                       rounded-lg
                       capitalize
@@ -248,83 +259,82 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                                     : ""
                         }
                       `}
-            >
-              {msg.mood}
-            </h1>
+              >
+                {msg.mood}
+              </h1>
 
-            <h1
-              className="
+              <h1
+                className="
                       bg-bg-glass
                       p-1.5
                       rounded-lg
                       font-semibold
                       capitalize
                     "
-            >
-              Hint: {msg.hint?.trim() ? msg.hint : "N/A"}
-            </h1>
-          </span>
+              >
+                Hint: {msg.hint?.trim() ? msg.hint : "N/A"}
+              </h1>
+            </span>
 
-          {/* Time part */}
-          <span
-            className="
+            {/* Time part */}
+            <span
+              className="
                   w-1/4
                   flex
                   items-center
                   justify-end
                   text-sm
                 "
-          >
-            {getTimeAgo(msg.createdAt)}
-          </span>
-        </div>
-        <p>{msg.message}</p>
+            >
+              {getTimeAgo(msg.createdAt)}
+            </span>
+          </div>
+          <p>{msg.message}</p>
 
-        {/* Control part */}
-
-        <span
-          className={`
-                w-full
-                max-h-0
-                overflow-hidden
-                opacity-0
-                transition-all
-                duration-300
-                ease-in-out
-                flex
-                gap-2
-                items-center
-                justify-between
-                text-text-alt
-                border-t-2
-                border-border
-                mt-0
-                pt-0
+          {/* Control part */}
+          <span
+            className={`
+              w-full
+              max-h-0
+              overflow-hidden
+              opacity-0
+              transition-all
+              duration-300
+              ease-in-out
+              flex
+              gap-2
+              items-center
+              justify-between
+              text-text-alt
+              border-t-2
+              border-border
+              mt-0
+              pt-0
                 ${
                   controlsOpen === msg.id
                     ? "max-h-40 opacity-100 mt-5 pt-3"
                     : "max-h-0 opacity-0 pt-0 mt-0"
                 }
               `}
-        >
-          {/* Pin and love button part */}
-          <span
-            className="
+          >
+            {/* Pin and love button part */}
+            <span
+              className="
                     w-1/2
                     flex
                     items-center
                     justify-start
                     gap-5
                   "
-          >
-            {/* Pin button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                // togglePinned(msg.id);
-              }}
-              className={clsx(
-                `
+            >
+              {/* Pin button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // togglePinned(msg.id);
+                }}
+                className={clsx(
+                  `
                     h-8
                     w-8
                     rounded-md
@@ -338,20 +348,20 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     ease-in-out
                     hover:text-[#fde047]
                   `,
-                msg.pinned && "pinned",
-              )}
-            >
-              <TiPinOutline className="text-2xl" />
-            </button>
+                  msg.pinned && "pinned",
+                )}
+              >
+                <TiPinOutline className="text-2xl" />
+              </button>
 
-            {/* Love button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleLoved(msg.id);
-              }}
-              className={clsx(
-                `
+              {/* Love button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLoved(msg.id);
+                }}
+                className={clsx(
+                  `
                     rounded-md
                     flex
                     justify-center
@@ -363,16 +373,16 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     ease-in-out
                     hover:text-accent-pink
                   `,
-                msg.loved && "loved",
-              )}
-            >
-              <FaRegHeart />
-            </button>
-          </span>
+                  msg.loved && "loved",
+                )}
+              >
+                <FaRegHeart />
+              </button>
+            </span>
 
-          {/* Download and delete button part */}
-          <span
-            className="
+            {/* Download and delete button part */}
+            <span
+              className="
                     w-1/2
                     flex
                     items-center
@@ -380,14 +390,14 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     gap-5
                     
                   "
-          >
-            {/* Download button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                // downloadMessage(msg.id);
-              }}
-              className="
+            >
+              {/* Download button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // downloadMessage(msg.id);
+                }}
+                className="
                       w-8
                       h-8
                       bg-bg-glass
@@ -405,17 +415,17 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                       hover:border-text-alt
                       
                     "
-            >
-              <FiDownload className="text-xl" />
-            </button>
+              >
+                <FiDownload className="text-xl" />
+              </button>
 
-            {/* Delete button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                messageDelete(msg.id);
-              }}
-              className="
+              {/* Delete button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  messageDelete(msg.id);
+                }}
+                className="
                     w-8
                     h-8
                     bg-red-600/10
@@ -430,14 +440,16 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     active:scale-90
                     hover:bg-red-600/20
                   "
-            >
-              <MdDeleteForever className="text-2xl text-red-600" />
-            </button>
+              >
+                <MdDeleteForever className="text-2xl text-red-600" />
+              </button>
+            </span>
           </span>
-        </span>
-      </div>
+        </div>
+      </AnimationWrapper>
     );
   };
+
 
   // pinned message part
   return (
