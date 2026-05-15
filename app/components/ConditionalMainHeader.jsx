@@ -879,7 +879,7 @@ const ConditionalMainHeader = () => {
                       gap-3
                     "
                   >
-                    <p
+                    <span
                       className="
                         text-base
                         font-secondary
@@ -936,7 +936,7 @@ const ConditionalMainHeader = () => {
                       >
                         This action is irreversible.
                       </span>
-                    </p>
+                    </span>
 
                     <h1 className="font-primary">
                       To confirm, type "{" "}

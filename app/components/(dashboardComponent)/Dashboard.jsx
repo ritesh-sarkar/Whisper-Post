@@ -16,7 +16,10 @@ import { isToday, isThisWeek } from "@/lib/DateCountLogic";
 
 // Animation part
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
-import { dashboardLinkPartAnimationConfig, dashboardCardAnimationConfig } from "@/lib/AnimationConfig";
+import {
+  dashboardLinkPartAnimationConfig,
+  dashboardCardAnimationConfig,
+} from "@/lib/AnimationConfig";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -124,7 +127,7 @@ const Dashboard = () => {
 
           {/* Graph */}
           <AnimationWrapper
-            variants={dashboardCardAnimationConfig(0.15*5)}
+            variants={dashboardCardAnimationConfig(0.15 * 5)}
             once={false}
             className="
               w-full
