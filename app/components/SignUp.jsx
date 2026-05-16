@@ -28,7 +28,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [verifyBanner, setVerifyBanner] = useState(false);
+  const [verifyBanner, setVerifyBanner] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -479,7 +479,18 @@ const SignUp = () => {
       {verifyBanner && (
         <div
           className="
+            w-full
+            h-screen
+            flex
+            items-center
+            justify-center
+            p-0
+          "
+        >
+          <div
+            className="
             w-9/10
+            h-auto
             max-w-150
             mx-auto
             flex
@@ -497,9 +508,9 @@ const SignUp = () => {
             md:py-6
             md:px-5
           "
-        >
-          <h1
-            className="
+          >
+            <h1
+              className="
               font-primary
               text-2xl
               font-semibold
@@ -507,12 +518,12 @@ const SignUp = () => {
               md:text-3xl
               md:leading-tight
             "
-          >
-            A verification link has been sent to your email.
-          </h1>
+            >
+              A verification link has been sent to your email.
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
               font-secondary
               text-text-alt
               md:text-lg
@@ -520,13 +531,15 @@ const SignUp = () => {
               md:leading-snug
               md:tracking-wide
             "
-          >
-            Please check your email and verify your account to continue.
-          </p>
+            >
+              Please check your email and verify your account to continue.
+            </p>
+          </div>
         </div>
       )}
     </div>
   );
 };
+
 
 export default SignUp;

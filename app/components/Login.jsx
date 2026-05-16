@@ -23,6 +23,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [verificationStaus, setverificationStaus] = useState(true);
 
   const router = useRouter();
 
@@ -43,6 +44,10 @@ const Login = () => {
 
       if (loginRequest?.error) {
         toast.error(loginRequest.error);
+        if (loginRequest.error) {
+          setverificationStaus(false);
+          console.log(loginRequest.error); //TODO: Console debug
+        }
       }
     } catch (error) {
       toast.error(error.message);
@@ -132,6 +137,7 @@ const Login = () => {
           "
         >
           {/* Heading Animation */}
+
           <AnimationWrapper
             variants={anonymousMessageHeadingAnimationConfig(0.2)}
             once={false}
@@ -383,6 +389,87 @@ const Login = () => {
           </form>
         </AnimationWrapper>
       </div>
+
+      {verificationStaus && (
+        <div
+          className="
+        fixed
+        inset-0
+        z-50
+        flex
+        items-center
+        justify-center
+        bg-black/40
+        backdrop-blur-sm
+        p-4
+      "
+        >
+          <div
+            className="
+          w-full
+          max-w-md
+          bg-bg-glass
+          border
+          border-border
+          rounded-3xl
+          p-6
+          flex
+          flex-col
+          items-center
+          justify-center
+          gap-5
+          text-center
+          shadow-2xl
+        "
+          >
+            {/* Heading */}
+            <h1
+              className="
+            text-2xl
+            font-primary
+            font-bold
+            text-text
+          "
+            >
+              Account Not Verified
+            </h1>
+
+            {/* Description */}
+            <p
+              className="
+            text-text-alt
+            font-secondary
+            leading-relaxed
+          "
+            >
+              Your account has not been verified yet. Please verify your account
+              before logging in.
+            </p>
+
+            {/* Verify Button */}
+            <button
+              onClick={() => router.push("/verify-account")}
+              className="
+            px-6
+            py-2.5
+            rounded-xl
+            bg-text
+            text-bg
+            font-primary
+            font-semibold
+            transition-all
+            duration-300
+            ease-in-out
+            hover:scale-105
+            active:scale-95
+            cursor-pointer
+          "
+            >
+              Verify Account
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
