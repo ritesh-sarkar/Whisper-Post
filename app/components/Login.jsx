@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
 import toast from "react-hot-toast";
 
 //Custom libs and components
@@ -25,6 +26,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [verificationStaus, setverificationStaus] = useState(true);
 
+
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -44,7 +46,7 @@ const Login = () => {
 
       if (loginRequest?.error) {
         toast.error(loginRequest.error);
-        if (loginRequest.error) {
+        if (loginRequest.error === "User is not varified yet!") {
           setverificationStaus(false);
           console.log(loginRequest.error); //TODO: Console debug
         }
@@ -56,9 +58,29 @@ const Login = () => {
     }
   };
 
+
+  //Handle login with google
   const handleGoogleLogin = () => {
     signIn("google", { callbackUrl: "/dashboard" });
   };
+
+  //Hanlde sending verification email
+
+  const handleVerifiaction = async () => {
+    try {
+          const res = await axios.post("/api/resend-verification-email", {
+            email
+          });
+    
+          if (res.status === 200) {
+            console.log(res.data.message);
+            console.log(res.status);
+            
+          }
+        } catch (error) {
+          toast.error(error.response?.data?.message || error.message);
+        }
+      };
 
   if (loading) return <LoaderComponent state={"Logging in"} />;
 
@@ -390,57 +412,61 @@ const Login = () => {
         </AnimationWrapper>
       </div>
 
-      {verificationStaus && (
+      {!verificationStaus && (
         <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setverificationStaus(true);
+          }}
           className="
-        fixed
-        inset-0
-        z-50
-        flex
-        items-center
-        justify-center
-        bg-black/40
-        backdrop-blur-sm
-        p-4
-      "
+            fixed
+            inset-0
+            z-50
+            flex
+            items-center
+            justify-center
+          bg-black/40
+            backdrop-blur-sm
+            p-4
+          "
         >
           <div
             className="
-          w-full
-          max-w-md
-          bg-bg-glass
-          border
-          border-border
-          rounded-3xl
-          p-6
-          flex
-          flex-col
-          items-center
-          justify-center
-          gap-5
-          text-center
-          shadow-2xl
-        "
+              w-full
+              max-w-md
+              bg-bg-glass
+              border
+              border-border
+              rounded-3xl
+              p-6
+              flex
+              flex-col
+              items-center
+              justify-center
+              gap-5
+              text-center
+              shadow-2xl
+            "
           >
             {/* Heading */}
             <h1
               className="
-            text-2xl
-            font-primary
-            font-bold
-            text-text
-          "
+                text-2xl
+                font-primary
+                font-bold
+                text-text
+              "
             >
-              Account Not Verified
+              Account Not Verified!
             </h1>
 
             {/* Description */}
             <p
               className="
-            text-text-alt
-            font-secondary
-            leading-relaxed
-          "
+                text-text-alt
+                font-secondary
+                leading-relaxed
+              "
             >
               Your account has not been verified yet. Please verify your account
               before logging in.
@@ -448,22 +474,33 @@ const Login = () => {
 
             {/* Verify Button */}
             <button
-              onClick={() => router.push("/verify-account")}
+              onClick={handleVerifiaction} //TODO: Add verify account functionality
               className="
-            px-6
-            py-2.5
-            rounded-xl
-            bg-text
-            text-bg
-            font-primary
-            font-semibold
-            transition-all
-            duration-300
-            ease-in-out
-            hover:scale-105
-            active:scale-95
-            cursor-pointer
-          "
+                text-center
+                text-lg
+                font-primary
+                font-semibold
+                text-bg
+                bg-text
+                flex
+                justify-center
+                items-center
+                px-5
+                py-1.5
+                my-4
+                rounded-xl
+                transition-all
+                duration-300
+                ease-in-out
+                hover:tracking-wide
+                hover:gap-2
+                hover:bg-linear-to-br
+                hover:from-accent-primary/20
+                hover:via-accent/20
+                hover:to-accent-pink/20
+                active:scale-95
+                cursor-pointer
+              "
             >
               Verify Account
             </button>
