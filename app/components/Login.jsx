@@ -73,9 +73,7 @@ const Login = () => {
           });
     
           if (res.status === 200) {
-            console.log(res.data.message);
-            console.log(res.status);
-            
+            toast.success(res.data.message);
           }
         } catch (error) {
           toast.error(error.response?.data?.message || error.message);
