@@ -171,7 +171,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     );
   };
 
-
   // Message filter
   const normalMessages = messages.filter((msg) => !msg.pinned);
   const pinnedMessages = messages.filter((msg) => msg.pinned);
@@ -450,7 +449,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     );
   };
 
-
   // pinned message part
   return (
     <div className="relative">
@@ -469,13 +467,22 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               capitalize
             "
           >
-            <TiPinOutline className="text-xl -rotate-45" />
+            <TiPinOutline
+              className="
+              text-xl 
+              -rotate-45"
+            />
             Pinned messages
           </h1>
           {pinnedMessages.map(renderMessage)}
         </div>
       )}
-      <div className="mt-10 lg:mt-14">
+      <div
+        className="
+          mt-10 
+          lg:mt-14
+          "
+      >
         <h1
           className="
               w-full
@@ -490,7 +497,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
             "
         >
           <FaRegMessage className="text-lg" />
-          Recent messages
+          {normalMessages.length>0 ? "Messages" : "No messages"}
         </h1>
         {normalMessages.map(renderMessage)}
       </div>

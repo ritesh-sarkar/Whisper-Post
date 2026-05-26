@@ -28,7 +28,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [verifyBanner, setVerifyBanner] = useState(true);
+  const [verifyBanner, setVerifyBanner] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {

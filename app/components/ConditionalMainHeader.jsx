@@ -249,7 +249,7 @@ const ConditionalMainHeader = () => {
         className="
           fixed
           top-0 
-          z-10 
+          z-15
           w-full
           bg-transparent
           backdrop-blur-2xl

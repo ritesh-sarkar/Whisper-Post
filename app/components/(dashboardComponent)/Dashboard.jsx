@@ -13,7 +13,7 @@ import Messages from "@/app/components/(dashboardComponent)/Messages";
 import Graph from "@/app/components/(dashboardComponent)/Graph";
 import { fetchMessagesByUser } from "@/lib/FetchMessageByUser";
 import { isToday, isThisWeek } from "@/lib/DateCountLogic";
-
+import StoryCard from "@/app/components/(dashboardComponent)/StoryCard";
 // Animation part
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 import {
@@ -95,6 +95,7 @@ const Dashboard = () => {
           "
         >
           <LinkPart />
+          
         </AnimationWrapper>
 
         {/* Card and graph part */}
@@ -215,6 +216,7 @@ const Dashboard = () => {
           />
         </div>
       </div>
+      <StoryCard />
     </div>
   );
 };
