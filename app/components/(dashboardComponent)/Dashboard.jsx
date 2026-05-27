@@ -63,7 +63,6 @@ const Dashboard = () => {
         p-2
         mt-20
         md:p-5
-        lg:max-w-85/100
         lg:mt-30
       "
     >
@@ -81,7 +80,8 @@ const Dashboard = () => {
           gap-12
           lg:flex-row
           lg:items-center
-          lg:justify-center  
+          lg:justify-center
+          lg:max-w-85/100
         "
       >
         {/* Link part */}
@@ -95,7 +95,6 @@ const Dashboard = () => {
           "
         >
           <LinkPart />
-          
         </AnimationWrapper>
 
         {/* Card and graph part */}
@@ -159,8 +158,60 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Messages Card */}
+      {/* Story Card Part */}
+      <div
+        className="
+          md:w-95/100
+          flex
+          flex-col
+          items-start
+          justify-center
+          bg-bg
+          border
+          border-border
+          rounded-3xl
+          md:px-3
+          py-4
+          pb-6
+          mt-16
+          backdrop-blur-xl
+        "
+      >
+        <div
+          className="
+              space-y-2
+              px-6
+            "
+        >
+          <h1
+            className="
+                text-3xl
+                md:text-4xl
+                font-bold
+                bg-linear-to-r
+                from-accent
+                via-accent-alt
+                to-accent-pink
+                bg-clip-text
+                text-transparent
+              "
+          >
+            Story Card Builder
+          </h1>
 
+          <p
+            className="
+                text-sm
+                text-text-alt
+              "
+          >
+            Customize your WhisperPost story card.
+          </p>
+        </div>
+        <StoryCard />
+      </div>
+
+      {/* Messages Card */}
       <div
         className="
           w-9/10
@@ -173,6 +224,7 @@ const Dashboard = () => {
           py-4
           pb-6
           backdrop-blur-xl
+          lg:max-w-85/100
         "
       >
         <h1
@@ -216,7 +268,6 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      <StoryCard />
     </div>
   );
 };

@@ -155,3 +155,19 @@
 .recharts-wrapper *:focus-visible {
   outline: none !important;
 }
+
+.disabled-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Firefox */
+.disabled-scrollbar {
+  scrollbar-width: none;
+}
+
+/* IE/Edge */
+.disabled-scrollbar {
+  -ms-overflow-style: none;
+}

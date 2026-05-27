@@ -92,7 +92,7 @@ const StoryCard = () => {
       const dynamicImage = session?.user?.profilePicture || "";
 
       setProfileLink(dynamicLink);
-      setProfileImage("/profile.png");
+      setProfileImage("/profile.png"); //TODO: Add dynamic image link here
       setUsername(session.user.username);
     }
   }, [session]);
@@ -103,7 +103,7 @@ const StoryCard = () => {
 
   const [config, setConfig] = useState({
     title: "Drop me anonymous messages 👀",
-    subtitle: "Tap the link sticker or scan the QR",
+    subtitle: "Add IG link sticker here.",
     gradientType: "linear",
     gradientDirection: "135deg",
     primaryColor: "#7c3aed",
@@ -184,12 +184,11 @@ const StoryCard = () => {
 
       link.click();
 
-      toast.success("Downloaded successfully!", {
+      toast.success("Downloading image...", {
         id: loadingToast,
       });
     } catch (error) {
       console.error(error);
-
       toast.error("Failed to generate image", {
         id: loadingToast,
       });
@@ -199,7 +198,6 @@ const StoryCard = () => {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(profileLink);
-
       toast.success("Profile link copied");
     } catch (error) {
       console.error(error);
@@ -209,7 +207,6 @@ const StoryCard = () => {
   const nativeShare = async () => {
     if (!navigator.share) {
       toast.error("Sharing not supported on this device");
-
       return;
     }
 
@@ -237,12 +234,12 @@ const StoryCard = () => {
       cardGlass: true,
       glowIntensity: 50,
       fontFamily: "'Space Grotesk', sans-serif",
-      titleSize: 52,
+      titleSize: 50,
       titleWeight: 700,
       textAlign: "center",
       showQR: true,
       qrColor: "#000000",
-      qrSize: 120,
+      qrSize: 100,
       showProfile: true,
       profileGlow: true,
     });
@@ -252,7 +249,6 @@ const StoryCard = () => {
     <div
       className="
         w-full
-        min-h-screen
         bg-bg
         text-text
         font-secondary
@@ -261,14 +257,15 @@ const StoryCard = () => {
         flex
         gap-6
         flex-col
+        justify-center
         md:flex-row
-        md:px-6
-        md:gap-8
+        md:px-6    
       "
     >
       <div
         className="
           w-full
+          md:w-1/2
           max-w-450
           mx-auto
           gap-8
@@ -283,12 +280,12 @@ const StoryCard = () => {
         <div
           className="     
             w-full
+            h-auto
             flex
             flex-col
             items-center
             gap-6
-            lg:sticky
-            lg:top-8
+            relative
             "
         >
           <motion.div
@@ -312,14 +309,15 @@ const StoryCard = () => {
                 w-full
                 max-w-125
                 rounded-3xl
-                overflow-hidden
+                overflow-hidden 
               "
             >
               <div
                 className="
                   relative
                   aspect-9/16
-                  overflow-hidden
+                  overflow-y-scroll
+                  disabled-scrollbar
                 "
                 style={{
                   background: gradientStyle,
@@ -358,14 +356,6 @@ const StoryCard = () => {
                 />
 
                 <div
-                  className={`
-                    absolute
-                    inset-0
-                    ${config.cardGlass ? "backdrop-blur-md bg-black/10" : ""}
-                  `}
-                />
-
-                <div
                   className="
                     relative
                     z-10
@@ -374,7 +364,7 @@ const StoryCard = () => {
                     flex-col
                     justify-between
                     items-center
-                    p-8
+                    p-6
                     md:p-10
                   "
                 >
@@ -397,6 +387,7 @@ const StoryCard = () => {
                         text-xs
                         tracking-[0.3em]
                         uppercase
+                        mb-4
                       "
                     >
                       WhisperPost
@@ -546,6 +537,7 @@ const StoryCard = () => {
         }}
         className="
             w-full
+            md:w-7/10
             bg-bg
             backdrop-blur-2xl
             border
@@ -555,47 +547,26 @@ const StoryCard = () => {
             md:sticky
             md:top-6
             space-y-8
+            md:flex
+            md:justify-between
+            md:gap-8
           "
       >
         <div
           className="
-              space-y-2
+            w-full
+            space-y-6 
+            md:w-1/2
             "
         >
-          <h1
+          {/* TITLE */}
+          <div
             className="
-                text-3xl
-                md:text-4xl
-                font-bold
-                bg-linear-to-r
-                from-accent
-                via-accent-alt
-                to-accent-pink
-                bg-clip-text
-                text-transparent
-              "
-          >
-            Story Card Builder
-          </h1>
-
-          <p
-            className="
-                text-sm
-                text-text-alt
-              "
-          >
-            Customize your WhisperPost story card.
-          </p>
-        </div>
-
-        {/* TITLE */}
-        <div
-          className="
               space-y-3
             "
-        >
-          <label
-            className="
+          >
+            <label
+              className="
                 text-sm
                 text-text-alt
                 font-bold
@@ -603,14 +574,14 @@ const StoryCard = () => {
                 tracking-widest
                 pl-2
               "
-          >
-            Title
-          </label>
+            >
+              Title
+            </label>
 
-          <input
-            value={config.title}
-            onChange={(e) => updateConfig("title", e.target.value)}
-            className="
+            <input
+              value={config.title}
+              onChange={(e) => updateConfig("title", e.target.value)}
+              className="
                 w-full
                 bg-bg-alt
                 border
@@ -622,17 +593,17 @@ const StoryCard = () => {
                 backdrop-blur-xl
                 mt-2
               "
-          />
-        </div>
+            />
+          </div>
 
-        {/* SUBTITLE */}
-        <div
-          className="
+          {/* SUBTITLE */}
+          <div
+            className="
               space-y-3
             "
-        >
-          <label
-            className="
+          >
+            <label
+              className="
                 text-sm
                 text-text-alt
                 font-bold
@@ -640,15 +611,15 @@ const StoryCard = () => {
                 tracking-widest
                 pl-2
               "
-          >
-            Subtitle
-          </label>
+            >
+              Subtitle
+            </label>
 
-          <input
-            type="text"
-            value={config.subtitle}
-            onChange={(e) => updateConfig("subtitle", e.target.value)}
-            className="
+            <input
+              type="text"
+              value={config.subtitle}
+              onChange={(e) => updateConfig("subtitle", e.target.value)}
+              className="
                 w-full
                 bg-bg-alt
                 border
@@ -659,86 +630,86 @@ const StoryCard = () => {
                 backdrop-blur-xl
                 mt-2
               "
-          />
-        </div>
-
-        {/* COLORS */}
-        <div
-          className="
-              space-y-4
-            "
-        >
-          <h2
-            className="
-                text-lg
-                font-semibold
-                font-primary
-              "
-          >
-            Colors
-          </h2>
-
-          <div
-            className="
-                grid
-                grid-cols-2
-                gap-4
-              "
-          >
-            <ColorInput
-              label="Primary"
-              value={config.primaryColor}
-              onChange={(val) => updateConfig("primaryColor", val)}
-            />
-
-            <ColorInput
-              label="Secondary"
-              value={config.secondaryColor}
-              onChange={(val) => updateConfig("secondaryColor", val)}
-            />
-
-            <ColorInput
-              label="Accent"
-              value={config.accentColor}
-              onChange={(val) => updateConfig("accentColor", val)}
-            />
-
-            <ColorInput
-              label="Text"
-              value={config.textColor}
-              onChange={(val) => updateConfig("textColor", val)}
             />
           </div>
-        </div>
 
-        {/* QUICK PALETTE */}
-        <div
-          className="
+          {/* COLORS */}
+          <div
+            className="
               space-y-4
             "
-        >
-          <h2
-            className="
+          >
+            <h2
+              className="
                 text-lg
                 font-semibold
                 font-primary
               "
-          >
-            Quick Palettes
-          </h2>
+            >
+              Colors
+            </h2>
 
-          <div
-            className="
+            <div
+              className="
                 grid
                 grid-cols-2
                 gap-4
               "
+            >
+              <ColorInput
+                label="Primary"
+                value={config.primaryColor}
+                onChange={(val) => updateConfig("primaryColor", val)}
+              />
+
+              <ColorInput
+                label="Secondary"
+                value={config.secondaryColor}
+                onChange={(val) => updateConfig("secondaryColor", val)}
+              />
+
+              <ColorInput
+                label="Accent"
+                value={config.accentColor}
+                onChange={(val) => updateConfig("accentColor", val)}
+              />
+
+              <ColorInput
+                label="Text"
+                value={config.textColor}
+                onChange={(val) => updateConfig("textColor", val)}
+              />
+            </div>
+          </div>
+
+          {/* QUICK PALETTE */}
+          <div
+            className="
+              space-y-4
+            "
           >
-            {PRESET_PALETTES.map((palette) => (
-              <button
-                key={palette.name}
-                onClick={() => applyPalette(palette)}
-                className="
+            <h2
+              className="
+                text-lg
+                font-semibold
+                font-primary
+              "
+            >
+              Quick Palettes
+            </h2>
+
+            <div
+              className="
+                grid
+                grid-cols-2
+                gap-4
+              "
+            >
+              {PRESET_PALETTES.map((palette) => (
+                <button
+                  key={palette.name}
+                  onClick={() => applyPalette(palette)}
+                  className="
                       relative
                       overflow-hidden
                       rounded-2xl
@@ -750,59 +721,72 @@ const StoryCard = () => {
                       hover:scale-[1.03]
                       cursor-pointer
                     "
-                style={{
-                  background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
-                }}
-              >
-                <div
-                  className="
+                  style={{
+                    background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
+                  }}
+                >
+                  <div
+                    className="
                         absolute
                         inset-0
                         bg-bg/20
                         w-full
                         h-full
                       "
-                />
+                  />
 
-                <span
-                  className="
+                  <span
+                    className="
                         relative
                         z-10
                         text-sm
                         font-semibold
                       "
-                >
-                  {palette.name}
-                </span>
-              </button>
-            ))}
+                  >
+                    {palette.name}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* FONT DROPDOWN */}
         <div
           className="
-              space-y-4
+            space-y-6 
+            md:w-1/2
             "
         >
-          <h2
+          <div
             className="
+              space-y-4
+            "
+          >
+            <h2
+              className="
                 text-lg
                 font-semibold
                 font-primary
+                md:text-sm
+                md:font-bold
+                md:uppercase
+                md:text-text-alt
+                md:tracking-widest
+                md:font-secondary
               "
-          >
-            Typography
-          </h2>
+            >
+              Typography
+            </h2>
 
-          <div
-            className="
+            <div
+              className="
                 relative
               "
-          >
-            <button
-              onClick={() => setFontDropdown(!fontDropdown)}
-              className="
+            >
+              <button
+                onClick={() => setFontDropdown(!fontDropdown)}
+                className="
                   w-full
                   flex
                   items-center
@@ -815,34 +799,37 @@ const StoryCard = () => {
                   px-5
                   py-4
                 "
-            >
-              <span
-                style={{
-                  fontFamily: config.fontFamily,
-                }}
               >
-                {FONT_OPTIONS.find((f) => f.value === config.fontFamily)?.name}
-              </span>
+                <span
+                  style={{
+                    fontFamily: config.fontFamily,
+                  }}
+                >
+                  {
+                    FONT_OPTIONS.find((f) => f.value === config.fontFamily)
+                      ?.name
+                  }
+                </span>
 
-              <FaChevronDown />
-            </button>
+                <FaChevronDown />
+              </button>
 
-            <AnimatePresence>
-              {fontDropdown && (
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: 10,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: 10,
-                  }}
-                  className="
+              <AnimatePresence>
+                {fontDropdown && (
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    className="
                       absolute
                       top-[110%]
                       left-0
@@ -855,19 +842,19 @@ const StoryCard = () => {
                       overflow-hidden
                       z-50
                     "
-                >
-                  {FONT_OPTIONS.map((font) => (
-                    <button
-                      key={font.name}
-                      onClick={() => {
-                        updateConfig("fontFamily", font.value);
+                  >
+                    {FONT_OPTIONS.map((font) => (
+                      <button
+                        key={font.name}
+                        onClick={() => {
+                          updateConfig("fontFamily", font.value);
 
-                        setFontDropdown(false);
-                      }}
-                      style={{
-                        fontFamily: font.value,
-                      }}
-                      className="
+                          setFontDropdown(false);
+                        }}
+                        style={{
+                          fontFamily: font.value,
+                        }}
+                        className="
                             w-full
                             text-left
                             px-5
@@ -877,137 +864,137 @@ const StoryCard = () => {
                             hover:bg-border
                             cursor-pointer
                           "
-                    >
-                      {font.name}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                      >
+                        {font.name}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
-          <div
-            className="
+            <div
+              className="
                 space-y-2
               "
-          >
-            <label
-              className="
+            >
+              <label
+                className="
                   text-sm
                   text-text-alt
                 "
-            >
-              Title Size
-            </label>
+              >
+                Title Size
+              </label>
 
-            <input
-              type="range"
-              min={32}
-              max={80}
-              value={config.titleSize}
-              onChange={(e) =>
-                updateConfig("titleSize", Number(e.target.value))
-              }
-              className="
+              <input
+                type="range"
+                min={32}
+                max={80}
+                value={config.titleSize}
+                onChange={(e) =>
+                  updateConfig("titleSize", Number(e.target.value))
+                }
+                className="
                   w-full
                   cursor-pointer
                 "
-            />
-          </div>
+              />
+            </div>
 
-          <div
-            className="
+            <div
+              className="
                 space-y-2
               "
-          >
-            <label
-              className="
+            >
+              <label
+                className="
                   text-sm
                   text-text-alt
                 "
-            >
-              Glow Intensity
-            </label>
+              >
+                Glow Intensity
+              </label>
 
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={config.glowIntensity}
-              onChange={(e) =>
-                updateConfig("glowIntensity", Number(e.target.value))
-              }
-              className="
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={config.glowIntensity}
+                onChange={(e) =>
+                  updateConfig("glowIntensity", Number(e.target.value))
+                }
+                className="
                   w-full
                   cursor-pointer
                 "
-            />
+              />
+            </div>
           </div>
-        </div>
 
-        {/* TOGGLES */}
-        <div
-          className="
+          {/* TOGGLES */}
+          <div
+            className="
               space-y-4
             "
-        >
-          <h2
-            className="
+          >
+            <h2
+              className="
                 font-primary
                 text-lg
                 font-semibold
               "
-          >
-            Controls
-          </h2>
+            >
+              Controls
+            </h2>
 
-          <ToggleButton
-            active={config.showQR}
-            onClick={() => updateConfig("showQR", !config.showQR)}
-            label="QR Code"
-            icon={config.showQR ? <FaEye /> : <FaEyeSlash />}
-          />
+            <ToggleButton
+              active={config.showQR}
+              onClick={() => updateConfig("showQR", !config.showQR)}
+              label="QR Code"
+              icon={config.showQR ? <FaEye /> : <FaEyeSlash />}
+            />
 
-          <ToggleButton
-            active={config.showProfile}
-            onClick={() => updateConfig("showProfile", !config.showProfile)}
-            label="Profile Picture"
-            icon={config.showProfile ? <FaEye /> : <FaEyeSlash />}
-          />
-        </div>
+            <ToggleButton
+              active={config.showProfile}
+              onClick={() => updateConfig("showProfile", !config.showProfile)}
+              label="Profile Picture"
+              icon={config.showProfile ? <FaEye /> : <FaEyeSlash />}
+            />
+          </div>
 
-
-        {/* ACTIONS */}
-        <div
-          className="
+          {/* ACTIONS */}
+          <div
+            className="
               grid
               grid-cols-2
               gap-4
             "
-        >
-          <ActionButton
-            onClick={downloadImage}
-            icon={<FaDownload />}
-            label="Download"
-          />
+          >
+            <ActionButton
+              onClick={downloadImage}
+              icon={<FaDownload />}
+              label="Download"
+            />
 
-          <ActionButton
-            onClick={copyLink}
-            icon={<FaCopy />}
-            label="Copy Link"
-          />
+            <ActionButton
+              onClick={copyLink}
+              icon={<FaCopy />}
+              label="Copy Link"
+            />
 
-          <ActionButton
-            onClick={nativeShare}
-            icon={<FaShareAlt />}
-            label="Share"
-          />
+            <ActionButton
+              onClick={nativeShare}
+              icon={<FaShareAlt />}
+              label="Share"
+            />
 
-          <ActionButton
-            onClick={resetCustomization}
-            icon={<FaUndo />}
-            label="Reset"
-          />
+            <ActionButton
+              onClick={resetCustomization}
+              icon={<FaUndo />}
+              label="Reset"
+            />
+          </div>
         </div>
       </motion.div>
 
@@ -1198,15 +1185,18 @@ const StoryCard = () => {
               </div>
             )}
 
-            <p
+            <div
               className="
-                text-text
-                text-3xl
+                flex
+                items-center
+                gap-2
+                text-text/80
+                text-4xl
               "
             >
-              whisperpost.vercel.app/u/
-              {username}
-            </p>
+              <FaQrcode />
+              <span>Scan or tap the link sticker</span>
+            </div>
           </div>
         </div>
       </div>
