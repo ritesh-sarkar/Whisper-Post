@@ -714,8 +714,6 @@ const StoryCard = () => {
                       overflow-hidden
                       rounded-2xl
                       h-14
-                      border
-                      border-border
                       transition-all
                       duration-300
                       hover:scale-[1.03]
