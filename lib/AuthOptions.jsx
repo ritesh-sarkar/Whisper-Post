@@ -133,6 +133,7 @@ export const authOptions = {
           token.name = dbUser.name;
           token.username = dbUser.username;
           token.email = dbUser.email;
+          token.imageUrl = dbUser.imageUrl;
         }
       }
 
@@ -143,6 +144,7 @@ export const authOptions = {
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.username = token.username;
+      session.user.image = token.imageUrl;
       session.user.email = token.email;
       return session;
     },

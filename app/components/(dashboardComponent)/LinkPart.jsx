@@ -11,11 +11,14 @@ const LinkPart = () => {
   const { data: session } = useSession();
 
   const [anonyLink, setAnonyLink] = useState("");
+  const [anonyImage, setAnonyImage] = useState("/profile.png");
 
   useEffect(() => {
     if (session?.user?.username) {
       const dynamicLink = `${process.env.NEXT_PUBLIC_BASE_URL}/message/${session.user.username}`;
+      const dynamicImage = session?.user?.image || "/profile.png";
       setAnonyLink(dynamicLink);
+      setAnonyImage(dynamicImage);
     }
   }, [session]);
 
@@ -55,8 +58,9 @@ const LinkPart = () => {
           "
       >
         <img
-          src="profile.png"
+          src={anonyImage}
           alt="profile image"
+          referrerPolicy="no-referrer"
           className="
               w-16
               h-16
