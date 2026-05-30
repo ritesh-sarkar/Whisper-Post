@@ -7,16 +7,33 @@ const messageSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
     message: {
       type: String,
       required: true,
+    },
+
+    mood: {
+      type: String,
+      required: true,
+    },
+
+    hint: {
+      type: String,
+      default: "N/A",
     },
 
     isNew: {
       type: Boolean,
       default: true,
     },
+
     loved: {
+      type: Boolean,
+      default: false,
+    },
+    
+    isPinned: {
       type: Boolean,
       default: false,
     },
@@ -24,7 +41,7 @@ const messageSchema = new mongoose.Schema(
   {
     timestamps: true,
   },
-  { suppressReservedKeysWarning: true }
+  { suppressReservedKeysWarning: true },
 );
 
 const MessageModel =
