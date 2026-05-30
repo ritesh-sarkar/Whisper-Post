@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import ConnectToDB from "@/lib/DBConnection";
 import User from "@/models/UserModel";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
   providers: [
@@ -12,6 +13,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
 
+      
       async authorize(credentials) {
         try {
           await ConnectToDB();
@@ -47,6 +49,8 @@ export const authOptions = {
       },
     }),
   ],
+
+  
 
   pages: {
     signIn: "/login",
