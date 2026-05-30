@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export default async function middleware(request) {
   const token = await getToken({
     req: request,
-    secret: process.env.NEXT_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
   });
 
   const protectedRoutes =

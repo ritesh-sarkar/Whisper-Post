@@ -3,6 +3,8 @@ import ConnectToDB from "@/lib/DBConnection";
 import User from "@/models/UserModel";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { Siemreap } from "next/font/google";
+import { signIn } from "next-auth/react";
 
 export const authOptions = {
   providers: [
@@ -13,7 +15,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
 
-      
       async authorize(credentials) {
         try {
           await ConnectToDB();
@@ -30,7 +31,7 @@ export const authOptions = {
 
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
-            user.password
+            user.password,
           );
 
           if (!isPasswordCorrect) {
@@ -48,15 +49,19 @@ export const authOptions = {
         }
       },
     }),
-  ],
 
-  
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ],
 
   pages: {
     signIn: "/login",
+    error: "/login",
   },
 
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 
   session: {
     strategy: "jwt",
@@ -68,13 +73,69 @@ export const authOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        token.username = user.username;
-        token.email = user.email;
+    async signIn({ user, account }) {
+      if (account.provider === "google") {
+        await ConnectToDB();
+
+        const userExists = await User.findOne({ email: user.email });
+
+        if (userExists && userExists.provider === "credentials") {
+          return "/login?error=email_exists";
+        }
+
+        if (userExists && userExists.provider === "google") {
+          return true;
+        }
+
+        // Creating New user
+        const generatedUsername =
+          user.email.split("@")[0] +
+          Math.floor(Math.random() * 1000) +
+          "_" +
+          Date.now().toString().slice(-6);
+
+        await User.create({
+          name: user.name,
+          username: generatedUsername,
+          email: user.email,
+          provider: "google",
+          imageUrl: user.image,
+          isVarified: true,
+        });
+
+        return true; // Explicitly return true for new registrations
       }
+
+      return true;
+    },
+
+    async jwt({ token, user, account }) {
+      await ConnectToDB();
+
+      // Initial sign-in setup
+      if (user) {
+        if (account?.provider === "google") {
+          // For Google, look up the user by email to get the correct MongoDB _id
+          const dbUser = await User.findOne({ email: user.email });
+          if (dbUser) {
+            token.id = dbUser._id.toString();
+          }
+        } else {
+          // For Credentials, your authorize() function already returned the mongo ID as user.id
+          token.id = user.id;
+        }
+      }
+
+      // Sync latest data from database using the verified MongoDB ID
+      if (token.id) {
+        const dbUser = await User.findById(token.id);
+        if (dbUser) {
+          token.name = dbUser.name;
+          token.username = dbUser.username;
+          token.email = dbUser.email;
+        }
+      }
+
       return token;
     },
 

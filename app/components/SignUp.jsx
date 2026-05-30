@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -80,11 +81,13 @@ const SignUp = () => {
     setPassword("");
   };
 
+  // handle google login
   const handleGoogleLogin = () => {
-    // TODO: integrate Google OAuth
-    toast("Google login coming soon 🚀");
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
+  
+  // Loading component for creating account
   if (loading) return <LoaderComponent state={"Creating your account"} />;
 
   return (
@@ -540,6 +543,5 @@ const SignUp = () => {
     </div>
   );
 };
-
 
 export default SignUp;

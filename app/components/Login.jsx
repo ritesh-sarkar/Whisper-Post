@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -26,8 +26,20 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [verificationStaus, setverificationStaus] = useState(true);
 
-
   const router = useRouter();
+
+  // Error tracking part
+  const params = useSearchParams();
+  const emailExistingError = params.get("error");
+
+  useEffect(() => {
+    if (emailExistingError === "email_exists") {
+      toast.error(
+        "An account already exists with this email. Please sign in with credentials.",
+      );
+      router.replace("/login");
+    }
+  }, [emailExistingError]);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -58,27 +70,25 @@ const Login = () => {
     }
   };
 
-
   //Handle login with google
   const handleGoogleLogin = () => {
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
   //Hanlde sending verification email
-
   const handleVerifiaction = async () => {
     try {
-          const res = await axios.post("/api/resend-verification-email", {
-            email
-          });
-    
-          if (res.status === 200) {
-            toast.success(res.data.message);
-          }
-        } catch (error) {
-          toast.error(error.response?.data?.message || error.message);
-        }
-      };
+      const res = await axios.post("/api/resend-verification-email", {
+        email,
+      });
+
+      if (res.status === 200) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
 
   if (loading) return <LoaderComponent state={"Logging in"} />;
 
