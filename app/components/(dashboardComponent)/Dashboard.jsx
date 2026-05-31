@@ -153,7 +153,7 @@ const Dashboard = () => {
             >
               Activity Overview
             </h1>
-            <Graph />
+            <Graph messages={messages} />
           </AnimationWrapper>
         </div>
       </div>
