@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useMemo, useRef, useState, useEffect } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
-
 import { toJpeg } from "html-to-image";
-
 import QRCode from "react-qr-code";
-
 import { useSession } from "next-auth/react";
-
 import toast from "react-hot-toast";
 
 // icons
@@ -89,10 +84,11 @@ const StoryCard = () => {
     if (session?.user?.username) {
       const dynamicLink = `${process.env.NEXT_PUBLIC_BASE_URL}/message/${session.user.username}`;
 
-      const dynamicImage = session?.user?.profilePicture || "";
+      // Dynamic image
+      const dynamicImage = session?.user?.image || "/profile.png";
 
       setProfileLink(dynamicLink);
-      setProfileImage("/profile.png"); //TODO: Add dynamic image link here
+      setProfileImage(dynamicImage);
       setUsername(session.user.username);
     }
   }, [session]);
