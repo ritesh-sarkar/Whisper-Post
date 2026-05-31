@@ -725,7 +725,7 @@ const ConditionalMainHeader = () => {
                       <input
                         onChange={handleImage}
                         type="file"
-                        accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
+                        accept="image/png, image/jpeg, image/webp, image/gif, image/avif, image/jpg, image/DNG"
                         className="hidden"
                       />
                     </label>
