@@ -106,6 +106,30 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
   };
 
   // ======================================================
+  // Toggle pinned message
+  // ======================================================
+
+  const togglePinned = async (messageID) => {
+    try {
+      await axios.patch("/api/messages", {
+        messageID,
+        action: "toggle-pin",
+      });
+
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === messageID
+            ? { ...msg, pinned: !msg.pinned }
+            : msg
+        )
+      );
+      loadMessages();
+    } catch {
+      toast.error("Failed to pin this message");
+    }
+  };
+
+  // ======================================================
   // Delete message
   // ======================================================
 
@@ -149,11 +173,11 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
   // ======================================================
 
   const normalMessages = messages.filter(
-    (msg) => !msg.pinned
+    (msg) => !msg.isPinned
   );
 
   const pinnedMessages = messages.filter(
-    (msg) => msg.pinned
+    (msg) => msg.isPinned
   );
 
   // ======================================================
@@ -325,6 +349,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  togglePinned(msg.id);
                 }}
                 className={clsx(
                   `
@@ -341,7 +366,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     ease-in-out
                     hover:text-[#fde047]
                   `,
-                  msg.pinned && "pinned"
+                  msg.isPinned && "pinned"
                 )}
               >
                 <TiPinOutline className="text-2xl" />

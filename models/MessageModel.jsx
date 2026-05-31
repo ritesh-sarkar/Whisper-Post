@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema(
 
     mood: {
       type: String,
-      required: true,
+      required: false,
     },
 
     hint: {

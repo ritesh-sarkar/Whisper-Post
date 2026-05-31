@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -27,9 +27,25 @@ const AnonymousMessage = () => {
   const [messageMood, setMessageMood] = useState("");
   const [hint, setHint] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userImage, setUserImage] = useState("/Profile.png");
 
   const { username } = useParams();
 
+  // Grab user from db
+  const GrabUser = async () => {
+    const res = await axios.get(`/api/user/info/${username}`);
+
+    setUserImage(res.data.imageUrl || "");
+  };
+
+  useEffect(() => {
+    GrabUser();
+  }, [username]);
+
+
+
+
+  //mood option
   const moodOption = [
     {
       name: "love",
@@ -53,12 +69,14 @@ const AnonymousMessage = () => {
     },
   ];
 
+
+
+
   // message submission function
-
-  //TODO: add hint and mood with message to send to backend
-
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
+
+
 
     const result = MessageValidationZod.safeParse({ message });
 
@@ -67,15 +85,24 @@ const AnonymousMessage = () => {
       return;
     }
 
+    if (messageMood==="") {
+      toast.error("Please select a mood");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await axios.post(`/api/messages/${username}`, {
         message,
+        mood: messageMood,
+        hint,
       });
 
       toast.success(res.data.message);
       setMessage("");
+      setMessageMood("");
+      setHint("");
     } catch (error) {
       toast.error(error.response?.data?.error || "Something went wrong");
     } finally {
@@ -101,8 +128,8 @@ const AnonymousMessage = () => {
         overflow-x-hidden
       "
     >
-      {/* Background blobs */}
 
+      {/* Background blobs */}
       <div
         className="
           absolute 
@@ -164,9 +191,11 @@ const AnonymousMessage = () => {
             md:h-24
           "
           >
-            {/* //TODO:profile pic */}
+            
+            {/* Profile pic  */}
+
             <img
-              src="/profile.png"
+              src={userImage}
               alt="Profile Image"
               className="
                 w-full
@@ -243,7 +272,6 @@ const AnonymousMessage = () => {
           "
           >
             {/* Form part */}
-
             <form
               onSubmit={handleMessageSubmit}
               className="
@@ -297,7 +325,6 @@ const AnonymousMessage = () => {
               </span>
 
               {/* mood selection part */}
-
               <div
                 className="
                   w-full
@@ -336,7 +363,6 @@ const AnonymousMessage = () => {
                       key={index}
                       onClick={() => {
                         setMessageMood(mood.name);
-                        console.log(messageMood);
                       }}
                       className={`
                         bg-bg-glass
@@ -378,7 +404,6 @@ const AnonymousMessage = () => {
               </div>
 
               {/* Hint part */}
-
               <div
                 className="
                 w-full
@@ -423,7 +448,6 @@ const AnonymousMessage = () => {
               </div>
 
               {/* send button part */}
-
               <button
                 type="submit"
                 className="

@@ -15,7 +15,7 @@ export async function POST(req) {
 
     const user = await User.findOne({ _id: UserId, email: email });
     if (user) {
-      user.isVarified = true;
+      user.isVerified = true;
       await user.save();
       return NextResponse.json(
         { message: "User verified successfully" },

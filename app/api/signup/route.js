@@ -38,7 +38,7 @@ export async function POST(req) {
       username,
       email,
       password: hashedPassword,
-      isVarified: false,
+      isVerified: false,
     });
 
     await user.save();

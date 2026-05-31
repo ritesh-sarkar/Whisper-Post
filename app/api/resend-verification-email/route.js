@@ -16,7 +16,7 @@ export async function POST(req) {
     await ConnectToDB();
 
     const isExistUser = await User.findOne({ email });
-    const isUserVerified = isExistUser.isVarified;
+    const isUserVerified = isExistUser.isVerified;
 
     if (isExistUser && !isUserVerified) {
       try {

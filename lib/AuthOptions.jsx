@@ -25,7 +25,7 @@ export const authOptions = {
             throw new Error("Invalid credentials.");
           }
 
-          if (!user.isVarified) {
+          if (!user.isVerified) {
             throw new Error("User is not varified yet!");
           }
 
@@ -100,7 +100,7 @@ export const authOptions = {
           email: user.email,
           provider: "google",
           imageUrl: user.image,
-          isVarified: true,
+          isVerified: true,
         });
 
         return true; // Explicitly return true for new registrations
