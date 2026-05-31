@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { fetchMessagesByUser } from "@/lib/FetchMessageByUser";
+import axios from "axios";
 
 //icons
 import { IoSettingsSharp } from "react-icons/io5";
@@ -20,21 +21,29 @@ import { MdDeleteForever } from "react-icons/md";
 //animation libs
 import { headerAnimationConfig } from "@/lib/AnimationConfig";
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import LoaderComponent from "@/app/components/LoaderComponent";
+import { set } from "mongoose";
 
 const ConditionalMainHeader = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const [loading, setLoading] = useState('');
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const [imageUrl, setImageUrl] = useState("/profile.png");
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const [isDeleteOpen, setisDeleteOpen] = useState(false);
+
+  //default formData
+  const [formData, setFormData] = useState({});
 
   const { data: session } = useSession();
 
   const userID = session?.user.id;
   const [messages, setMessages] = useState([]);
 
+  // fetch messages
   const loadMessages = async () => {
     if (!userID) return;
     const { success, messages } = await fetchMessagesByUser(userID);
@@ -45,23 +54,90 @@ const ConditionalMainHeader = () => {
 
   const unreadMessages = messages.filter((msg) => msg.isNew);
 
+  // Grab user data from session
   useEffect(() => {
     if (session?.user) {
       setName(session.user.name);
       setUsername(session.user.username);
+      setImageUrl(session.user.image);
       loadMessages();
     }
   }, [session]);
 
+  // Profile update functionality
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const previewURL = URL.createObjectURL(file);
+
+      const updatedData = {
+        ...formData,
+        image: previewURL,
+        file,
+      };
+
+      setFormData(updatedData);
+      setImageUrl(previewURL);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+
+      setLoading("profile_update");
+
+      const formPayload = new FormData();
+
+      if (name) {
+        formPayload.append("name", name);
+      }
+
+      if (username) {
+        formPayload.append("username", username);
+      }
+
+      if (formData.file) {
+        formPayload.append("image", formData.file);
+      }
+
+      const response = await axios.patch("/api/user-update", formPayload);
+
+      if (response.data.success) {
+        toast.success("Profile updated successfully!");
+        setisProfileOpen(false);
+      }
+
+      setLoading('');
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
+  };
+
+  //Habdle sign out
   const handleSignOut = () => {
+    setLoading("sign_out");
     signOut({
       redirect: true,
       callbackUrl: "/",
     });
     toast.success("Signed out successfully");
+    setLoading('');
     router.push("/");
   };
 
+
+
+  // Loading states
+  if (loading === "profile_update") return <LoaderComponent state={"Requesting for profile update"} />;
+
+  if (loading === "delete_account") return <LoaderComponent state={"Deleting account"} />;
+
+  if (loading === "sign_out") return <LoaderComponent state={"Signing out"} />;
+
+  // Main Header
   if (pathname === "/") {
     return (
       <AnimationWrapper variants={headerAnimationConfig(0.2)} once={true}>
@@ -368,7 +444,6 @@ const ConditionalMainHeader = () => {
             </button>
 
             {/* Menu part */}
-
             {isMenuOpen && (
               <div
                 className="
@@ -596,7 +671,7 @@ const ConditionalMainHeader = () => {
                         "
                     >
                       <img
-                        src="/profile.png"
+                        src={imageUrl}
                         alt="profile"
                         className="
                           w-full
@@ -606,6 +681,7 @@ const ConditionalMainHeader = () => {
                       />
                     </div>
 
+                    {/* //TODO: add image upload functionality */}
                     <label
                       className="
                         text-sm
@@ -623,7 +699,12 @@ const ConditionalMainHeader = () => {
                       "
                     >
                       Upload new image
-                      <input type="file" accept="image/*" className="hidden" />
+                      <input
+                        onChange={handleImage}
+                        type="file"
+                        accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
+                        className="hidden"
+                      />
                     </label>
                   </div>
 
@@ -653,6 +734,13 @@ const ConditionalMainHeader = () => {
                         type="text"
                         placeholder="Name"
                         defaultValue={name}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                          setFormData((prev) => ({
+                            ...prev,
+                            name: e.target.value,
+                          }));
+                        }}
                         className="
                         w-full
                         px-4
@@ -686,6 +774,13 @@ const ConditionalMainHeader = () => {
                         type="text"
                         placeholder="Username"
                         defaultValue={username}
+                        onChange={(e) => {
+                          setUsername(e.target.value);
+                          setFormData((prev) => ({
+                            ...prev,
+                            username: e.target.value,
+                          }));
+                        }}
                         className="
                         w-full
                         px-4
@@ -705,6 +800,7 @@ const ConditionalMainHeader = () => {
 
                   {/* Save Button */}
                   <button
+                    onClick={handleSave}
                     className="
                       w-full
                       text-center
