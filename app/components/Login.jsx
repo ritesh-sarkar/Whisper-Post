@@ -60,7 +60,6 @@ const Login = () => {
         toast.error(loginRequest.error);
         if (loginRequest.error === "User is not varified yet!") {
           setverificationStaus(false);
-          console.log(loginRequest.error); //TODO: Console debug
         }
       }
     } catch (error) {

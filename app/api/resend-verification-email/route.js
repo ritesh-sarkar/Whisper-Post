@@ -20,7 +20,6 @@ export async function POST(req) {
 
     if (isExistUser && !isUserVerified) {
       try {
-        console.log(isExistUser); //TODO: Console debug
 
         const token = jwt.sign(
           {

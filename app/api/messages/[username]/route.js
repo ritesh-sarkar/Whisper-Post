@@ -55,9 +55,6 @@ export async function POST(req, { params }) {
     // Rate limiting
     const allowed = checkRateLimit(ip);
 
-    console.log(ip);
-    
-
     if (!allowed) {
       return NextResponse.json(
         {
