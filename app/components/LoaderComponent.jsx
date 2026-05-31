@@ -48,7 +48,7 @@ const LoaderComponent = ({ state }) => {
       <div
         className="
           relative
-          z-10
+          z-99
           flex
           flex-col
           items-center

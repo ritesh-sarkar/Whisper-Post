@@ -22,18 +22,18 @@ import { MdDeleteForever } from "react-icons/md";
 import { headerAnimationConfig } from "@/lib/AnimationConfig";
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
 import LoaderComponent from "@/app/components/LoaderComponent";
-import { set } from "mongoose";
 
 const ConditionalMainHeader = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [imageUrl, setImageUrl] = useState("/profile.png");
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const [isDeleteOpen, setisDeleteOpen] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
   //default formData
   const [formData, setFormData] = useState({});
@@ -85,7 +85,6 @@ const ConditionalMainHeader = () => {
 
   const handleSave = async () => {
     try {
-
       setLoading("profile_update");
 
       const formPayload = new FormData();
@@ -102,17 +101,43 @@ const ConditionalMainHeader = () => {
         formPayload.append("image", formData.file);
       }
 
-      const response = await axios.patch("/api/user-update", formPayload);
+      const response = await axios.patch("/api/user/update", formPayload);
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
         setisProfileOpen(false);
       }
 
-      setLoading('');
-
+      setLoading("");
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong!");
+    }
+  };
+
+  //handle delete
+  const handleDelete = async () => {
+    try {
+
+      if (confirmationMessage !== "DELETE MY ACCOUNT") {
+        toast.error("Your Confirmation Message is incorrect!");
+        return;
+      }
+
+      //loader call
+      setLoading("delete_account");
+
+      const response = await axios.delete("/api/user/delete");
+      if (response.data.success) {
+        toast.success("Account deleted successfully!");
+        signOut({
+          redirect: true,
+          callbackUrl: "/",
+        });
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    } finally {
+      setLoading("");
     }
   };
 
@@ -124,16 +149,16 @@ const ConditionalMainHeader = () => {
       callbackUrl: "/",
     });
     toast.success("Signed out successfully");
-    setLoading('');
+    setLoading("");
     router.push("/");
   };
 
-
-
   // Loading states
-  if (loading === "profile_update") return <LoaderComponent state={"Requesting for profile update"} />;
+  if (loading === "profile_update")
+    return <LoaderComponent state={"Requesting for profile update"} />;
 
-  if (loading === "delete_account") return <LoaderComponent state={"Deleting account"} />;
+  if (loading === "delete_account")
+    return <LoaderComponent state={"Deleting account"} />;
 
   if (loading === "sign_out") return <LoaderComponent state={"Signing out"} />;
 
@@ -575,10 +600,8 @@ const ConditionalMainHeader = () => {
               </div>
             )}
 
-            {/* //TODO: add profile edit fuctionality */}
 
             {/* Profile edit part */}
-
             {isProfileOpen && (
               <div
                 onClick={() => setisProfileOpen(false)}
@@ -594,8 +617,8 @@ const ConditionalMainHeader = () => {
                   bg-bg/90
                 "
               >
-                {/* Modal */}
 
+                {/* Modal */}
                 <div
                   onClick={(e) => e.stopPropagation()}
                   className="
@@ -613,8 +636,8 @@ const ConditionalMainHeader = () => {
                     relative
                   "
                 >
-                  {/* Close Button */}
 
+                  {/* Close Button */}
                   <button
                     onClick={() => setisProfileOpen(false)}
                     className="
@@ -832,8 +855,8 @@ const ConditionalMainHeader = () => {
                     Save Changes
                   </button>
 
-                  {/* Delete Button */}
 
+                  {/* Delete Button */}
                   <p
                     className="
                       w-full
@@ -894,10 +917,8 @@ const ConditionalMainHeader = () => {
               </div>
             )}
 
+
             {/* Delete account Confirmation */}
-
-            {/* //TODO: Add delete functionality here */}
-
             {isDeleteOpen && (
               <div
                 onClick={(e) => e.stopPropagation()}
@@ -913,8 +934,8 @@ const ConditionalMainHeader = () => {
                   bg-bg/80
                   "
               >
-                {/* Delete Prodfile Modal */}
 
+                {/* Delete Prodfile Modal */}
                 <div
                   onClick={(e) => e.stopPropagation()}
                   className="
@@ -932,8 +953,8 @@ const ConditionalMainHeader = () => {
                     relative
                   "
                 >
-                  {/* Close Button */}
 
+                  {/* Close Button */}
                   <button
                     onClick={() => setisDeleteOpen(false)}
                     className="
@@ -1053,60 +1074,32 @@ const ConditionalMainHeader = () => {
                     >
                       Confirmation text:
                       <input
+                        onChange={(e) => {
+                          setConfirmationMessage(e.target.value);
+                        }}
                         required
                         type="text"
                         placeholder="Confirmation text"
                         className="
-                        w-full
-                        px-4
-                        py-2.5
-                        rounded-xl
-                        bg-bg-glass
-                        border
-                        border-border
-                        text-text
-                        focus:outline-none
-                        focus:ring-1
-                        focus:ring-accent
-                    "
-                      />
-                    </label>
-                    <label
-                      className="
-                        w-full
-                        flex
-                        flex-col
-                        items-start
-                        justify-start
-                        text-text
-                        gap-1
-                      "
-                    >
-                      Password:
-                      <input
-                        required
-                        type="password"
-                        placeholder="Password"
-                        className="
-                        w-full
-                        px-4
-                        py-2.5
-                        rounded-xl
-                        bg-bg-glass
-                        border
-                        border-border
-                        text-text
-                        focus:outline-none
-                        focus:ring-1
-                        focus:ring-accent
-                    "
+                          w-full
+                          px-4
+                          py-2.5
+                          rounded-xl
+                          bg-bg-glass
+                          border
+                          border-border
+                          text-text
+                          focus:outline-none
+                          focus:ring-1
+                          focus:ring-accent
+                        "
                       />
                     </label>
                   </div>
 
                   {/* Delete account Button */}
-
                   <button
+                    onClick={handleDelete}
                     className="
                       flex
                       w-full
