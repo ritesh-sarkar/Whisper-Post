@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { toPng } from "html-to-image";
 
 // Custom libs and components
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
@@ -17,29 +18,17 @@ import { MdDeleteForever } from "react-icons/md";
 import { FiDownload } from "react-icons/fi";
 
 const Messages = ({ messages, setMessages, loadMessages }) => {
-  // ======================================================
-  // States
-  // ======================================================
-
   const [deleting, setDeleting] = useState(null);
-
-  // Control section toggle state
   const [controlsOpen, setControlsOpen] = useState(null);
-
-  // Delete modal states
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [selectedDeleteID, setSelectedDeleteID] = useState(null);
+  const exportRef = useRef(null);
+  const [exportMessage, setExportMessage] = useState(null);
 
   // Session
   const { data: session } = useSession();
 
-  // Refs
-  const selectedRef = useRef(null);
-
-  // ======================================================
   // Time formatter
-  // ======================================================
-
   const getTimeAgo = (createdAt) => {
     const now = new Date();
     const time = new Date(createdAt);
@@ -59,10 +48,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     return `${Math.floor(diff / 86400)}d ago`;
   };
 
-  // ======================================================
   // Mark message as read
-  // ======================================================
-
   const toggleIsNew = async (messageID) => {
     try {
       await axios.patch("/api/messages", {
@@ -72,20 +58,15 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
 
       setMessages((prev) =>
         prev.map((msg) =>
-          msg.id === messageID
-            ? { ...msg, isNew: false }
-            : msg
-        )
+          msg.id === messageID ? { ...msg, isNew: false } : msg,
+        ),
       );
     } catch {
       toast.error("Failed to mark as read");
     }
   };
 
-  // ======================================================
   // Toggle loved message
-  // ======================================================
-
   const toggleLoved = async (messageID) => {
     try {
       await axios.patch("/api/messages", {
@@ -95,20 +76,15 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
 
       setMessages((prev) =>
         prev.map((msg) =>
-          msg.id === messageID
-            ? { ...msg, loved: !msg.loved }
-            : msg
-        )
+          msg.id === messageID ? { ...msg, loved: !msg.loved } : msg,
+        ),
       );
     } catch {
       toast.error("Failed to love this message");
     }
   };
 
-  // ======================================================
   // Toggle pinned message
-  // ======================================================
-
   const togglePinned = async (messageID) => {
     try {
       await axios.patch("/api/messages", {
@@ -118,10 +94,8 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
 
       setMessages((prev) =>
         prev.map((msg) =>
-          msg.id === messageID
-            ? { ...msg, pinned: !msg.pinned }
-            : msg
-        )
+          msg.id === messageID ? { ...msg, pinned: !msg.pinned } : msg,
+        ),
       );
       loadMessages();
     } catch {
@@ -129,10 +103,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     }
   };
 
-  // ======================================================
   // Delete message
-  // ======================================================
-
   const messageDelete = async (messageID) => {
     try {
       setDeleting(messageID);
@@ -142,10 +113,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
       });
 
       setTimeout(() => {
-        setMessages((prev) =>
-          prev.filter((msg) => msg.id !== messageID)
-        );
-
+        setMessages((prev) => prev.filter((msg) => msg.id !== messageID));
         setDeleting(null);
       }, 1200);
 
@@ -156,34 +124,81 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     }
   };
 
-  // ======================================================
-  // Toggle control section
-  // ======================================================
 
+  // Toggle control section
   const handleControlsToggle = (clickedMessageId) => {
     setControlsOpen((prev) =>
-      prev === clickedMessageId
-        ? null
-        : clickedMessageId
+      prev === clickedMessageId ? null : clickedMessageId,
     );
   };
 
-  // ======================================================
+  const parseMoodStyle = (mood) => {
+    switch (mood) {
+      case "love":
+        return { backgroundColor: "#ec489a20", color: "#f472b6", border: "1px solid #f472b6" };
+      case "confession":
+        return { backgroundColor: "#f9741620", color: "#f97416", border: "1px solid #f97416" };
+      case "funny":
+        return { backgroundColor: "#eab20820", color: "#fde047", border: "1px solid #fde047" };
+      case "secret":
+        return { backgroundColor: "#7f1d1d20", color: "#ff5656", border: "1px solid #ff5656" };
+      case "advice":
+        return { backgroundColor: "#2563eb20", color: "#3b82f6", border: "1px solid #3b82f6" };
+      default:
+        return { backgroundColor: "#9ca3af", color: "#f8fafc", border: "1px solid #f8fafc" };
+    }
+  };
+
+
+  // Fixed 4:3 Image Download Functionality
+  const downloadMessageAsImage = async (e, msg) => {
+    e.stopPropagation();
+
+    const toastId = toast.loading("Generating image...");
+
+    try {
+      // 1. Set data
+      setExportMessage(msg);
+
+      // 2. Wait for React paint (NOT timeout)
+      await new Promise(requestAnimationFrame);
+      await new Promise(requestAnimationFrame);
+
+      // extra safety for fonts
+      if (document.fonts?.ready) {
+        await document.fonts.ready;
+      }
+
+      // 3. Capture
+      const dataUrl = await toPng(exportRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: "#000000",
+      });
+
+      // 4. Download
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `message-${msg.id.slice(0,4)}-whisper-post.png`;
+      link.click();
+
+      toast.success("Downloading image...", { id: toastId });
+
+      // 5. cleanup AFTER capture
+      setExportMessage(null);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to download image", { id: toastId });
+    }
+  };
+
+  
   // Message filters
-  // ======================================================
+  const normalMessages = messages.filter((msg) => !msg.isPinned);
+  const pinnedMessages = messages.filter((msg) => msg.isPinned);
 
-  const normalMessages = messages.filter(
-    (msg) => !msg.isPinned
-  );
 
-  const pinnedMessages = messages.filter(
-    (msg) => msg.isPinned
-  );
-
-  // ======================================================
   // Reusable Message Renderer
-  // ======================================================
-
   const renderMessage = (msg) => {
     const isBeingDeleted = deleting === msg.id;
 
@@ -215,16 +230,11 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               hover:bg-bg-glass
               cursor-pointer
             `,
-            msg.isNew &&
-              "newMessage hover:bg-bg",
-            isBeingDeleted &&
-              "opacity-0 blur-2xl scale-95"
+            msg.isNew && "newMessage hover:bg-bg",
+            isBeingDeleted && "opacity-0 blur-2xl scale-95",
           )}
         >
-          {/* ====================================================== */}
           {/* Top Section */}
-          {/* ====================================================== */}
-
           <div
             className="
               w-full
@@ -282,10 +292,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                   capitalize
                 "
               >
-                Hint:{" "}
-                {msg.hint?.trim()
-                  ? msg.hint
-                  : "N/A"}
+                Hint: {msg.hint?.trim() ? msg.hint : "N/A"}
               </h1>
             </span>
 
@@ -303,16 +310,10 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
             </span>
           </div>
 
-          {/* ====================================================== */}
           {/* Message */}
-          {/* ====================================================== */}
-
           <p>{msg.message}</p>
 
-          {/* ====================================================== */}
           {/* Controls */}
-          {/* ====================================================== */}
-
           <span
             className={`
               w-full
@@ -366,7 +367,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     ease-in-out
                     hover:text-[#fde047]
                   `,
-                  msg.isPinned && "pinned"
+                  msg.isPinned && "pinned",
                 )}
               >
                 <TiPinOutline className="text-2xl" />
@@ -391,7 +392,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     ease-in-out
                     hover:text-accent-pink
                   `,
-                  msg.loved && "loved"
+                  msg.loved && "loved",
                 )}
               >
                 <FaRegHeart />
@@ -408,8 +409,9 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                 gap-5
               "
             >
-              {/* Download */}
+              {/* Download Button */}
               <button
+                onClick={(e) => downloadMessageAsImage(e, msg)}
                 className="
                   w-8
                   h-8
@@ -435,7 +437,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-
                   setSelectedDeleteID(msg.id);
                   setConfirmDelete(true);
                 }}
@@ -464,16 +465,9 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     );
   };
 
-  // ======================================================
-  // Main Return
-  // ======================================================
-
   return (
     <div className="relative">
-      {/* ====================================================== */}
       {/* Pinned Messages */}
-      {/* ====================================================== */}
-
       {pinnedMessages.length > 0 && (
         <div>
           <h1
@@ -489,30 +483,15 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               capitalize
             "
           >
-            <TiPinOutline
-              className="
-                text-xl
-                -rotate-45
-              "
-            />
-
+            <TiPinOutline className="text-xl -rotate-45" />
             Pinned messages
           </h1>
-
           {pinnedMessages.map(renderMessage)}
         </div>
       )}
 
-      {/* ====================================================== */}
       {/* Normal Messages */}
-      {/* ====================================================== */}
-
-      <div
-        className="
-          mt-10
-          lg:mt-14
-        "
-      >
+      <div className="mt-10 lg:mt-14">
         <h1
           className="
             w-full
@@ -527,19 +506,12 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
           "
         >
           <FaRegMessage className="text-lg" />
-
-          {normalMessages.length > 0
-            ? "Messages"
-            : "No messages"}
+          {normalMessages.length > 0 ? "Messages" : "No messages"}
         </h1>
-
         {normalMessages.map(renderMessage)}
       </div>
 
-      {/* ====================================================== */}
       {/* Delete Confirmation Modal */}
-      {/* ====================================================== */}
-
       {confirmDelete && (
         <div
           className="
@@ -572,43 +544,13 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               duration-300
             "
           >
-            {/* Title */}
-            <h1
-              className="
-                text-xl
-                font-semibold
-                font-primary
-                text-text
-              "
-            >
+            <h1 className="text-xl font-semibold font-primary text-text">
               Delete Message
             </h1>
-
-            {/* Description */}
-            <p
-              className="
-                mt-3
-                text-sm
-                text-text-alt
-                leading-relaxed
-                font-secondary
-              "
-            >
-              Are you sure you want to delete this
-              message? This action cannot be undone.
+            <p className="mt-3 text-sm text-text-alt leading-relaxed font-secondary">
+              Are you sure you want to delete this message? This action cannot be undone.
             </p>
-
-            {/* Buttons */}
-            <div
-              className="
-                mt-6
-                flex
-                items-center
-                justify-center
-                gap-4
-              "
-            >
-              {/* Cancel Button */}
+            <div className="mt-6 flex items-center justify-center gap-4">
               <button
                 onClick={() => {
                   setConfirmDelete(false);
@@ -632,14 +574,9 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               >
                 No
               </button>
-
-              {/* Delete Button */}
               <button
                 onClick={async () => {
-                  await messageDelete(
-                    selectedDeleteID
-                  );
-
+                  await messageDelete(selectedDeleteID);
                   setConfirmDelete(false);
                   setSelectedDeleteID(null);
                 }}
@@ -663,6 +600,141 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
           </div>
         </div>
       )}
+
+
+      {/* FIXED IMAGE EXPORT CANVAS */}
+      <div
+        style={{
+          position: "fixed",
+          top: "0px",
+          left: "0px",
+          width: "0px",
+          height: "0px",
+          overflow: "hidden",
+          pointerEvents: "none",
+          zIndex: -9999,
+        }}
+      >
+        <div
+          ref={exportRef}
+          style={{
+            width: "800px",
+            height: "600px",
+            backgroundColor: "#0b0b0f",
+            color: "#f8fafc",
+            padding: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            fontFamily: "Poppins, -apple-system, sans-serif",
+            overflow: "hidden",
+          }}
+        >
+          {exportMessage && (
+            <>
+              {/* HEADER */}
+              <div
+                style={{
+                  borderBottom: "1px solid #2a2a2a",
+                  paddingBottom: "16px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span
+                      style={{
+                        padding: "6px 12px",
+                        borderRadius: "8px",
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        textTransform: "capitalize",
+                        ...parseMoodStyle(exportMessage.mood),
+                      }}
+                    >
+                      {exportMessage.mood}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "#cfcfcf",
+                        backgroundColor: "#1a1a1f",
+                        padding: "6px 10px",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      {exportMessage.hint?.trim() ? exportMessage.hint : "N/A"}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: "13px", color: "#9a9a9a" }}>
+                    {getTimeAgo(exportMessage.createdAt)}
+                  </span>
+                </div>
+              </div>
+
+
+              {/* MESSAGE CONTENT */}
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "20px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "28px",
+                    textAlign: "center",
+                    lineHeight: 1.5,
+                    maxWidth: "90%",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {exportMessage.message}
+                </p>
+              </div>
+
+              {/* FOOTER */}
+              <div
+                style={{
+                  borderTop: "1px solid #2a2a2a",
+                  paddingTop: "16px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <img
+                  src="/logo.png"
+                  alt="logo"
+                  style={{ width: "22px", height: "22px" }}
+                />
+                <span
+                  style={{
+                    fontSize: "14px",
+                    letterSpacing: "1px",
+                    color: "#b5b5b5",
+                    fontWeight: 500,
+                  }}
+                >
+                  WhisperPost
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
