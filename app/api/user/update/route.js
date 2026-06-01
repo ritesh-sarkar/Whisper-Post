@@ -59,11 +59,11 @@ export async function PATCH(req) {
 
         // Image upload
         if (image && image.size > 0) {
-            // 10MB limit
-            if (image.size > 10 * 1024 * 1024) {
+            // 5MB limit
+            if (image.size > 5 * 1024 * 1024) {
                 return NextResponse.json(
                     {
-                        error: "Image size must be less than 10MB",
+                        error: "Image size must be less than 5MB",
                     },
                     { status: 400 }
                 );

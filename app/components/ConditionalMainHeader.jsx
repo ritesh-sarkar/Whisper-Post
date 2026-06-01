@@ -69,6 +69,11 @@ const ConditionalMainHeader = () => {
   const handleImage = (e) => {
     const file = e.target.files[0];
 
+    if (file.size >= 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB!");
+      return;
+    }
+
     if (file) {
       const previewURL = URL.createObjectURL(file);
 
@@ -112,14 +117,13 @@ const ConditionalMainHeader = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong!");
     } finally {
-      setLoading(""); 
+      setLoading("");
     }
   };
 
   //handle delete
   const handleDelete = async () => {
     try {
-
       if (confirmationMessage !== "DELETE MY ACCOUNT") {
         toast.error("Your Confirmation Message is incorrect!");
         return;
@@ -602,7 +606,6 @@ const ConditionalMainHeader = () => {
               </div>
             )}
 
-
             {/* Profile edit part */}
             {isProfileOpen && (
               <div
@@ -619,7 +622,6 @@ const ConditionalMainHeader = () => {
                   bg-bg/90
                 "
               >
-
                 {/* Modal */}
                 <div
                   onClick={(e) => e.stopPropagation()}
@@ -638,7 +640,6 @@ const ConditionalMainHeader = () => {
                     relative
                   "
                 >
-
                   {/* Close Button */}
                   <button
                     onClick={() => setisProfileOpen(false)}
@@ -857,7 +858,6 @@ const ConditionalMainHeader = () => {
                     Save Changes
                   </button>
 
-
                   {/* Delete Button */}
                   <p
                     className="
@@ -919,7 +919,6 @@ const ConditionalMainHeader = () => {
               </div>
             )}
 
-
             {/* Delete account Confirmation */}
             {isDeleteOpen && (
               <div
@@ -936,7 +935,6 @@ const ConditionalMainHeader = () => {
                   bg-bg/80
                   "
               >
-
                 {/* Delete Prodfile Modal */}
                 <div
                   onClick={(e) => e.stopPropagation()}
@@ -955,7 +953,6 @@ const ConditionalMainHeader = () => {
                     relative
                   "
                 >
-
                   {/* Close Button */}
                   <button
                     onClick={() => setisDeleteOpen(false)}
