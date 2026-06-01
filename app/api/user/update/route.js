@@ -125,7 +125,7 @@ export async function PATCH(req) {
             { status: 200 }
         );
     } catch (error) {
-        
+        console.error(error);
         return NextResponse.json(
             {
                 error: "Internal Server Error",

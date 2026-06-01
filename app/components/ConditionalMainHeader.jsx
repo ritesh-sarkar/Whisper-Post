@@ -2,20 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { fetchMessagesByUser } from "@/lib/FetchMessageByUser";
 import axios from "axios";
 
 //icons
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
-import { IoIosLogOut } from "react-icons/io";
-import { IoMdClose } from "react-icons/io";
+import { IoIosLogOut, IoMdClose } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 
 //animation libs
@@ -539,34 +536,37 @@ const ConditionalMainHeader = () => {
                     p-1
                   "
                 >
-                  <li
-                    onClick={() => {
-                      setisMenuOpen(false);
-                      setisProfileOpen(true);
-                    }}
-                    className="
-                      flex
-                      w-full
-                      items-center
-                      justify-start
-                      gap-2
-                      bg-transparent
-                      m-1
-                      p-2
-                      rounded-lg
-                      font-secondary
-                      text-text
-                      cursor-pointer
-                      transform-all
-                      duration-300
-                      ease-in-out
-                      active:scale-90
-                      hover:bg-text-alt/20
-                    "
-                  >
-                    <CiUser className="size-5" />
-                    Profile
+                  <li className="w-full">
+                    <button
+                      onClick={() => {
+                        setisMenuOpen(false);
+                        setisProfileOpen(true);
+                      }}
+                      className="
+                        flex
+                        w-full
+                        items-center
+                        justify-start
+                        gap-2
+                        bg-transparent
+                        m-1
+                        p-2
+                        rounded-lg
+                        font-secondary
+                        text-text
+                        cursor-pointer
+                        transform-all
+                        duration-300
+                        ease-in-out
+                        active:scale-90
+                        hover:bg-text-alt/20
+                      "
+                    >
+                      <CiUser className="size-5" />
+                      Profile
+                    </button>
                   </li>
+
                   <hr
                     className="
                       w-full
@@ -577,30 +577,34 @@ const ConditionalMainHeader = () => {
                       p-0
                     "
                   />
-                  <li
-                    onClick={handleSignOut}
-                    className="
-                      flex
-                      w-full
-                      items-center
-                      justify-start
-                      gap-2
-                      bg-transparent
-                      p-2
-                      rounded-lg
-                      font-secondary
+                  <li className="w-full">
+
+                    <button
+                      onClick={handleSignOut}
+                      className="
+                        flex
+                        w-full
+                        items-center
+                        justify-start
+                        gap-2
+                        bg-transparent
+                        m-1
+                        p-2
+                        rounded-lg
+                        font-secondary
                       text-red-500
-                      cursor-pointer
-                      transform-all
-                      duration-300
-                      ease-in-out
-                      active:scale-90
+                        cursor-pointer
+                        transform-all
+                        duration-300
+                        ease-in-out
+                        active:scale-90
                       hover:bg-red-600/20
-                      relative
-                    "
-                  >
-                    <IoIosLogOut className="size-5" />
-                    Log out
+                        relative
+                      "
+                    >
+                      <IoIosLogOut className="size-5" />
+                      Log out
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -707,7 +711,6 @@ const ConditionalMainHeader = () => {
                       />
                     </div>
 
-                    {/* //TODO: add image upload functionality */}
                     <label
                       className="
                         text-sm
@@ -724,7 +727,7 @@ const ConditionalMainHeader = () => {
                         hover:text-text
                       "
                     >
-                      Upload new image
+                      Upload new image {""}
                       <input
                         onChange={handleImage}
                         type="file"
@@ -754,7 +757,7 @@ const ConditionalMainHeader = () => {
                         gap-1
                       "
                     >
-                      Name:
+                      Name: {""}
                       <input
                         required
                         type="text"
@@ -794,7 +797,7 @@ const ConditionalMainHeader = () => {
                         gap-1
                       "
                     >
-                      Username:
+                      Username: {""}
                       <input
                         required
                         type="text"
@@ -1071,7 +1074,7 @@ const ConditionalMainHeader = () => {
                         gap-1
                       "
                     >
-                      Confirmation text:
+                      Confirmation text: {""}
                       <input
                         onChange={(e) => {
                           setConfirmationMessage(e.target.value);
