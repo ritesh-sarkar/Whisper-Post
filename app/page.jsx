@@ -1,8 +1,8 @@
 import CreateProfileButton from "@/app/components/CreateProfileButton";
-import toast from "react-hot-toast";
 
 // custom libs and components
 import AnimationWrapper from "@/app/components/Animation/AnimationWrapper";
+import UserGuide from "./components/UserGuide";
 import {
   heroAnimationConfig,
   cardAnimationConfig,
@@ -13,8 +13,6 @@ import ParticleBackground from "./components/Particles";
 import { IoShieldOutline, IoSparklesSharp } from "react-icons/io5";
 import { FaUserCheck } from "react-icons/fa";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
-
-
 
 const page = () => {
   const features = [
@@ -44,7 +42,6 @@ const page = () => {
     },
   ];
 
-  
   return (
     <div
       className="
@@ -292,6 +289,10 @@ const page = () => {
           </AnimationWrapper>
         ))}
       </div>
+
+
+      {/* User Guide */}
+      <UserGuide />
     </div>
   );
 };
