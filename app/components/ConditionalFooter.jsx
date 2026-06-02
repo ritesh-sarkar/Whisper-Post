@@ -68,7 +68,7 @@ const ConditionalFooter = () => {
               font-primary
               cursor-pointer
             "
-            href="http://ritesh-sarkar.vercel.app"
+            href="https://ritesh-sarkar.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
           >
