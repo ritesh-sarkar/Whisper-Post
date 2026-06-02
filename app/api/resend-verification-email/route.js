@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import ConnectToDB from "@/lib/DBConnection";
 
 const JWT_Secret = process.env.JWT_SECRET;
-const NEXTAUTH_URL = process.env.NEXT_AUTH_URL;
+const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export async function POST(req) {
   const { email } = await req.json();
