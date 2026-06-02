@@ -107,6 +107,7 @@ const UserGuide = () => {
 
     return (
         <AnimationWrapper
+            id="howtouse"
             variants={howToUseAnimationConfig(0.2)}
             once={false}
             className="

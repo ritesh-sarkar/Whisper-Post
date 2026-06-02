@@ -290,7 +290,6 @@ const page = () => {
         ))}
       </div>
 
-
       {/* User Guide */}
       <UserGuide />
     </div>
