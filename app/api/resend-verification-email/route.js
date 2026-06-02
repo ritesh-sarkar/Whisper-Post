@@ -95,7 +95,7 @@ export async function POST(req) {
           </p>
 
           <!-- CTA Button -->
-          <a href="${NEXT_AUTH_URL}/verify/${token}" style="
+          <a href="${NEXTAUTH_URL}/verify/${token}" style="
             display: inline-block;
             padding: 12px 28px;
             background: linear-gradient(135deg, #7c3aed, #ec4899);
