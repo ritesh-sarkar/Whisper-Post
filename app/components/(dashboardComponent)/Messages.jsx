@@ -124,7 +124,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     }
   };
 
-
   // Toggle control section
   const handleControlsToggle = (clickedMessageId) => {
     setControlsOpen((prev) =>
@@ -135,20 +134,43 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
   const parseMoodStyle = (mood) => {
     switch (mood) {
       case "love":
-        return { backgroundColor: "#ec489a20", color: "#f472b6", border: "1px solid #f472b6" };
+        return {
+          backgroundColor: "#ec489a20",
+          color: "#f472b6",
+          border: "1px solid #f472b6",
+        };
       case "confession":
-        return { backgroundColor: "#f9741620", color: "#f97416", border: "1px solid #f97416" };
+        return {
+          backgroundColor: "#f9741620",
+          color: "#f97416",
+          border: "1px solid #f97416",
+        };
       case "funny":
-        return { backgroundColor: "#eab20820", color: "#fde047", border: "1px solid #fde047" };
+        return {
+          backgroundColor: "#eab20820",
+          color: "#fde047",
+          border: "1px solid #fde047",
+        };
       case "secret":
-        return { backgroundColor: "#7f1d1d20", color: "#ff5656", border: "1px solid #ff5656" };
+        return {
+          backgroundColor: "#7f1d1d20",
+          color: "#ff5656",
+          border: "1px solid #ff5656",
+        };
       case "advice":
-        return { backgroundColor: "#2563eb20", color: "#3b82f6", border: "1px solid #3b82f6" };
+        return {
+          backgroundColor: "#2563eb20",
+          color: "#3b82f6",
+          border: "1px solid #3b82f6",
+        };
       default:
-        return { backgroundColor: "#9ca3af", color: "#f8fafc", border: "1px solid #f8fafc" };
+        return {
+          backgroundColor: "#9ca3af",
+          color: "#f8fafc",
+          border: "1px solid #f8fafc",
+        };
     }
   };
-
 
   // Fixed 4:3 Image Download Functionality
   const downloadMessageAsImage = async (e, msg) => {
@@ -165,7 +187,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
       await new Promise(requestAnimationFrame);
 
       // extra safety for fonts
-      if (document.fonts?.ready) {
+      if (document.fonts) {
         await document.fonts.ready;
       }
 
@@ -179,7 +201,7 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
       // 4. Download
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `message-${msg.id.slice(0,4)}-whisper-post.png`;
+      link.download = `message-${msg.id.slice(0, 4)}-whisper-post.png`;
       link.click();
 
       toast.success("Downloading image...", { id: toastId });
@@ -192,11 +214,9 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
     }
   };
 
-  
   // Message filters
   const normalMessages = messages.filter((msg) => !msg.isPinned);
   const pinnedMessages = messages.filter((msg) => msg.isPinned);
-
 
   // Reusable Message Renderer
   const renderMessage = (msg) => {
@@ -548,7 +568,8 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
               Delete Message
             </h1>
             <p className="mt-3 text-sm text-text-alt leading-relaxed font-secondary">
-              Are you sure you want to delete this message? This action cannot be undone.
+              Are you sure you want to delete this message? This action cannot
+              be undone.
             </p>
             <div className="mt-6 flex items-center justify-center gap-4">
               <button
@@ -601,7 +622,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
         </div>
       )}
 
-
       {/* FIXED IMAGE EXPORT CANVAS */}
       <div
         style={{
@@ -649,7 +669,13 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                     alignItems: "center",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
                     <span
                       style={{
                         padding: "6px 12px",
@@ -679,7 +705,6 @@ const Messages = ({ messages, setMessages, loadMessages }) => {
                   </span>
                 </div>
               </div>
-
 
               {/* MESSAGE CONTENT */}
               <div
